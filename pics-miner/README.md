@@ -9,6 +9,6 @@ and put it in the `api_key` file in your working directory.
 To download images and tagged images of people with ids
 in range [`<min_id>`, `<max_id>`), run:
 
-`python3 tmdb-miner.py <min_id> <max_id>``
+``python3 tmdb-miner.py <min_id> <max_id>``
 
 Images will be saved in `./images`.
