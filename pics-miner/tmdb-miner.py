@@ -26,12 +26,16 @@ class TMDbPicsMiner:
         self.people = range(min_id, max_id)
 
     def download_pics(self, person_dir, pics_dict):
-        if len(pics_dict) == 0:
+        if not pics_dict:
             return False
+
+        if not os.path.exists(person_dir):
+            os.makedirs(person_dir)
+
         for pic in pics_dict:
             path = pic['file_path']
             urlretrieve(TMDbPicsMiner.download_url + path, person_dir + path)
-            return True
+        return True
 
     def __person_exists(self, id):
         url = TMDbPicsMiner.api_url + str(id) + self.key_url
@@ -42,8 +46,6 @@ class TMDbPicsMiner:
         for person in self.people:
             if self.__person_exists(person):
                 person_dir = TMDbPicsMiner.dir + "/" + str(person)
-                if not os.path.exists(person_dir):
-                    os.makedirs(person_dir)
 
                 url = TMDbPicsMiner.api_url + str(person) + TMDbPicsMiner.img_url + self.key_url
                 response = requests.request("GET", url)
