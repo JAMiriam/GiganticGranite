@@ -33,7 +33,9 @@ class TMDbPicsMiner:
             os.makedirs(person_dir)
 
         for pic in pics_dict:
-            path = pic['file_path']
+            path = pic['file_path'] if 'file_path' in pic else None
+            if path is None:
+                continue
             urlretrieve(TMDbPicsMiner.download_url + path, person_dir + path)
         return True
 
