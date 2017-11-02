@@ -11,4 +11,8 @@ in range [`<min_id>`, `<max_id>`), run:
 
 ``python3 tmdb-miner.py <min_id> <max_id>``
 
-Images will be saved in `./images`.
+or for single `<id>` run:
+``python3 tmdb-miner.py <id>``
+
+Images will be saved in `./images` in specific folder for each id
+named as IMDb id if specified or as TMDb id otherwise. 

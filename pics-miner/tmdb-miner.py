@@ -37,35 +37,40 @@ class TMDbPicsMiner:
             urlretrieve(TMDbPicsMiner.download_url + path, person_dir + path)
         return True
 
-    def __person_exists(self, id):
-        url = TMDbPicsMiner.api_url + str(id) + self.key_url
-        response = requests.request("GET", url)
-        return True if response.status_code == 200 else False
 
     def mine(self):
         for person in self.people:
-            if self.__person_exists(person):
-                person_dir = TMDbPicsMiner.dir + "/" + str(person)
-
-                url = TMDbPicsMiner.api_url + str(person) + TMDbPicsMiner.img_url + self.key_url
-                response = requests.request("GET", url)
-
-                print("Downloading images for id:", person, end=" ... ")
-                if self.download_pics(person_dir, response.json()['profiles']):
-                    print("done.")
-                else:
-                    print("Id", person, "does not have any images.")
-
-                url = TMDbPicsMiner.api_url + str(person) + TMDbPicsMiner.tag_img_url + self.key_url
-                response = requests.request("GET", url)
-
-                print("Downloading tagged images for id:", person, end=" ... ")
-                if self.download_pics(person_dir, response.json()['results']):
-                    print("done.")
-                else:
-                    print("Id", person, "does not have any images.")
-            else:
+            url = TMDbPicsMiner.api_url + str(person) + self.key_url
+            person_info_response = requests.request("GET", url)
+            if person_info_response.status_code != 200:
                 print("Id", person, "does not exist.")
+                continue
+
+            person_dir_id = person_info_response.json()['imdb_id'] if 'imdb_id' in person_info_response.json() else str(person)
+            person_dir = TMDbPicsMiner.dir + "/" + person_dir_id
+            url = TMDbPicsMiner.api_url + str(person) + TMDbPicsMiner.img_url + self.key_url
+            response = requests.request("GET", url)
+
+            print("Downloading images for id:", person, "(dir:", person_dir_id, ")", end=" ... ")
+            if self.download_pics(person_dir, response.json()['profiles']):
+                print("done.")
+            else:
+                print("Id", person, "does not have any images.")
+
+            url = TMDbPicsMiner.api_url + str(person) + TMDbPicsMiner.tag_img_url + self.key_url
+            response = requests.request("GET", url)
+
+            print("Downloading tagged images for id:", person, "(dir:", person_dir_id, ")", end=" ... ")
+            if self.download_pics(person_dir, response.json()['results']):
+                print("done.")
+            else:
+                print("Id", person, "does not have any images.")
+
+            if os.path.exists(person_dir):
+                file = open(person_dir + "/info.txt", 'w')
+                file.write(person_info_response.json()['name']+"\n" if 'name' in person_info_response.json() else "\n")
+                file.write(person_dir_id + "\n")
+                file.write(str(person))
 
 
 def main(argv):
@@ -74,10 +79,11 @@ def main(argv):
         max_id = int(argv[2])
     elif len(argv) > 1:
         min_id = int(argv[1])
-        max_id = 19129
+        max_id = int(argv[1]) + 1
     else:
-        min_id = 1
-        max_id = 19129
+        print("usage: \n tmdb-miner.py <min_id> <max_id> \n or \n tmdb-miner.py <id>")
+        sys.exit(2)
+
     miner = TMDbPicsMiner(min_id, max_id)
     miner.mine()
 
