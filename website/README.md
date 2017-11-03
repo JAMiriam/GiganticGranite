@@ -2,7 +2,7 @@
 ### Prerequisites
 Install required software
 ```
-apt-get install -y apache2 php libapache2-mod-php
+sudo apt-get install -y apache2 php libapache2-mod-php
 ```
 Copy required files
 ```
@@ -12,7 +12,7 @@ sudo ln -s /location/to/repo/website/giganticgranite.com giganticgranite.com
 ```
 Enable site
 ```
-a2ensite giganticgranite.com.conf
+sudo a2ensite giganticgranite.com.conf
 sudo service apache2 reload
 ```
 Modify hosts
