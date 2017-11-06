@@ -103,12 +103,12 @@ class ActorsInfoPicker:
         return images
 
     def download_by_tmdb_id(self, id):
-        downloaded_actor = Actor(id)
         url = ActorsInfoPicker.tmdb_id_url + str(id) + self.key_url
         resp = requests.request("GET", url)
         if resp.status_code != 200:
             raise ConnectionError('GET {}'.format(resp.status_code))
 
+        downloaded_actor = Actor(resp.json()['imdb_id'] if 'imdb_id' in resp.json() else 0)
         downloaded_actor.name = resp.json()['name'] if 'name' in resp.json() else ''
         downloaded_actor.birthday = resp.json()['birthday'] if 'birthday' in resp.json() else ''
         downloaded_actor.deathday = resp.json()['deathday'] if 'deathday' in resp.json() else ''
@@ -138,6 +138,7 @@ class ActorsInfoPicker:
 
     def download_by_name(self, name):
         url = ActorsInfoPicker.name_url + self.key_url + '&query=' + name
+        print(url)
         resp = requests.request("GET", url)
         if resp.status_code != 200:
             raise ConnectionError('GET {}'.format(resp.status_code))
@@ -193,12 +194,12 @@ class Actor:
             mc.print()
 
 
-# * ActorInfoPicker's usage example
+# # * ActorInfoPicker's usage example
 # def main():
 #     picker = ActorsInfoPicker()
-#     actor = picker.download_by_tmdb_id('206')
+#     # actor = picker.download_by_tmdb_id('4566')
 #     actor = picker.download_by_imdb_id('nm0000614')
-#     actor = picker.download_by_name('Alan Rickman')
+#     # actor = picker.download_by_name('Alan Rickman')
 #     actor.print()
 #
 # if __name__ == "__main__":
