@@ -1,5 +1,5 @@
 from flask import Flask, Response, jsonify
-from actorinfo import Actor, MovieCredit
+from actorinfo import Actor, MovieCredit, ActorsInfoPicker
 
 import json
 
@@ -25,7 +25,10 @@ app = Flask(__name__)
 @app.route('/actors/<image>')
 def getActors(image):
 	actors = []
-	actors.append(Actor(1))
+	# actors.append(Actor(1))
+	picker = ActorsInfoPicker()
+	actor = picker.download_actor_info('4566', 'nm0000614')
+	actors.append(actor)
 	
 	#	ToDo
 	#
