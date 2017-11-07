@@ -19,8 +19,7 @@ import requests
 import sys
 
 # * ActorsInfoPicker downloads info about actor and puts it to class Actor object.
-# * There are three methods for downloading info, by TMDb id, IMDb id or actor name,
-#   user should provide one of these values.
+# * The main method requires both tmdb id and imdb id.
 # * ActorsInfoPicker requires two files to work properly:
 #   genres - file with python dictionary to recognize genre of movie, api_key - file with key to TMDb.
 
@@ -30,6 +29,7 @@ class ActorsInfoPicker:
     imdb_id_url = "https://api.themoviedb.org/3/find/"
     name_url = "https://api.themoviedb.org/3/search/person"
     tmdb_photo = "https://image.tmdb.org/t/p/original"
+    append_link = "&append_to_response=images,combined_credits"
     # tmdb_genres = "https://api.themoviedb.org/3/genre/movie/list"
     # tmdb_genres_tv = "https://api.themoviedb.org/3/genre/tv/list"
 
@@ -69,19 +69,38 @@ class ActorsInfoPicker:
     #     print(self.genres)
     #     return True
 
-    def download_movie_credits(self, actor_id):
-        movie_credits = []
-        url = ActorsInfoPicker.tmdb_id_url + str(actor_id) + '/combined_credits' + self.key_url
+    # Main method to download info
+    def download_actor_info(self, tmdb_id, imdb_id):
+        downloaded_actor = Actor(imdb_id)
+        url = self.tmdb_id_url + str(tmdb_id) + self.key_url + self.append_link
         resp = requests.request("GET", url)
         if resp.status_code != 200:
             raise ConnectionError('GET {}'.format(resp.status_code))
 
-        if 'cast' in resp.json():
-            for movie_json in resp.json()['cast']:
+        downloaded_actor.name = str(resp.json()['name']) if 'name' in resp.json() else ''
+        downloaded_actor.birthday = str(resp.json()['birthday']) if 'birthday' in resp.json() else ''
+        downloaded_actor.deathday = str(resp.json()['deathday']) if 'deathday' in resp.json() else ''
+        downloaded_actor.biography = str(resp.json()['biography']) if 'biography' in resp.json() else ''
+        if 'gender' in resp.json():
+            downloaded_actor.gender = 'Male' if resp.json()['gender'] == 2 else "Female" if resp.json()['gender'] == 1 \
+                else 'not set'
+        else:
+            ''
+        downloaded_actor.imdb_profile = 'http://www.imdb.com/name/{}'.format(resp.json()['imdb_id']) \
+            if 'imdb_id' in resp.json() else ''
+
+        downloaded_actor.images = self.download_image_urls(resp)
+        downloaded_actor.movie_credits = self.download_movie_credits(downloaded_actor.id, resp)
+        return downloaded_actor
+
+    def download_movie_credits(self, actor_id, resp):
+        movie_credits = []
+        if 'combined_credits' in resp.json() and 'cast' in resp.json()['combined_credits']:
+            for movie_json in resp.json()['combined_credits']['cast']:
                 movie_credit = MovieCredit(actor_id)
-                movie_credit.title = movie_json['title'] if 'title' in movie_json \
-                    else movie_json['name'] if 'name' in movie_json else ''
-                movie_credit.vote_average = movie_json['vote_average'] if 'vote_average' in movie_json else ''
+                movie_credit.title = str(movie_json['title']) if 'title' in movie_json \
+                    else str(movie_json['name']) if 'name' in movie_json else ''
+                movie_credit.vote_average = str(movie_json['vote_average']) if 'vote_average' in movie_json else ''
                 movie_credit.poster = self.tmdb_photo + str(movie_json['poster_path']) \
                     if 'poster_path' in movie_json else ''
                 if 'genre_ids' in movie_json:
@@ -91,62 +110,13 @@ class ActorsInfoPicker:
 
         return movie_credits
 
-    def download_image_urls(self, actor_id):
+    def download_image_urls(self, resp):
         images = []
-        url = ActorsInfoPicker.tmdb_id_url + str(actor_id) + '/images' + self.key_url
-        resp = requests.request("GET", url)
-        if resp.status_code != 200:
-            raise ConnectionError('GET {}'.format(resp.status_code))
-        if 'profiles' in resp.json():
-            for image_json in resp.json()['profiles']:
-                images.append(self.tmdb_photo + image_json['file_path'])
+        if 'images' in resp.json() and 'profiles' in resp.json()['images']:
+            for image_json in resp.json()['images']['profiles']:
+                if 'file_path' in image_json:
+                    images.append(self.tmdb_photo + str(image_json['file_path']))
         return images
-
-    def download_by_tmdb_id(self, id):
-        url = ActorsInfoPicker.tmdb_id_url + str(id) + self.key_url
-        resp = requests.request("GET", url)
-        if resp.status_code != 200:
-            raise ConnectionError('GET {}'.format(resp.status_code))
-
-        downloaded_actor = Actor(resp.json()['imdb_id'] if 'imdb_id' in resp.json() else 0)
-        downloaded_actor.name = resp.json()['name'] if 'name' in resp.json() else ''
-        downloaded_actor.birthday = resp.json()['birthday'] if 'birthday' in resp.json() else ''
-        downloaded_actor.deathday = resp.json()['deathday'] if 'deathday' in resp.json() else ''
-        downloaded_actor.biography = resp.json()['biography'] if 'biography' in resp.json() else ''
-        if 'gender' in resp.json():
-            downloaded_actor.gender = 'Male' if resp.json()['gender'] == 2 else "Female" if resp.json()['gender'] == 1 \
-                else 'not set'
-        else:
-            ''
-        downloaded_actor.imdb_profile = 'http://www.imdb.com/name/{}'.format(resp.json()['imdb_id']) \
-            if 'imdb_id' in resp.json() else ''
-
-        downloaded_actor.images = self.download_image_urls(id)
-        downloaded_actor.movie_credits = self.download_movie_credits(id)
-        return downloaded_actor
-
-    def download_by_imdb_id(self, id):
-        url = ActorsInfoPicker.imdb_id_url + str(id) + self.key_url + '&external_source=imdb_id'
-        resp = requests.request("GET", url)
-        if resp.status_code != 200:
-            raise ConnectionError('GET {}'.format(resp.status_code))
-        if 'person_results' in resp.json() and 'id' in resp.json()['person_results'][0]:
-            tmdb_id = resp.json()['person_results'][0]['id']
-            return self.download_by_tmdb_id(tmdb_id)
-        else:
-            return False
-
-    def download_by_name(self, name):
-        url = ActorsInfoPicker.name_url + self.key_url + '&query=' + name
-        print(url)
-        resp = requests.request("GET", url)
-        if resp.status_code != 200:
-            raise ConnectionError('GET {}'.format(resp.status_code))
-        if 'results' in resp.json() and 'id' in resp.json()['results'][0]:
-            tmdb_id = resp.json()['results'][0]['id']
-            return self.download_by_tmdb_id(tmdb_id)
-        else:
-            return False
 
 
 class MovieCredit:
@@ -194,12 +164,10 @@ class Actor:
             mc.print()
 
 
-# # * ActorInfoPicker's usage example
+# * ActorInfoPicker's usage example
 # def main():
 #     picker = ActorsInfoPicker()
-#     # actor = picker.download_by_tmdb_id('4566')
-#     actor = picker.download_by_imdb_id('nm0000614')
-#     # actor = picker.download_by_name('Alan Rickman')
+#     actor = picker.download_actor_info('4566', 'nm0000614')
 #     actor.print()
 #
 # if __name__ == "__main__":
