@@ -1,5 +1,4 @@
-<html>
-<body>
-<h1>This is a test</h1>
-</body>
-</html>
+<?php
+    header("Location: upload/upload.html");
+    die();
+?>
