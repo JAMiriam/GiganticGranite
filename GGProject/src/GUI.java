@@ -2,6 +2,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * Graphical user interface. Linux-friendly.
+ * Tray icon with context menu.
+ */
 class GUI {
 	GUI() {
 		try {
@@ -11,9 +15,11 @@ class GUI {
 		}
 		UIManager.put("swing.boldMetal", Boolean.FALSE);
 		createAndShow();
-		GlobalKeyListener.startListener();
 	}
 
+	/**
+	 * Creating simple context menu attached to tray image
+	 */
 	private void createAndShow() {
 		if (!SystemTray.isSupported()) {
 			System.out.println("SystemTray is not supported");
@@ -122,6 +128,10 @@ class GUI {
 		});
 	}
 
+	/**
+	 * @param iconPath path to image
+	 * @return Image object
+	 */
 	private Image createImage(String iconPath) {
 		return (new ImageIcon(iconPath, "")).getImage();
 	}

@@ -4,9 +4,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
+/**
+ * Class implements interface for taking screenshots using a java Robot class
+ */
 public class ScreenshotViaRobot implements IScreenshoter {
 	@Override
 	public void takeFullScreen(String savePath) throws Exception {

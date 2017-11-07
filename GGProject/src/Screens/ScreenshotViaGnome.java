@@ -3,6 +3,10 @@ package Screens;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * Class implements interface for taking screenshots using a Linux
+ * program called gnome-screenshot
+ */
 public class ScreenshotViaGnome implements IScreenshoter {
 	@Override
 	public void takeFullScreen(String savePath) throws Exception {
@@ -15,9 +19,11 @@ public class ScreenshotViaGnome implements IScreenshoter {
 	}
 }
 
+/**
+ * Class executing given bash command
+ */
 class BashCommandExecutor {
 	static void runCommand(String command) throws Exception {
-		System.out.println("Executing BASH command:\n   " + command);
 		Runtime r = Runtime.getRuntime();
 		String[] commands = {"bash", "-c", command};
 		String line;

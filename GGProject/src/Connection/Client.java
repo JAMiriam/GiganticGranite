@@ -1,21 +1,71 @@
 package Connection;
 
+import json.JSONAnalizer;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.json.JsonObject;
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.ServerSocket;
+import java.net.HttpURLConnection;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.URL;
 
 public class Client {
 	public static void main(String args[]) {
-		Client.startConnection("localhost", 8080);
+		Client client = new Client();
+		client.startConnection("localhost", 5000);
 	}
 
 	private static Socket socket;
 
-	static void startConnection(String serverIp, int serverPort) {
+	private void startConnection(String serverIp, int serverPort) {
 		try {
 			socket = new Socket(serverIp, serverPort);
+			new ClientThread(socket).start();
+
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static class ClientThread extends Thread {
+		Socket socket;
+		boolean sent = false;
+		BufferedReader bufferedReader;
+		PrintWriter printWriter;
+
+		ClientThread(Socket socket) {
+			try {
+				this.socket = socket;
+				bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+			}
+			catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		public void run() {
+			try {
+				String line;
+				if(!sent) {
+					printWriter.write("GET /actors/asdf HTTP/1.1\r\n\r\n");
+					printWriter.flush();
+					sent = true;
+				}
+
+				while ((line = bufferedReader.readLine()) != null) {
+					if(line.startsWith("[")) {
+						System.out.println(line);
+						JSONAnalizer.analyze(line);
+					}
+				}
+			}
+			catch(Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 
@@ -38,52 +88,6 @@ public class Client {
 	public void closeConnection() {
 		try {
 			socket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-}
-
-class DummyServer {
-	private static ServerSocket socket;
-	private static Socket clientSocket;
-
-	public static void main(String args[]) {
-		DummyServer.runServer(8080);
-		DummyServer.listenForFile();
-	}
-
-	public static void runServer(int serverPort) {
-		try {
-			socket = new ServerSocket(serverPort);
-			clientSocket = socket.accept();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void listenForFile() {
-		try {
-			while (true) {
-				DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-				FileOutputStream fout = new FileOutputStream("screens/serverScreens/image.png");
-				int i;
-				while ( (i = dis.read()) > -1) {
-					fout.write(i);
-				}
-
-				fout.flush();
-				fout.close();
-				dis.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	void closeConnection() {
-		try {
-			clientSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
