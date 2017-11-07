@@ -1,11 +1,28 @@
 from flask import Flask, Response, jsonify
-from actorinfo import Actor, MovieCredit, ActorsInfoPicker
+from actorinfo import ActorsInfoPicker, Actor, MovieCredit
 
 import json
 
 app = Flask(__name__)
 
-#JSON contains 
+
+@app.route('/actors/image', methods=['POST'])
+def getActors():
+	# 		TODO
+	# Use image to run AI
+	# find actor's name for specific id
+	# create JSON with array of id, name, position
+	#
+
+	# test connection
+	dicted_actors = dict(status = 'ok')
+	data = json.dumps(dicted_actors)
+	
+	return Response(data, mimetype="application/json")
+
+
+
+#JSON with details contains 
 # 	array of Actor:
 #		name: string
 #		biography: string
@@ -20,29 +37,19 @@ app = Flask(__name__)
 #			vote_average: number
 #			poster: string
 #	
-
-
-@app.route('/actors/<image>')
-def getActors(image):
-	actors = []
-	# actors.append(Actor(1))
+@app.route('/actordetails/<actor_id>', methods=['GET'])
+def getDetails(actor_id):
 	picker = ActorsInfoPicker()
-	actor = picker.download_actor_info('4566', 'nm0000614')
-	actors.append(actor)
+	actors = []
 	
-	#	ToDo
-	#
-	# use image to run AI
-	#
+	actors.append(picker.download_by_imdb_id(actor_id))
 
-
-
-	# Preparing 'actors on image' JSON to return
+	# Preparing JSON with actor details to return
 	dicted_actors = []
 	for actor in actors:
 		dicted_credits = []
 		for movie_credit in actor.movie_credits:
-			print movie_credit
+			
 			dicted_credits.append(dict(
 					title = movie_credit.title,
 					genres = movie_credit.genres,
