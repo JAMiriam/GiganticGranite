@@ -10,10 +10,6 @@ sudo cp giganticgranite.com.conf /etc/apache2/sites-available/giganticgranite.co
 cd /var/www
 sudo ln -s /location/to/repo/website/giganticgranite.com giganticgranite.com
 ```
-Modify permissions
-```
-sudo chown www-data:www-data website/giganticgranite.com/uploads
-```
 Enable site
 ```
 sudo a2ensite giganticgranite.com.conf

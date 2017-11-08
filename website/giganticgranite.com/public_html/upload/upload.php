@@ -1,6 +1,10 @@
 <?php
-    $target_dir = "../../uploads/";
-    $target_file = $target_dir . basename($_FILES["imageToUpload"]["tmp_name"]);
+    $target_dir = sys_get_temp_dir(). "/giganticgranite_data/";
+    if (!file_exists($target_dir)) {
+        mkdir($target_dir);
+    }
+    $file_name = uniqid("img", true);
+    $target_file = $target_dir . $file_name;
     $upload_ok = 1;
 
     if (isset($_POST["submit"])) {
@@ -14,7 +18,7 @@
     }
 
     if (file_exists($target_file)) {
-        echo "Flie exists (wait for new version it will be fixed)";
+        echo "File exists";
         $upload_ok = 0;
     }
 
@@ -22,10 +26,11 @@
         echo "Sorry, dunno what happened here";
     } else {
         if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
-            echo "success";
             # TODO send request to main server so it can do its machine learning magic
+            # TODO save json and modify image            
+            header("Location: /info/info.php?img=" . $file_name);
         } else {
-            echo "Couldn't move file. Maybe check uploads folder owner (should be www-data)?";
+            echo "Couldn't move file";
         }
     }
 ?>
