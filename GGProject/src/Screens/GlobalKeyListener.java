@@ -1,4 +1,5 @@
-import Screens.*;
+package Screens;
+
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 public class GlobalKeyListener implements NativeKeyListener {
 	private boolean altPressedFlag = false;
 
-	static void startListener() {
+	public static void startListener() {
 		try {
 			Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 			logger.setLevel(Level.OFF);

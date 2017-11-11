@@ -1,5 +1,20 @@
 package json;
 
+//JSON contains
+//		array of Actor:
+//		name: string
+//		biography: string
+//		birthday: string
+//		deathday: string or null
+//		gender: string
+//		imdb_profile: string
+//		images: array of string
+//		movie_credits: array of MovieCredit
+//		title: string
+//		genres: array of string
+//		vote_average: number
+//		poster: string
+
 public class JSONAnalizer {
 	JSONAnalizer() {
 

@@ -1,13 +1,18 @@
-import java.awt.*;
-import java.awt.event.*;
+package gui;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Graphical user interface. Linux-friendly.
  * Tray icon with context menu.
  */
-class GUI {
-	GUI() {
+public class TrayGUI {
+	public TrayGUI() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException ex) {
@@ -26,7 +31,9 @@ class GUI {
 			return;
 		}
 		final JPopupMenu popup = new JPopupMenu();
-		final TrayIcon trayIcon = new TrayIcon(createImage("images/bulb.gif"));
+		Image image = createImage("images/icon.png");
+		int trayIconWidth = new TrayIcon(image).getSize().width;
+		final TrayIcon trayIcon = new TrayIcon(image.getScaledInstance(trayIconWidth, -1, Image.SCALE_SMOOTH));
 		final SystemTray tray = SystemTray.getSystemTray();
 		trayIcon.setImageAutoSize(false);
 

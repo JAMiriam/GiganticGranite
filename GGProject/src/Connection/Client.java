@@ -1,26 +1,14 @@
 package Connection;
 
 import json.JSONAnalizer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import javax.json.JsonObject;
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.URL;
 
 public class Client {
-	public static void main(String args[]) {
-		Client client = new Client();
-		client.startConnection("localhost", 5000);
-	}
-
 	private static Socket socket;
 
-	private void startConnection(String serverIp, int serverPort) {
+	public void startConnection(String serverIp, int serverPort) {
 		try {
 			socket = new Socket(serverIp, serverPort);
 			new ClientThread(socket).start();
@@ -32,7 +20,6 @@ public class Client {
 
 	public static class ClientThread extends Thread {
 		Socket socket;
-		boolean sent = false;
 		BufferedReader bufferedReader;
 		PrintWriter printWriter;
 
@@ -49,25 +36,31 @@ public class Client {
 
 		public void run() {
 			try {
-				String line;
-				if(!sent) {
-					printWriter.write("GET /actors/asdf HTTP/1.1\r\n\r\n");
-					printWriter.flush();
-					sent = true;
-				}
-
-				while ((line = bufferedReader.readLine()) != null) {
-					if(line.startsWith("[")) {
-						System.out.println(line);
-						JSONAnalizer.analyze(line);
-					}
-				}
+				sendGETRequest();
 			}
 			catch(Exception ex) {
 				ex.printStackTrace();
 			}
 		}
+
+		void sendGETRequest() throws IOException {
+			String line;
+			boolean sent = false;
+			if(!sent) {
+				printWriter.write("GET /actors/asdf HTTP/1.1\r\n\r\n");
+				printWriter.flush();
+				sent = true;
+			}
+
+			while ((line = bufferedReader.readLine()) != null) {
+				if(line.startsWith("[")) {
+					System.out.println(line);
+					JSONAnalizer.analyze(line);
+				}
+			}
+		}
 	}
+
 
 	static void sendFile (String imagePath) {
 		int i;
