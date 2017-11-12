@@ -15,9 +15,6 @@ if not os.path.exists(infodir):
 filename ="info.txt"
 
 for subdir, dirs, files in os.walk(imgdir):
-    print(subdir)
-    print(files)
-    print(dirs)
     if filename in files:
         _, new_filename = os.path.split(subdir)
         new_filename += ".txt"
