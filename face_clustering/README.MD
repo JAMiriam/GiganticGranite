@@ -18,6 +18,7 @@ To be able to use cuda with dlib you need to download and install CUDA 9 and cud
 ### Compilation
 Befor use you need to compile pyx code via Cython
 (If you on Windows 10, and have processor with avx instruction you can skip compilation)
+
 ``python setup.py build_ext --inplace``
 
 #### Usage
