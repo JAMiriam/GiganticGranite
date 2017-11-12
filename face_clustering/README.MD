@@ -6,6 +6,8 @@ To be able to use face_clustering you need to install Python and quite a few lib
 ### Dlib and OpenCV
 If you working on Windows 10, have gpu compatible with cuda and processor with avx instruction you can use dlib.pyd in face_clustering's directory. In that case don't download dlib.
 
+If you don't have cuda delete file dlib.pyd
+
 There are two libraries, you need to add to your Anaconda Environment. Dlib and OpenCV. Open your terminal (or if you on Windows open Anaconda Navigator, go to environment, choose root, click triangle, open terminal) and type:
 
 ``pip install dlib``
