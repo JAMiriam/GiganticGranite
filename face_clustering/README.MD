@@ -12,7 +12,7 @@ There are two libraries, you need to add to your Anaconda Environment. Dlib and 
 
 ``pip install opencv-python``
 
-###CUDA
+### CUDA
 To be able to use cuda with dlib you need to download and install CUDA 9 and cudnn 7 from nvidia website. After instalation of CUDA 9 (in default location) copy-past the content of cudnn archive into cuda's directory. Reboot.
 
 ### Compilation
