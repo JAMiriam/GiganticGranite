@@ -1,5 +1,6 @@
 package Screens;
 
+import main.Main;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -63,6 +64,7 @@ public class GlobalKeyListener implements NativeKeyListener {
 				else {
 					manager.captureFullScreen();
 					System.out.println("Fullscreen captured\n");
+//                    System.out.println(Main.client.postRequest("http://127.0.0.1:5000/actors/image", "images/photo.jpg"));
 				}
 			}
 			catch (Exception ex) {
