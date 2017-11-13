@@ -1,13 +1,18 @@
-from flask import Flask, Response, jsonify
+from flask import Flask, Response, jsonify, request
 from actorinfo import ActorsInfoPicker, Actor, MovieCredit
+from werkzeug import secure_filename
 
 import json
+
 
 app = Flask(__name__)
 
 
 @app.route('/actors/image', methods=['POST'])
 def getActors():
+	img = request.files['image'];
+
+	img.save(secure_filename(img.filename))
 	# 		TODO
 	# Use image to run AI
 	# find actor's name for specific id
@@ -15,7 +20,7 @@ def getActors():
 	#
 
 	# test connection
-	dicted_actors = dict(status = 'ok')
+	dicted_actors = dict(status = 'ok')	
 	data = json.dumps(dicted_actors)
 	
 	return Response(data, mimetype="application/json")
@@ -76,4 +81,5 @@ def getDetails(actor_id):
 
 if __name__ == '__main__':
     app.run()
+
 
