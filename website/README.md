@@ -21,4 +21,4 @@ Modify hosts
 sudo vim /etc/hosts
 127.0.0.1 giganticgranite.com
 ```
-You can find website on ```giganticgranite.com```
+You can find website on ```https://giganticgranite.com```
