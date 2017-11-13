@@ -1,3 +1,3 @@
-import face_clustering
+import facerec
 import sys
-face_clustering.cls(sys.argv[1])
+facerec.cls(sys.argv[1])
