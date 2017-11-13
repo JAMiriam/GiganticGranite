@@ -1,4 +1,6 @@
 <?php
-    header("Location: upload/upload.html");
-    die();
+    require_once 'HTTP.php';
+
+    $http = new HTTP();
+    $http->redirect('upload/upload.html');
 ?>
