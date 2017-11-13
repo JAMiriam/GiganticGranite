@@ -9,7 +9,7 @@
         # TODO make it look decent
         # TODO read json and shot formated data
         # TODO? use AJAX to load additional info
-        if (isset($_GET[img])){
+        if (isset($_GET['img'])){
             $image = $_GET['img'];
             $image_path = sys_get_temp_dir(). "/giganticgranite_data/" . $image;
             if (file_exists($image_path)) {
