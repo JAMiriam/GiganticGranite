@@ -2,7 +2,7 @@
 ### Prerequisites (for Ubuntu)
 Install required software
 ```
-sudo apt-get install -y apache2 php libapache2-mod-php
+sudo apt-get install -y apache2 php libapache2-mod-php curl php-curl php-guzzlehttp php-json imagemagick php-imagick php-http
 ```
 Copy required files
 ```
@@ -12,6 +12,7 @@ sudo ln -s /location/to/repo/website/giganticgranite.com giganticgranite.com
 ```
 Enable site
 ```
+sudo a2enmod ssl
 sudo a2ensite giganticgranite.com.conf
 sudo service apache2 reload
 ```
