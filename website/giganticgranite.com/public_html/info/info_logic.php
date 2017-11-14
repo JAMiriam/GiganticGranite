@@ -12,7 +12,6 @@
             $basic_info = $basic_info[0];
 
             # temp
-            $page_data->imdb = $basic_info->imdb;
             $page_data->name = $basic_info->name;
         } else {
             echo "corrupted link";
