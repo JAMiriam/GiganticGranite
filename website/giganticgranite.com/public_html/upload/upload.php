@@ -6,7 +6,8 @@
     if (!file_exists($target_dir)) {
         mkdir($target_dir);
     }
-    $file_name = uniqid("img", true);
+    $uniqid = uniqid("", true);
+    $file_name = 'img' . $uniqid;
     $target_file = $target_dir . $file_name;
     $upload_ok = 1;
 
@@ -40,11 +41,12 @@
                     ]
                 ]
             ]);
-            echo $response->getStatusCode();
-            echo $response->getBody();
+            # check response (response code)?
+            $json_path = $target_dir . 'bjson' . $uniqid;
+            file_put_contents($json_path, $response->getBody());
 
-            #$http = new HTTP();
-            #$http->redirect('/info/info.php?img=' . $file_name);
+            $http = new HTTP();
+            $http->redirect('/info/info.php?id=' . $uniqid);
         } else {
             echo "Couldn't move file";
         }

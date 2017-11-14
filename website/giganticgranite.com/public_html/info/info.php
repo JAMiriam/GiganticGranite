@@ -1,3 +1,5 @@
+<?php require('info_logic.php') ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,22 +7,10 @@
     </head>
 
     <body>
-        <?php
-        # TODO make it look decent
-        # TODO read json and shot formated data
-        # TODO? use AJAX to load additional info
-        if (isset($_GET['img'])){
-            $image = $_GET['img'];
-            $image_path = sys_get_temp_dir(). "/giganticgranite_data/" . $image;
-            if (file_exists($image_path)) {
-                echo '<img src="data:image/jpeg;base64,' . base64_encode(file_get_contents($image_path)) . '" />';
-            } else {
-                echo "corrupted link";
-            }
-        } else {
-            echo "terrible link";
-            die();
-        }
-        ?>
+        <h1><?php echo $page_data->imdb ?></h1>
+        <h1><?php echo $page_data->name ?></h1>
+        <image src="<?php echo $page_data->image_src ?>"></image>
+
+        <script src="info_AJAX.js"></script>
     </body>
 </html>
