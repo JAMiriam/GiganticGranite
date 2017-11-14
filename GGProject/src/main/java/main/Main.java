@@ -1,7 +1,7 @@
 package main;
 
-import Connection.NewClient;
-import Screens.GlobalKeyListener;
+import connection.NewClient;
+import screenshots.GlobalKeyListener;
 import gui.TrayGUI;
 import gui.mainWindow.GUI;
 import json.JSONModelParser;
@@ -11,6 +11,7 @@ import org.json.JSONArray;
 
 import javax.swing.*;
 import java.util.ArrayList;
+
 
 public class Main extends Thread{
 	private static NewClient client;

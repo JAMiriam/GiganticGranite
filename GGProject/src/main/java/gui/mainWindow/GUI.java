@@ -14,8 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.Main;
 import models.Actor;
+import main.Main;
 
 /**
  * open in browser (for imdb "More info")

@@ -9,7 +9,7 @@ import com.sun.jna.ptr.PointerByReference;
 
 import java.util.Collections;
 
-public class EnumerateWindows {
+public class WindowsManager {
 	public static void main(String[] args) {
 		X11 x11 = X11.INSTANCE;
 		Display display = x11.XOpenDisplay(null);

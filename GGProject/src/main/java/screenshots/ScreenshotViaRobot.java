@@ -1,4 +1,4 @@
-package Screens;
+package screenshots;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

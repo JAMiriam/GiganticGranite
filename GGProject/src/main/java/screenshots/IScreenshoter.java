@@ -1,4 +1,4 @@
-package Screens;
+package screenshots;
 
 public interface IScreenshoter {
 	void takeFullScreen(String savePath) throws Exception;
