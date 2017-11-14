@@ -22,5 +22,5 @@ def prd(path):
     for des in descriptors:
         guess=clf.predict(des[0].reshape(1, -1))
         guess_score=clf.score(des[0].reshape(1, -1),guess)
-        print(guess,guess_score,clf.predict_proba(des[0].reshape(1, -1)),des[1],des[2],des[3],des[4])
+        print(guess,guess_score,clf.decision_function(des[0].reshape(1, -1)),des[1],des[2],des[3],des[4])
 prd(sys.argv[1])
