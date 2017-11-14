@@ -47,6 +47,9 @@ class ActorsInfoPicker:
             sys.exit(2)
 
         self.key = key_file.read()
+        # check if the key is valid and does not have new line
+        if self.key[len(self.key) - 1] == '\n':
+            self.key = self.key[:len(self.key) - 1]
         self.key_url = "?api_key=" + self.key
         self.genres = genres
         # self.set_movie_genres()
