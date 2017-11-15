@@ -2,9 +2,14 @@ import sys
 def prd(path):
     import pickle
     import cv2
+    import math
     import dlib
     import numpy as np
     img = cv2.imread(path)
+    (x,y,z)=(img.shape)
+    if(x*y>(1920*1080)):
+        sizer=math.sqrt(((1920*1080))/(x*y))
+        img = cv2.resize(img,None,fx=sizer, fy=sizer, interpolation =  cv2.INTER_AREA )
     cnn_face_detector = dlib.cnn_face_detection_model_v1("mmod_human_face_detector.dat")
     predictor_path = "shape_predictor_5_face_landmarks.dat"
     face_rec_model_path = "dlib_face_recognition_resnet_model_v1.dat"
