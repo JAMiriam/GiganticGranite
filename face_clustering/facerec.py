@@ -25,6 +25,7 @@ def cls(path):
     import numpy as np
     import glob
     import cv2
+    import math
     import pickle
     predictor_path = "shape_predictor_5_face_landmarks.dat"
     face_rec_model_path = "dlib_face_recognition_resnet_model_v1.dat"
@@ -40,6 +41,10 @@ def cls(path):
         descriptors = []
         for f in glob.glob(os.path.join(path, "*.jpg")):
             img = cv2.imread(f)
+            (x,y,z)=(img.shape)
+            if(x*y>(1920*1080)):
+                sizer=math.sqrt(((1920*1080))/(x*y))
+                img = cv2.resize(img,None,fx=sizer, fy=sizer, interpolation =  cv2.INTER_AREA )
             dets = detector(img, 1)
             for k, dr in enumerate(dets):
                 d=dr.rect
