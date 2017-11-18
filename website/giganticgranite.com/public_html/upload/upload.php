@@ -1,6 +1,7 @@
 <?php
-    require_once 'HTTP.php';
-    require_once 'GuzzleHttp/autoload.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+    use GuzzleHttp\Client;
 
     $target_dir = sys_get_temp_dir(). "/giganticgranite_data/";
     if (!file_exists($target_dir)) {
@@ -32,7 +33,7 @@
         if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
             # TODO send request to main server so it can do its machine learning magic
             # TODO save json and modify image
-            $client = new GuzzleHTTP\Client();
+            $client = new Client();
             $response = $client->request('POST', '127.0.0.1:5000/actors/image', [
                 'multipart' => [
                     [
@@ -45,7 +46,7 @@
             $json_path = $target_dir . 'bjson' . $uniqid;
             file_put_contents($json_path, $response->getBody());
 
-            $http = new HTTP();
+            $http = new HTTP2();
             $http->redirect('/info/info.php?id=' . $uniqid);
         } else {
             echo "Couldn't move file";

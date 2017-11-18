@@ -2,7 +2,12 @@
 ### Prerequisites (for Ubuntu)
 Install required software
 ```
-sudo apt-get install -y apache2 php libapache2-mod-php curl php-curl php-guzzlehttp php-json imagemagick php-imagick php-http
+sudo apt-get install -y apache2 php libapache2-mod-php curl imagemagick php-imagick composer
+```
+Install php dependencies via composer
+```
+cd /path/to/repo/website/giganticgranite.com/public_html
+composer install
 ```
 Set permissions
 ```

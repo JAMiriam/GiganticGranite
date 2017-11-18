@@ -1,5 +1,7 @@
 <?php
-    require_once 'GuzzleHttp/autoload.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+    use GuzzleHttp\Client;
 
     $target_dir = sys_get_temp_dir(). "/giganticgranite_data/";
     $uniqid = $_GET['id'];
@@ -9,7 +11,7 @@
     # TODO check ALL actors
     $basic_info = $basic_info[0];
     $imdb = $basic_info->imdb;
-    $client = new GuzzleHTTP\Client();
+    $client = new Client();
     $response = $client->request('GET', '127.0.0.1:5000/actordetails/' . $imdb);
 
     # TODO format this data

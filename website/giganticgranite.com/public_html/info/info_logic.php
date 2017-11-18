@@ -15,6 +15,7 @@
             $page_data->name = $basic_info->name;
         } else {
             echo "corrupted link";
+            die();
         }
     } else {
         echo "terrible link";
