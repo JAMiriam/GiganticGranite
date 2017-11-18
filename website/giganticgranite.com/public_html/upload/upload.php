@@ -46,6 +46,22 @@
             $json_path = $target_dir . 'bjson' . $uniqid;
             file_put_contents($json_path, $response->getBody());
 
+            $imagick = new Imagick();
+            $imagick->readImage($target_file);
+            $draw = new \ImagickDraw();
+
+            # test rectangle
+            $strokeColor = new \ImagickPixel('black');
+            $draw->setStrokeColor($strokeColor);
+            $draw->setStrokeOpacity(1);
+            $draw->setStrokeWidth(2);
+            $draw->setFillOpacity(0);
+            $draw->rectangle(200, 200, 400, 400);
+            $draw->setFontSize(30);
+            $draw->annotation(300, 440, 'Alan Rickman');
+            $imagick->drawImage($draw);
+            echo $imagick->writeImage();
+
             $http = new HTTP2();
             $http->redirect('/info/info.php?id=' . $uniqid);
         } else {
