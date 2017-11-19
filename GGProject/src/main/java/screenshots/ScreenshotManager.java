@@ -1,4 +1,4 @@
-package Screens;
+package screenshots;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

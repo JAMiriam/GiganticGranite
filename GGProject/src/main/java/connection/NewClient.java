@@ -1,4 +1,4 @@
-package Connection;
+package connection;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
