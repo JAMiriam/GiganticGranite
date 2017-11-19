@@ -12,7 +12,7 @@ public class ActiveWindowInfo {
 
     private static String command = "xwininfo";
     private static String idParam = "-id";
-    private static String[] activeWindowCommand = {"/bin/bash", "-c", "xprop -root | awk '/_NET_ACTIVE_WINDOW\\(WINDOW\\)/{print $NF}'"};
+    private static String[] activeWindowCommand = {"xprop", "-root"};
 
 
     public static WindowInfo getActiveWindowInfo() throws IOException {
@@ -23,8 +23,17 @@ public class ActiveWindowInfo {
 
     public static String getActiveWindowId() throws IOException {
         Process process = Runtime.getRuntime().exec(activeWindowCommand);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        return reader.readLine().replaceFirst("^.*#\\s", "");
+
+        InputStream inputStream = process.getInputStream();
+        Scanner s = new Scanner(inputStream).useDelimiter("\\A");
+        String result = s.hasNext() ? s.next() : "";
+
+        String p = "_NET_ACTIVE_WINDOW\\(WINDOW\\):\\s+window\\s+id\\s+#\\s+(0x[0-9a-f]+)\\s?+";
+        Pattern r = Pattern.compile(p);
+        Matcher m = r.matcher(result);
+        if(!(m.find( ))) throw new IOException("Window id not found");
+        String id = m.group(1);
+        return id;
     }
 
     public static Integer[] getWindowCoords(String windowId) throws IOException {
