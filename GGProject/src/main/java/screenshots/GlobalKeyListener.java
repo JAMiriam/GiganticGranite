@@ -1,10 +1,12 @@
 package screenshots;
 
+import gui.smallerWindow.TransparentWindow;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
+import javax.swing.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,13 +59,14 @@ public class GlobalKeyListener implements NativeKeyListener {
 				if (altPressedFlag) {
 					manager.captureActiveWindow();
 					System.out.println("Window captured\n");
-
+					System.out.println("Opening small window");
+					SwingUtilities.invokeLater(new Thread(TransparentWindow::new));
 				}
 //				PRTSCR pressed - full screenshot
 				else {
 					manager.captureFullScreen();
 					System.out.println("Fullscreen captured\n");
-//                    System.out.println(Main.client.postRequest("http://127.0.0.1:5000/actors/image", "images/photo.jpg"));
+					new TransparentWindow();
 				}
 			}
 			catch (Exception ex) {

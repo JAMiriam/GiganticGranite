@@ -1,19 +1,13 @@
 package windowutils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
 
 public class ActiveWindowInfo {
-
     private static String command = "xwininfo";
     private static String idParam = "-id";
     private static String[] activeWindowCommand = {"xprop", "-root"};
-
 
     public static WindowInfo getActiveWindowInfo() throws IOException {
        String id =  getActiveWindowId();
@@ -21,7 +15,7 @@ public class ActiveWindowInfo {
        return new WindowInfo(id, coords);
     }
 
-    public static String getActiveWindowId() throws IOException {
+    private static String getActiveWindowId() throws IOException {
         Process process = Runtime.getRuntime().exec(activeWindowCommand);
 
         InputStream inputStream = process.getInputStream();
@@ -32,11 +26,10 @@ public class ActiveWindowInfo {
         Pattern r = Pattern.compile(p);
         Matcher m = r.matcher(result);
         if(!(m.find( ))) throw new IOException("Window id not found");
-        String id = m.group(1);
-        return id;
+        return m.group(1);
     }
 
-    public static Integer[] getWindowCoords(String windowId) throws IOException {
+    static Integer[] getWindowCoords(String windowId) throws IOException {
         Integer[] coords = new Integer[4];
         String[] coordsCommand = {command, idParam, windowId};
         Process process = Runtime.getRuntime().exec(coordsCommand);
@@ -71,14 +64,7 @@ public class ActiveWindowInfo {
         return coords;
     }
 
-
-
     public static void updateCoords(WindowInfo windowInfo) throws IOException {
         getWindowCoords(windowInfo.getId());
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        System.out.println(ActiveWindowInfo.getActiveWindowInfo().toString());
     }
 }
