@@ -1,4 +1,4 @@
-package jnaTests;
+package jnaTests.tests;
 
 import com.sun.jna.Native;
 import com.sun.jna.platform.unix.X11;
@@ -56,8 +56,10 @@ public class WindowsManager {
 			if(!windowName.contains("null")) {
 				System.out.println(windowName);
 				x11.XGetWindowAttributes(display, window, xwa);
-				System.out.println("height: " + xwa.height);
-				System.out.println("width: " + xwa.width);
+				int height = xwa.height, width = xwa.width;
+				if(height >= 50 && width >= 50) {
+					System.out.println("H: " + height + ", width: " + width);
+				}
 			}
 			x11.XFree(name.getPointer());
 
