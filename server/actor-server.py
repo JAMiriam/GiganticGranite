@@ -1,8 +1,8 @@
 from flask import Flask, Response, jsonify, request
 from actorinfo import ActorsInfoPicker, Actor, MovieCredit
-from werkzeug import secure_filename
-# from werkzeug.utils import secure_filename
-
+# from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
+from db_connection import DBConnector
 import json
 
 app = Flask(__name__)
@@ -46,11 +46,12 @@ def getActors():
 @app.route('/actordetails/<actor_id>', methods=['GET'])
 def getDetails(actor_id):
     picker = ActorsInfoPicker()
+    connector = DBConnector()
     actors = []
 
-    #       TODO
-    # find actor's tmdb id for given imdb id
-    actors.append(picker.download_actor_info('4566', 'nm0000614'))
+    tmdb_id = connector.find_actor("nm0000093")['tmdb_id']
+    actors.append(picker.download_actor_info(tmdb_id, 'nm0000093'))
+    # actors.append(picker.download_actor_info('4566', 'nm0000614'))
 
     # Preparing JSON with actor details to return
     dicted_actors = []
