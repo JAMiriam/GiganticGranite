@@ -40,41 +40,47 @@
         <main>
             <?php
             if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+                global $result;
                 $result = sign_up($_POST['email'], $_POST['username'], $_POST['password']);
                 if ($result == 0) {
                     echo "Your account was created!";
-                } elseif ($result == 1) {
-                    echo "Your email has associated account!";
-                } elseif ($result == 2) {
-                    echo "Username is taken!";
-                } else {
-                    echo "Something went wrong. Please try again!";
-                }
-            } elseif (!signed_in()) { ?>
+                } 
+            }
+            if (!isset($result) || $result != 0) { ?>
 
                 <!-- sign up -->
                 <div class="container">
-                    <form class="form-signin" action="register.php" method="post">
+                    <form class="form-signin" action="register.php" method="post" onsubmit="return form_submit()">
                         <h2 class="form-signin-heading">Sing up</h2>
                         <div class="form-group">
                             <label for="inputEmail" class="sr-only">Email address</label>
                             <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required>
+                            <?php
+                            if ($result == 1) { ?>
+                                <span class="help-block">Email associated with existing account</span>
+                                <?php
+                            } ?>
                         </div>
                         <div class="form-group">
                             <label for="inputUsername" class="sr-only">Username</label>
                             <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required>
+                            <?php
+                            if ($result == 2) { ?>
+                                <span class="help-block">Username taken</span>
+                                <?php
+                            } ?>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="sr-only">Password</label>
                             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="divPasswordRepeat">
                             <label for="inputPasswordRepeat" class="sr-only">Repeat password</label>
-                            <input type="password" id="inputPasswordReapeat" class="form-control" placeholder="Repeat password" required>
+                            <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Repeat password" required>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="agree"> I agree with <a href="#">Terms and conditions</a>
+                                <input type="checkbox" value="agree" required> I agree with <a href="#">Terms and conditions</a>
                             </label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
@@ -93,5 +99,6 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="scripts/validate.js"></script>        
     </body>
 </html>

@@ -62,10 +62,20 @@
                         <div class="form-group">
                             <label for="inputUsername" class="sr-only">Username</label>
                             <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
+                            <?php
+                            if ($_GET['error'] == 1) { ?>
+                                <span class="help-block">Wrong username</span>
+                                <?php
+                            } ?>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="sr-only">Password</label>
                             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                            <?php
+                            if ($_GET['error'] == 2) { ?>
+                                <span class="help-block">Wrong password</span>
+                                <?php
+                            } ?>
                         </div>
                         <div class="checkbox">
                             <label>

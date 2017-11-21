@@ -11,6 +11,7 @@
         $con = db_connect();
         $sql = "SELECT user_id, password_hash FROM users WHERE username LIKE '" . $username . "';";
         $result = $con->query($sql);
+        $http = new HTTP2();        
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             if (password_verify($password, $row['password_hash'])) {
@@ -18,13 +19,12 @@
                 $_SESSION['username'] = $username;
                 $_SESSION['id'] = $row['user_id'];
                 
-                $http = new HTTP2();
                 $http->redirect('/');
             } else {
-                echo 'Wrong password';
+                $http->redirect('index.php?error=2');
             }
         } else {
-            echo 'Wrong username';
+            $http->redirect('index.php?error=1');
         }
     }
 
