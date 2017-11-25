@@ -97,7 +97,48 @@ def prd(path):
         print(guess,guess_score,clf.decision_function(des[0].reshape(1, -1)),des[1],des[2],des[3],des[4])
 
 
-
+class reclass:
+    def __init__(self):
+        import pickle
+        import cv2
+        import math
+        import dlib
+        import numpy as np
+        self.cnn_face_detector = dlib.cnn_face_detection_model_v1("mmod_human_face_detector.dat")
+        self.predictor_path = "shape_predictor_5_face_landmarks.dat"
+        self.face_rec_model_path = "dlib_face_recognition_resnet_model_v1.dat"
+        self.detector = dlib.get_frontal_face_detector()
+        self.sp = dlib.shape_predictor(self.predictor_path)
+        self.facerec = dlib.face_recognition_model_v1(self.face_rec_model_path)
+        self.clf= pickle.load(open("brain.p", "rb"))
+    def prd(self,img_str):
+        import numpy as np
+        import cv2
+        import math
+        nparr = np.fromstring(img_str.read(), np.uint8)
+        img = cv2.imdecode(nparr,cv2.IMREAD_COLOR)
+        (x,y,z)=(img.shape)
+        if(x*y>(1920*1080)):
+            sizer=math.sqrt(((1920*1080))/(x*y))
+            img = cv2.resize(img,None,fx=sizer, fy=sizer, interpolation =  cv2.INTER_AREA )
+        dets = self.cnn_face_detector(img, 1)
+        descriptors=[]
+        ret=[]
+        for k, dr in enumerate(dets):
+            d=dr.rect
+            shape = self.sp(img, d)
+            face_descriptor = self.facerec.compute_face_descriptor(img, shape)
+            descriptors.append([np.asarray(face_descriptor),d.left(),d.right(),d.top(),d.bottom()])
+        for des in descriptors:
+            guess=self.clf.predict(des[0].reshape(1, -1))
+            guess_score=self.clf.score(des[0].reshape(1, -1),guess)
+            fut=self.clf.decision_function(des[0].reshape(1, -1))
+            print(guess,guess_score,fut,des[1],des[2],des[3],des[4])
+            if(fut[0][guess[0]-1]>0):
+                ret.append(("right",guess[0],des[3],des[1],des[2],des[4]))
+            else:
+                ret.append(("wrong",guess[0],des[3],des[1],des[2],des[4]))
+        return ret
 
 
 
