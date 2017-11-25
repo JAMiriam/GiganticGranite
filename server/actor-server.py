@@ -4,17 +4,24 @@ from actorinfo import ActorsInfoPicker, Actor, MovieCredit
 from werkzeug.utils import secure_filename
 from db_connection import DBConnector
 import json
-
+import facerec
+prec=facerec.reclass()
 app = Flask(__name__)
 
 
 @app.route('/actors/image', methods=['POST'])
 def getActors():
     img = request.files['image']
-
-    img.save(secure_filename(img.filename))
+    
+    #prec.prd(img) returns array of vectors which contain:
+    #at first position "right" actor was found or "wrong" actor wasn't
+    #found at current position
+    #at second place is a mega position number of actor (or best guess in case of "wrong")
+    #next four are position of face four int left,top,right,bottom
+    #at this moment there can be problems with using this function
+    found_actors=prec.prd(img)
+    
     # 		TODO
-    # Use image to run AI
     # find actor's name for specific id
     # create JSON with array of id, name, position
     #
