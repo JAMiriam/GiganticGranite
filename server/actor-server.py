@@ -2,6 +2,8 @@ from flask import Flask, Response, jsonify, request
 from actorinfo import ActorsInfoPicker, Actor, MovieCredit
 # from werkzeug import secure_filename
 from werkzeug.utils import secure_filename
+
+from ai_info_parser import make_dict
 from db_connection import DBConnector
 import json
 import facerec
@@ -25,11 +27,11 @@ def getActors():
     # find actor's name for specific id
     # create JSON with array of id, name, position
     #
-
     # test connection
     # dicted_actors = dict(status='ok')
-    dicted_actors = []
-    dicted_actors.append(dict(name='Alan Rickman', imdb='nm0000614'))
+
+    dicted_actors = make_dict(found_actors)
+    # dicted_actors.append(dict(name='Alan Rickman', imdb='nm0000614'))
     data = json.dumps(dicted_actors)
 
     return Response(data, mimetype="application/json")
@@ -57,9 +59,9 @@ def getDetails(actor_id):
     actors = []
 
     tmdb_id = connector.find_actor(actor_id)['tmdb_id']
-    pick = picker.picker.download_actor_info(tmdb_id, actor_id)
-	if pick is not False:
-		actors.append(pick)
+    pick = picker.download_actor_info(tmdb_id, actor_id)
+    if pick is not False:
+        actors.append(pick)
     # actors.append(picker.download_actor_info(tmdb_id, 'nm0000093'))
     # actors.append(picker.download_actor_info('4566', 'nm0000614'))
 
