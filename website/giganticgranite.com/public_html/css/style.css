@@ -1,5 +1,5 @@
 body {
-    padding-top: 3rem;
+    padding-top: 5rem;
 }
 
 .navbar {
@@ -46,4 +46,14 @@ body {
 
 .help-block {
     color: red;
+}
+
+#image {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.big-image {
+    max-height: 100%;
+    max-width: 100%;
 }

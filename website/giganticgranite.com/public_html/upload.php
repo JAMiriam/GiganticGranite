@@ -1,3 +1,5 @@
+<?php require_once 'utils.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,44 +20,43 @@
                         <a class="nav-link" href="#">Upload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">History</a>
+                        <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#top">Sing in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.html">Sign up</a>
-                    </li>
+                    <?php
+                    if (signed_in()) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php">Log out</a>
+                        </li>
+                        <?php
+                    } else { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Sing in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.php">Sign up</a>
+                        </li>
+                        <?php
+                    } ?>
                 </ul>
             </div>
         </nav>
 
-        <!-- sign in -->
+        <!-- fill main -->
         <main>
-            <div class="container" id="top">
-                <form class="form-signin">
-                    <h2 class="form-signin-heading">Sign in</h2>
+            <div class="container" align="center">
+                <h1>Upload screenshot from movie:</h1>
+                <form enctype="multipart/form-data" action="upload_image.php" method="post">
                     <div class="form-group">
-                        <label for="inputUsername" class="sr-only">Username</label>
-                        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                        <input type="file" class="form-control-file" id="image" name="image">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="remember-me"> Remember me
-                        </label>
-                    </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                 </form>
-            </div>        
+            </div>
         </main>
         <!-- JQuery, Popper.js, Bootstrap JS scripts -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

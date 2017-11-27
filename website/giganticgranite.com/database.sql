@@ -14,6 +14,16 @@ CREATE TABLE users (
     PRIMARY KEY (user_id)
 );
 
+CREATE TABLE images (
+    image_id            INT             NOT NULL AUTO_INCREMENT,
+    user_id             INT             NOT NULL,
+    date_of_addition    DATETIME        NOT NULL DEFAULT NOW(),
+    image_path          VARCHAR(256)    NOT NULL,
+    actors              VARCHAR(1024)   NOT NULL,
+    PRIMARY KEY (image_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 -- DROP USER 'web'@'localhost';
 
 CREATE USER 'web'@'localhost' IDENTIFIED BY 'qwfJMCV7658FDJHFG';

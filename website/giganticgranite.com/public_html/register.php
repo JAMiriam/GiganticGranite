@@ -1,4 +1,10 @@
-<?php require_once 'utils.php' ?>
+<?php 
+    require_once 'utils.php'; 
+    if (signed_in()) {
+        $http = new HTTP2();
+        $http->redirect('/');
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +23,10 @@
                 <a class="navbar-brand" href="/">Gigantic Granite</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Upload</a>
+                        <a class="nav-link" href="upload.php">Upload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">History</a>
+                        <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
@@ -56,7 +62,7 @@
                             <label for="inputEmail" class="sr-only">Email address</label>
                             <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required>
                             <?php
-                            if ($result == 1) { ?>
+                            if (isset($result) && $result == 1) { ?>
                                 <span class="help-block">Email associated with existing account</span>
                                 <?php
                             } ?>
@@ -65,7 +71,7 @@
                             <label for="inputUsername" class="sr-only">Username</label>
                             <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required>
                             <?php
-                            if ($result == 2) { ?>
+                            if (isset($result) && $result == 2) { ?>
                                 <span class="help-block">Username taken</span>
                                 <?php
                             } ?>

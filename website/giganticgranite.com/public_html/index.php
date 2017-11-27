@@ -17,10 +17,10 @@
                 <a class="navbar-brand" href="/">Gigantic Granite</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Upload</a>
+                        <a class="nav-link" href="upload.php">Upload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">History</a>
+                        <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
@@ -63,7 +63,7 @@
                             <label for="inputUsername" class="sr-only">Username</label>
                             <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
                             <?php
-                            if ($_GET['error'] == 1) { ?>
+                            if (isset($_GET['error']) && $_GET['error'] == 1) { ?>
                                 <span class="help-block">Wrong username</span>
                                 <?php
                             } ?>
@@ -72,7 +72,7 @@
                             <label for="inputPassword" class="sr-only">Password</label>
                             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
                             <?php
-                            if ($_GET['error'] == 2) { ?>
+                            if (isset($_GET['error']) && $_GET['error'] == 2) { ?>
                                 <span class="help-block">Wrong password</span>
                                 <?php
                             } ?>

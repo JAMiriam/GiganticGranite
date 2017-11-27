@@ -9,6 +9,10 @@
 
     function sign_in($username, $password) {
         $con = db_connect();
+        
+        $username = $con->real_escape_string($username);
+        $password = $con->real_escape_string($password);
+
         $sql = "SELECT user_id, password_hash FROM users WHERE username LIKE '" . $username . "';";
         $result = $con->query($sql);
         $http = new HTTP2();        
@@ -30,6 +34,11 @@
 
     function sign_up($email, $username, $password) {
         $con = db_connect();
+
+        $email = $con->real_escape_string($email);
+        $username = $con->real_escape_string($username);
+        $password = $con->real_escape_string($password);
+        
         $sql1 = "SELECT * FROM users WHERE email LIKE '" . $email . "';";
         $sql2 = "SELECT * FROM users WHERE username LIKE '" . $username . "';";
         $result = $con->query($sql1);
@@ -48,6 +57,38 @@
         } else {
             return 3;
         }
+    }
+
+    function insert_image($image_path, $actors) {
+        $con = db_connect();
+        $image_path = $con->real_escape_string($image_path);
+        $sql = "INSERT INTO images (user_id, image_path, actors) VALUES (" . $_SESSION['id'] . ", '" . $image_path . "', '" . $actors . "');";
+        $con->query($sql);
+        return $con->insert_id;
+    }
+    
+    function encode_image($path) {
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $src = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $src;
+    }
+    
+    function get_image($id) {
+        $con = db_connect();
+        $sql = "SELECT image_path FROM images WHERE image_id = " . $id . ";";
+        $result = $con->query($sql);
+        $row = $result->fetch_assoc();
+        $path = $row['image_path'];
+        return encode_image($path);
+    }
+    
+    function get_actors($id) {
+        $con = db_connect();
+        $sql = "SELECT actors FROM images WHERE image_id = " . $id . ";";
+        $result = $con->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['actors'];
     }
 
     function db_connect() {
