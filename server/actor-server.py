@@ -56,8 +56,11 @@ def getDetails(actor_id):
     connector = DBConnector()
     actors = []
 
-    tmdb_id = connector.find_actor("nm0000093")['tmdb_id']
-    actors.append(picker.download_actor_info(tmdb_id, 'nm0000093'))
+    tmdb_id = connector.find_actor(actor_id)['tmdb_id']
+    pick = picker.picker.download_actor_info(tmdb_id, actor_id)
+	if pick is not False:
+		actors.append(pick)
+    # actors.append(picker.download_actor_info(tmdb_id, 'nm0000093'))
     # actors.append(picker.download_actor_info('4566', 'nm0000614'))
 
     # Preparing JSON with actor details to return
