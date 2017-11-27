@@ -78,6 +78,7 @@ class ActorsInfoPicker:
         url = self.tmdb_id_url + str(tmdb_id) + self.key_url + self.append_link
         resp = requests.request("GET", url)
         if resp.status_code != 200:
+            print(resp.json()['status_code'], resp.json()['status_message'])
             raise ConnectionError('GET {}'.format(resp.status_code))
 
         downloaded_actor.name = str(resp.json()['name']) if 'name' in resp.json() else ''
