@@ -32,6 +32,7 @@ class DBConnector:
         return self.collection.find_one({"_id": imdb_id})
 
     def find_actor_int(self, id):
+        id = int(id)
         return self.collection.find_one({"internal_id": id})
 
 # # get all documents matching query
