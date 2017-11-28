@@ -56,21 +56,24 @@
                 );
                 $json = $response->getBody();
                 $actors = json_decode($json);
-                // TODO draw stuff onto image
+                
                 $imagick = new Imagick();
                 $imagick->readImage($uploaddir);
                 $draw = new \ImagickDraw();
-                # test rectangle
                 $strokeColor = new \ImagickPixel('black');
                 $draw->setStrokeColor($strokeColor);
                 $draw->setStrokeOpacity(1);
                 $draw->setStrokeWidth(2);
                 $draw->setFillOpacity(0);
-                $draw->rectangle(200, 200, 400, 400);
                 $draw->setFontSize(30);
-                $draw->annotation(300, 440, 'Alan Rickman');
+                // TODO read position
+                foreach ($actors as $actor) {
+                    $draw->rectangle(200, 200, 400, 400);
+                    $draw->annotation(300, 440, $actor->name);
+                }
                 $imagick->drawImage($draw);
                 $imagick->writeImageFile(fopen($uploaddir, 'w'));
+                
                 if (signed_in()) {
                     $filename = insert_image($uploaddir, $json);
                 } else {

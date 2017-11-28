@@ -44,8 +44,10 @@
             <div class="container">
                 <img src="<?php echo $src ?>" class="big-image">
             </div>
-            <div class="container" id="ajax-container">
+            <div class="jumbotron">
+                <div class="container" id="ajax-container">
 
+                </div>
             </div>
         </main>
 
