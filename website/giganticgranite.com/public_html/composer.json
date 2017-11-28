@@ -1,6 +1,0 @@
-{
-    "require": {
-        "pear/http2": "^1.1",
-        "guzzlehttp/guzzle": "^6.3"
-    }
-}
