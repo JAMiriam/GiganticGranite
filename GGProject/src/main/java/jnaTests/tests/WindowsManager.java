@@ -57,9 +57,7 @@ public class WindowsManager {
 				System.out.println(windowName);
 				x11.XGetWindowAttributes(display, window, xwa);
 				int height = xwa.height, width = xwa.width;
-				if(height >= 50 && width >= 50) {
-					System.out.println("H: " + height + ", width: " + width);
-				}
+				System.out.println("H: " + height + ", width: " + width);
 			}
 			x11.XFree(name.getPointer());
 

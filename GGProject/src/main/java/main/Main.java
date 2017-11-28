@@ -17,7 +17,7 @@ public class Main extends Thread{
 	private static NewClient client;
 
 	public void run () {
-		SwingUtilities.invokeLater(TrayGUI::new);
+//		SwingUtilities.invokeLater(TrayGUI::new);
 		GlobalKeyListener.startListener();
 
         /*testing new client*/
@@ -33,7 +33,7 @@ public class Main extends Thread{
         System.out.println(actors.get(0).getBiography());
 
         //run gui updater after json was received
-		GUI.setScreenshot("File:screens/20171114_11_34_25_AM.png");
+//		GUI.setScreenshot("File:screens/20171114_11_34_25_AM.png");
 		GUI.loadActor(actors.get(0));
 
 	}
