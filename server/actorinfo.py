@@ -109,7 +109,10 @@ class ActorsInfoPicker:
                     if 'poster_path' in movie_json else ''
                 if 'genre_ids' in movie_json:
                     for genre_id in movie_json['genre_ids']:
-                        movie_credit.genres.append(self.genres[genre_id])
+                       if genre_id in self.genres.keys(): 
+                            movie_credit.genres.append(self.genres[genre_id])
+                        else:
+                            print('No genre with id = '+str(genre_id))
                 movie_credits.append(movie_credit)
 
         return movie_credits
