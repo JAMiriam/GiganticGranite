@@ -56,23 +56,21 @@
                 );
                 $json = $response->getBody();
                 $actors = json_decode($json);
-                
-                $imagick = new Imagick();
-                $imagick->readImage($uploaddir);
-                $draw = new \ImagickDraw();
-                $strokeColor = new \ImagickPixel('black');
-                $draw->setStrokeColor($strokeColor);
-                $draw->setStrokeOpacity(1);
-                $draw->setStrokeWidth(2);
-                $draw->setFillOpacity(0);
-                $draw->setFontSize(30);
-                // TODO read position
-                foreach ($actors as $actor) {
-                    $draw->rectangle(200, 200, 400, 400);
-                    $draw->annotation(300, 440, $actor->name);
+                foreach($actors as $actor) {
+                    $name = $actor->name;
+                    $top = intval($actor->top);
+                    $left = intval($actor->left);
+                    $right = intval($actor->right);
+                    $bottom = intval($actor->bottom);
+                    $cmd = 'convert "' . $uploaddir . '" ' . '-fill none -stroke red -pointsize 20 -draw "rectangle ';
+                    //die(var_dump($actor));
+                    $cmd .= $top . ',' . $left . ' ' . $right . ',' . $bottom . 
+                            '" -draw "text ' . $top . ',' . ($bottom + 20) . 
+                            ' \'' . $name . '\'" "' . $uploaddir . '"';
+                    //die($cmd);
+                    shell_exec($cmd);
                 }
-                $imagick->drawImage($draw);
-                $imagick->writeImageFile(fopen($uploaddir, 'w'));
+                //shell_exec('convert "' . $uploaddir . '" ' . '-fill none -stroke red -pointsize 20 -draw "rectangle 50,50 200,200" -draw "text 220,100 \'test trest\'" ' . '"' . $uploaddir . '"');
                 
                 if (signed_in()) {
                     $filename = insert_image($uploaddir, $json);

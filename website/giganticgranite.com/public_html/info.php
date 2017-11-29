@@ -41,7 +41,7 @@
 
         <!-- fill main -->
         <main>
-            <div class="container">
+            <div class="container text-center jumbotron">
                 <img src="<?php echo $src ?>" class="big-image">
             </div>
             <div class="jumbotron">

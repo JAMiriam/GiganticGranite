@@ -1,5 +1,14 @@
 ## Website
-### Prerequisites (for Ubuntu)
+### Instalation (for Windows)
+Install [php](http://windows.php.net/download#php-7.1)
+Install [netbeans PHP](https://netbeans.org/downloads/)
+Add php path to netbeans
+Install [composer](https://getcomposer.org/download/)
+cd /path/to/repo/website/giganticgranite.com
+composer install
+Create project with existing sources in netbeans (/path/to/repo/website/giganticgranite.com/public_html as root)
+
+### Instalation (for Ubuntu)
 Install required software
 ```
 sudo apt-get install -y apache2 php libapache2-mod-php curl imagemagick php-imagick composer
