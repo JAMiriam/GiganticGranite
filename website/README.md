@@ -1,12 +1,19 @@
 ## Website
 ### Instalation (for Windows)
 Install [php](http://windows.php.net/download#php-7.1)
+
 Install [netbeans PHP](https://netbeans.org/downloads/)
+
 Install [ImageMagick](https://www.imagemagick.org/script/download.php)
+
 Add php path to netbeans
+
 Install [composer](https://getcomposer.org/download/)
+
 cd /path/to/repo/website/giganticgranite.com
+
 composer install
+
 Create project with existing sources in netbeans (/path/to/repo/website/giganticgranite.com/public_html as root)
 
 ### Instalation (for Ubuntu)
