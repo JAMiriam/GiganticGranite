@@ -16,7 +16,8 @@ public class JSONModelParser {
             SimpleActor actor = new SimpleActor();
             actor.setName(jsonobject.getString("name"));
             actor.setImdb_id(jsonobject.getString("imdb"));
-//            TODO set position from json
+            actor.setPos(jsonobject.getInt("left"), jsonobject.getInt("top"),
+                    jsonobject.getInt("right"), jsonobject.getInt("bottom"));
             actors.add(actor);
         }
         return actors;
