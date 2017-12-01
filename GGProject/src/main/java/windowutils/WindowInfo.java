@@ -10,7 +10,7 @@ public class WindowInfo {
     private Integer width;
     private Integer height;
 
-    WindowInfo(String id, int x, int y, int width, int height){
+    public WindowInfo(String id, int x, int y, int width, int height){
         this.id = id;
         this.x = x;
         this.y = y;

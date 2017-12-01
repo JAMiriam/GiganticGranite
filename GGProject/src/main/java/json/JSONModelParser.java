@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class JSONModelParser {
-    public ArrayList<SimpleActor> parseToSimpleActor(JSONArray json) {
+    public static ArrayList<SimpleActor> parseToSimpleActor(JSONArray json) {
         ArrayList<SimpleActor> actors = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonobject = json.getJSONObject(i);
@@ -23,7 +23,7 @@ public class JSONModelParser {
         return actors;
     }
 
-    public ArrayList<Actor> parseToActor(JSONArray json) {
+    public static ArrayList<Actor> parseToActor(JSONArray json) {
         ArrayList<Actor> actors = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonobject = json.getJSONObject(i);
@@ -47,7 +47,7 @@ public class JSONModelParser {
         return actors;
     }
 
-    private ArrayList<MovieCredit> parseToMovieCredit(JSONArray json) {
+    private static ArrayList<MovieCredit> parseToMovieCredit(JSONArray json) {
         ArrayList<MovieCredit> movies = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonobject = json.getJSONObject(i);

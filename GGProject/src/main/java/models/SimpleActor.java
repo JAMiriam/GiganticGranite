@@ -7,7 +7,12 @@ public class SimpleActor {
     private int top;
     private int right;
     private int bottom;
-//    TODO actor's position
+
+    public SimpleActor(){};
+
+    public SimpleActor(int a, int b, int c, int d) {
+        setPos(a, b, c, d);
+    }
 
     public String getName() {
         return name;
@@ -34,5 +39,9 @@ public class SimpleActor {
 
     public Integer[] getPos() {
         return new Integer[]{left, top, right, bottom};
+    }
+
+    public String toString() {
+        return imdb_id + "; " + name + "; " + "[" + left + ", " + top + ", " + right + ", " + bottom + "]";
     }
 }
