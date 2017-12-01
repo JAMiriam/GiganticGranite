@@ -7,6 +7,7 @@ from ai_info_parser import make_dict
 from db_connection import DBConnector
 import json
 import facerec
+import sys
 prec=facerec.reclass()
 app = Flask(__name__)
 
