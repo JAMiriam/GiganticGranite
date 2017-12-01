@@ -1,0 +1,1 @@
+mongodb://gigantic-granite:afS1c8XsTm2HGRSg@gigantic-granite-shard-00-00-i8zsz.mongodb.net:27017,gigantic-granite-shard-00-01-i8zsz.mongodb.net:27017,gigantic-granite-shard-00-02-i8zsz.mongodb.net:27017/test?ssl=true&replicaSet=gigantic-granite-shard-0&authSource=admin
