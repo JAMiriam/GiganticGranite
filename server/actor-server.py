@@ -20,7 +20,7 @@ def getActors():
     #at first position "right" actor was found or "wrong" actor wasn't
     #found at current position
     #at second place is a mega position number of actor (or best guess in case of "wrong")
-    #next four are position of face four int left,top,right,bottom
+    #next four are position of face four int top left right bottom 
     #at this moment there can be problems with using this function
     found_actors=prec.prd(img)
     
