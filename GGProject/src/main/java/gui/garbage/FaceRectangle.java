@@ -1,4 +1,4 @@
-package gui.simpleWindow;
+package gui.garbage;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -21,24 +21,24 @@ class FaceRectangle {
 		labelPosition = new Point((int)faceRect.getX(), (int)(faceRect.getY()+faceRect.getHeight()+20));
 	}
 
-	public Rectangle2D getFaceRect() {
+	Rectangle2D getFaceRect() {
 		return faceRect;
 	}
 
-	public String getActorName() {
+	String getActorName() {
 		return label;
 	}
 
-	public boolean isActive() {
+	boolean isActive() {
 		return active;
 	}
 
-	public void activate() {
+	void activate() {
 		active = true;
 		activeLabel = true;
 	}
 
-	public void deactivate() {
+	void deactivate() {
 		active = false;
 	}
 }

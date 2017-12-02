@@ -2,6 +2,12 @@ package screenshots;
 
 import transmission.Client;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -28,5 +34,19 @@ public class ScreenshotManager {
 	public void sendScreenshot() {
 		System.out.println("Screenshot sent");
 		Client.sendImageToServer(path);
+		deleteScreenshot();
+	}
+
+	private void deleteScreenshot() {
+		try {
+			File file = new File(path);
+			if(file.delete())
+				System.out.println(file.getName() + " is deleted!");
+			else
+				System.out.println("Delete operation is failed.");
+		}
+		catch (Exception x) {
+			x.printStackTrace();
+		}
 	}
 }

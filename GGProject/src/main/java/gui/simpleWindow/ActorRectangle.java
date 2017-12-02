@@ -1,52 +1,53 @@
 package gui.simpleWindow;
 
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 class ActorRectangle extends Rectangle {
 	private final Color normalStrokeColor = Color.web("870F57");
-	private Rectangle filling;
-	private String name;
-	private boolean isActive;
+	private Tooltip tooltip;
+	private boolean isNameVisible;
 
 	ActorRectangle(int x, int y, int width, int height, String name) {
 		super(width, height);
-		this.name = name;
-		isActive = false;
+		tooltip = new Tooltip(name);
+		isNameVisible = false;
 		relocate(x, y);
-		setFill(Color.TRANSPARENT);
+//		setFill(Color.TRANSPARENT);
+		setFill(Color.grayRgb(255, 0.6));
 		setStroke(normalStrokeColor);
-		setStrokeWidth(5);
+		setStrokeWidth(4);
 
 		setArcHeight(10);
 		setArcWidth(10);
 
-
-//		setOnMouseEntered(event -> {
-//			System.out.println("Rectangle entered");
-//			changeColor();
-//		});
-//		setOnMouseExited(event -> {
-//			System.out.println("Rectangle exited");
-//			changeColor();
-//		});
-//
-//		setOnMouseClicked(event -> {
-//			System.out.println("Rectangle clicked");
-//		});
-
-	}
-
-	void changeColor() {
-		if(!isActive)
-			setEffect(new DropShadow(20, Color.GOLDENROD));
-		else
+		setOnMouseEntered(event -> {
+			setEffect(new DropShadow(127, Color.GOLDENROD));
+			showName(event);
+		});
+		setOnMouseExited(event -> {
 			setEffect(null);
-		isActive = !isActive;
+			hideName();
+		});
+//
+		setOnMouseClicked(event -> {
+			System.out.println("Rectangle clicked");
+		});
 	}
 
-	public String toString() {
-		return name;
+	private void showName(MouseEvent event) {
+		if(!isNameVisible) {
+			tooltip.show(this, event.getSceneX(), event.getSceneY() + 5);
+//			Tooltip.install(this, tooltip);
+			isNameVisible = true;
+		}
+	}
+
+	private void hideName() {
+		tooltip.hide();
+		isNameVisible = false;
 	}
 }

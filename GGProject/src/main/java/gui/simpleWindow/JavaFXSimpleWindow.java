@@ -1,22 +1,22 @@
 package gui.simpleWindow;
 
-import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.application.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.*;
 import models.SimpleActor;
 import windowutils.WindowInfo;
 import java.util.ArrayList;
 
+import static javafx.stage.StageStyle.TRANSPARENT;
+
 public class JavaFXSimpleWindow extends Application {
 	private static Stage mainStage;
 	private static Scene scene;
 	private static Pane canvas;
-	private static Group vb;
+	private static Group groupRoot;
 	private static final int shadowSize = 50;
 	private static ArrayList<SimpleActor> actors;
 	private static ArrayList<ActorRectangle> rectangles;
@@ -25,35 +25,23 @@ public class JavaFXSimpleWindow extends Application {
 	@Override
 	public void start(final Stage stage) {
 		mainStage = stage;
-		StackPane stackPane = new StackPane(createShadowPane());
-		scene = new Scene(stackPane, 10, 10);
 		canvas = new Pane();
+		groupRoot = new Group();
 		actors = new ArrayList<>();
 		rectangles = new ArrayList<>();
 
-		stage.initStyle(StageStyle.TRANSPARENT);
-		stackPane.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);" +
-				"-fx-background-insets: " + shadowSize + ";"
-		);
-		scene.setFill(Color.TRANSPARENT);
-		mainStage.setScene(scene);
+		stage.initStyle(TRANSPARENT);
+		groupRoot.setStyle("-fx-background-color: transparent");
 		mainStage.setAlwaysOnTop(true);
-
-		vb = new Group();
-		vb.getChildren().add(canvas);
-		scene.setRoot(vb);
+		groupRoot.getChildren().add(canvas);
+		scene = new Scene(groupRoot, 1, 1);
+		scene.setFill(null);
+		mainStage.setScene(scene);
 		mainStage.show();
 
-		scene.setOnMouseMoved(event -> {
-//			System.out.println("[" + event.getX() + ", " + event.getY() + "]");
-
-			for(ActorRectangle rectangle : rectangles) {
-				if(rectangle.getBoundsInParent().contains(event.getX(), event.getY())) {
-					System.out.println("Enter: " + rectangle.toString());
-					rectangle.changeColor();
-				}
-			}
-		});
+//		scene.setOnMouseMoved(event -> {
+////			System.out.println("[" + event.getX() + ", " + event.getY() + "]");
+//		});
 
 		System.out.println("JavaFX simple window created");
 	}
@@ -61,10 +49,10 @@ public class JavaFXSimpleWindow extends Application {
 	public static void relocateWindow(WindowInfo windowPos) {
 		Platform.runLater(() -> {
 			info = windowPos;
-			mainStage.setMinHeight(info.getHeight());
-			mainStage.setMinWidth(info.getWidth());
 			mainStage.setX(info.getX());
 			mainStage.setY(info.getY());
+			mainStage.setMinHeight(info.getHeight());
+			mainStage.setMinWidth(info.getWidth());
 		});
 	}
 
@@ -80,8 +68,9 @@ public class JavaFXSimpleWindow extends Application {
 	//TODO make old rectangles gone!
 	public static void drawRectangles() {
 		Platform.runLater(() -> {
+			//cleanup
 			canvas.setPrefSize(info.getWidth(), info.getHeight());
-			vb.getChildren().removeAll();
+			groupRoot.getChildren().removeAll();
 			rectangles.clear();
 
 			for(SimpleActor actor : actors) {
@@ -89,7 +78,6 @@ public class JavaFXSimpleWindow extends Application {
 				int width = actor.getPos()[3] - actor.getPos()[0];
 				int height = actor.getPos()[2] - actor.getPos()[1];
 				int x = actor.getPos()[1], y = actor.getPos()[0];
-				System.out.println("x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
 				rectangles.add(new ActorRectangle(x, y, width, height, actor.getName()));
 			}
 			canvas.getChildren().addAll(rectangles);

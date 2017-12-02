@@ -1,5 +1,6 @@
-package gui.simpleWindow;
+package gui.garbage;
 
+import gui.garbage.FaceRectangle;
 import windowutils.ActiveWindowInfo;
 import windowutils.WindowInfo;
 
@@ -12,9 +13,9 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TransparentWindow extends JFrame {
+public class SwingSimpleWindow extends JFrame {
 	public static void main(String args[]) {
-		window = new TransparentWindow();
+		window = new SwingSimpleWindow();
 		//test dummy data
 		window.drawRectangle(10, 10, 105, 105, "Johnny Depp");
 		window.drawRectangle(100, 200, 50, 50, "Alan Rickman");
@@ -22,10 +23,10 @@ public class TransparentWindow extends JFrame {
 		window.repaint();
 	}
 
-	private static TransparentWindow window;
+	private static SwingSimpleWindow window;
 	private ArrayList<FaceRectangle> aRectangles = new ArrayList<>();
 
-	public TransparentWindow() {
+	public SwingSimpleWindow() {
 		super("GGSmallWindow");
 		setLayout(new GridBagLayout());
 		setUndecorated(true);
