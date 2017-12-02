@@ -1,5 +1,6 @@
 package keylistener;
 
+import gui.WindowManager;
 import org.jnativehook.*;
 import org.jnativehook.keyboard.*;
 import screenshots.*;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 	private boolean altPressedFlag = false;
 
-	public static void startListener() {
+	private static void startListener() {
 		try {
 			Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 			logger.setLevel(Level.OFF);
@@ -34,13 +35,10 @@ public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
-//		ESC pressed - exit program
+//		ESC pressed - kill simple window
 		if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
-			try {
-				GlobalScreen.unregisterNativeHook();
-			} catch (NativeHookException e1) {
-				e1.printStackTrace();
-			}
+//			GlobalScreen.unregisterNativeHook();
+			WindowManager.clearSimpleWindow();
 		}
 
 //		ALT pressed - set flag
@@ -54,11 +52,10 @@ public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 
 				manager = new ScreenshotManager(new ScreenshotViaGnome());
 
-				//TODO capture active window blocked - need to figure out full screen window info!
 //				ALT+PRTSCR pressed - active window screenshot
 				if (altPressedFlag) {
-//					manager.captureActiveWindow();
-//					manager.sendScreenshot();
+					manager.captureActiveWindow();
+					manager.sendScreenshot();
 				}
 //				PRTSCR pressed - full screenshot
 				else {

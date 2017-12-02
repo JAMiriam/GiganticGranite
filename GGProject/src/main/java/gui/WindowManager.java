@@ -3,11 +3,15 @@ package gui;
 import gui.simpleWindow.JavaFXSimpleWindow;
 import models.SimpleActor;
 import windowutils.WindowInfo;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class WindowManager {
 	private static boolean isSimpleWindowActive;
 	private static boolean isDetailsWindowActive;
+	private static Dimension screenSize;
+	private static WindowInfo windowInfo;
 
 	public WindowManager() {
 		isSimpleWindowActive = false;
@@ -15,25 +19,27 @@ public class WindowManager {
 	}
 
 	public static void createSimpleWindow(ArrayList<SimpleActor> actorsData) {
-//		if(!isSimpleWindowActive) {
 		isSimpleWindowActive = true;
 
 		if (actorsData.isEmpty()) {
+			//TODO show JPaneDialog with info
 			System.out.println("No one recognized");
 		} else {
-			System.out.println("\nACTORS:");
-
-			for (SimpleActor a : actorsData) {
-				System.out.println(a.getName());
-			}
-			System.out.println();
-
-			//TODO set real screen size!
-			WindowInfo fullScreenInfo = new WindowInfo("", 0, 0, 1366, 768);
-			JavaFXSimpleWindow.relocateWindow(fullScreenInfo);
+			clearSimpleWindow();
+			JavaFXSimpleWindow.relocateWindow(windowInfo);
 			JavaFXSimpleWindow.loadActors(actorsData);
 			JavaFXSimpleWindow.drawRectangles();
 		}
-//	}
+	}
+
+	public static void setScreenSize(WindowInfo info) {
+		windowInfo = info;
+		System.out.println("Window prop set: " + windowInfo.getY() + ", " + windowInfo.getY() +
+				", " + windowInfo.getWidth() + ", " + windowInfo.getHeight());
+
+	}
+
+	public static void clearSimpleWindow() {
+		JavaFXSimpleWindow.clearData();
 	}
 }

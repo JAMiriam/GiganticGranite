@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 
 class ActorRectangle extends Rectangle {
 	private final Color normalStrokeColor = Color.web("870F57");
+	private final DropShadow shadow = new DropShadow(127, Color.GOLDENROD);
 	private Tooltip tooltip;
 	private boolean isNameVisible;
 
@@ -17,22 +18,30 @@ class ActorRectangle extends Rectangle {
 		isNameVisible = false;
 		relocate(x, y);
 //		setFill(Color.TRANSPARENT);
-		setFill(Color.grayRgb(255, 0.6));
+		setFill(Color.grayRgb(255, 0.55));
 		setStroke(normalStrokeColor);
 		setStrokeWidth(4);
 
 		setArcHeight(10);
 		setArcWidth(10);
 
+		//TODO set tooltip style
+//		tooltip.setStyle("-fx-background: rgba(30,30,30);" +
+//				"-fx-text-fill: white;" +
+//				"-fx-background-color: rgba(30,30,30,0.8);" +
+//				"-fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */" +
+//				"-fx-font-size: 0.85em;"
+//		);
+
 		setOnMouseEntered(event -> {
-			setEffect(new DropShadow(127, Color.GOLDENROD));
+			setEffect(shadow);
 			showName(event);
 		});
 		setOnMouseExited(event -> {
 			setEffect(null);
 			hideName();
 		});
-//
+
 		setOnMouseClicked(event -> {
 			System.out.println("Rectangle clicked");
 		});
@@ -40,7 +49,7 @@ class ActorRectangle extends Rectangle {
 
 	private void showName(MouseEvent event) {
 		if(!isNameVisible) {
-			tooltip.show(this, event.getSceneX(), event.getSceneY() + 5);
+			tooltip.show(this, event.getSceneX(), event.getSceneY() + 2);
 //			Tooltip.install(this, tooltip);
 			isNameVisible = true;
 		}

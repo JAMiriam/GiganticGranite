@@ -3,14 +3,8 @@ package main;
 import gui.WindowManager;
 import gui.simpleWindow.RunSimpleWindow;
 import transmission.Client;
-import gui.TrayGUI;
+import gui.tray.TrayGUI;
 import keylistener.GlobalKeyListener;
-import json.JSONModelParser;
-import models.Actor;
-import models.SimpleActor;
-import org.json.JSONArray;
-
-import java.util.ArrayList;
 
 
 public class Main {

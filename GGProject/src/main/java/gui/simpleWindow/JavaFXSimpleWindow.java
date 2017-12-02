@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import static javafx.stage.StageStyle.TRANSPARENT;
 
+//TODO make proper css for all nodes!
 public class JavaFXSimpleWindow extends Application {
 	private static Stage mainStage;
 	private static Scene scene;
@@ -32,12 +33,10 @@ public class JavaFXSimpleWindow extends Application {
 
 		stage.initStyle(TRANSPARENT);
 		groupRoot.setStyle("-fx-background-color: transparent");
-		mainStage.setAlwaysOnTop(true);
 		groupRoot.getChildren().add(canvas);
 		scene = new Scene(groupRoot, 1, 1);
 		scene.setFill(null);
 		mainStage.setScene(scene);
-		mainStage.show();
 
 //		scene.setOnMouseMoved(event -> {
 ////			System.out.println("[" + event.getX() + ", " + event.getY() + "]");
@@ -59,6 +58,7 @@ public class JavaFXSimpleWindow extends Application {
 	public static void loadActors(ArrayList<SimpleActor> recognizedActors) {
 		Platform.runLater(() -> {
 			actors.addAll(recognizedActors);
+			System.out.println("\nACTORS RECOGNIZED:");
 			for(SimpleActor a : actors) {
 				System.out.println(a.toString());
 			}
@@ -68,10 +68,7 @@ public class JavaFXSimpleWindow extends Application {
 	//TODO make old rectangles gone!
 	public static void drawRectangles() {
 		Platform.runLater(() -> {
-			//cleanup
 			canvas.setPrefSize(info.getWidth(), info.getHeight());
-			groupRoot.getChildren().removeAll();
-			rectangles.clear();
 
 			for(SimpleActor actor : actors) {
 				//actor.Pos = {left, top, right, bottom}
@@ -81,6 +78,18 @@ public class JavaFXSimpleWindow extends Application {
 				rectangles.add(new ActorRectangle(x, y, width, height, actor.getName()));
 			}
 			canvas.getChildren().addAll(rectangles);
+			mainStage.setAlwaysOnTop(true);
+			mainStage.show();
+		});
+	}
+
+	public static void clearData() {
+		Platform.runLater(() -> {
+			rectangles.clear();
+			actors.clear();
+			canvas.getChildren().clear();
+			scene.setFill(null);
+			mainStage.setScene(scene);
 		});
 	}
 
