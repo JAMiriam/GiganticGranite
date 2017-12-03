@@ -107,6 +107,8 @@ public class SwingSimpleWindow extends JFrame {
 			for(FaceRectangle rect: aRectangles) {
 				if(rect.getFaceRect().contains(mouseEvent.getX(), mouseEvent.getY())) {
 					System.out.println(rect.getActorName() + " clicked.");
+
+					//TODO show panel with details
 				}
 				repaint();
 			}

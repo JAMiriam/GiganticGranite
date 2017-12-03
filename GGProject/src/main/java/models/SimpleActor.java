@@ -10,6 +10,10 @@ public class SimpleActor {
 
     public SimpleActor(){};
 
+    public SimpleActor(int a, int b, int c, int d) {
+        setPos(a, b, c, d);
+    }
+
     public String getName() {
         return name;
     }

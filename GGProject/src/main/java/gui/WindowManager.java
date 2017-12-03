@@ -4,17 +4,26 @@ import gui.simpleWindow.JavaFXSimpleWindow;
 import models.SimpleActor;
 import windowutils.WindowInfo;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class WindowManager {
+	private static boolean isSimpleWindowActive;
+	private static boolean isDetailsWindowActive;
+	private static Dimension screenSize;
 	private static WindowInfo windowInfo;
 
+	public WindowManager() {
+		isSimpleWindowActive = false;
+		isDetailsWindowActive = false;
+	}
+
 	public static void createSimpleWindow(ArrayList<SimpleActor> actorsData) {
+		isSimpleWindowActive = true;
+
 		if (actorsData.isEmpty()) {
+			//TODO show JPaneDialog with info
 			System.out.println("No one recognized");
-			JOptionPane.showMessageDialog(null, "Sorry, but no one was recognized");
 		} else {
 			clearSimpleWindow();
 			JavaFXSimpleWindow.relocateWindow(windowInfo);
@@ -23,14 +32,11 @@ public class WindowManager {
 		}
 	}
 
-	public static void showDetailsPane() {
-		JavaFXSimpleWindow.showDetailsPanel();
-	}
-
 	public static void setScreenSize(WindowInfo info) {
 		windowInfo = info;
 		System.out.println("Window prop set: " + windowInfo.getY() + ", " + windowInfo.getY() +
 				", " + windowInfo.getWidth() + ", " + windowInfo.getHeight());
+
 	}
 
 	public static void clearSimpleWindow() {

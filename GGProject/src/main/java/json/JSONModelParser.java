@@ -33,7 +33,6 @@ public class JSONModelParser {
             actor.setDeathday(jsonobject.getString("deathday"));
             actor.setBiography(jsonobject.getString("biography"));
             actor.setGender(jsonobject.getString("gender"));
-            actor.setImdb_profile(jsonobject.getString("imdb_profile"));
 
             JSONArray imagesjson = (JSONArray) jsonobject.get("images");
             ArrayList<String> images = new ArrayList<>();

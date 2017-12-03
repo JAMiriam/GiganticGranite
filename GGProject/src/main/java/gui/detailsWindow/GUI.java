@@ -110,6 +110,12 @@ public class GUI extends Application {
 		actorPane.setVgap(10);
 		actorPane.setPadding(new Insets(25, 25, 25, 25));
 
+
+
+//		Text scenetitle = new Text("Java GG");
+//		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+//		actorPane.add(scenetitle, 0, 0, 2, 1);
+
 		Label name = new Label("Name: ");
 		Label birthdate = new Label("Birthdate: ");
 		Label died = new Label("Deathdate: ");
@@ -130,6 +136,7 @@ public class GUI extends Application {
 		actorPane.add(diedField, 1,5);
 		actorPane.add(biography, 0, 6);
 		actorPane.add(biographyField, 0, 7);
+
 		actorPane.add(gender, 0, 8);
 		actorPane.add(genderField, 1, 8);
 
