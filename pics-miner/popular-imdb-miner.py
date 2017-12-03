@@ -1,6 +1,7 @@
 import os
 import random
 import re
+import urllib
 from time import sleep
 from urllib.request import urlretrieve
 import requests
@@ -40,10 +41,15 @@ class IMDbPicsMiner:
         for link in pics_dict:
             if link is None:
                 continue
-            path, response = urlretrieve(link, person_dir + re.findall(IMDbPicsMiner.pattern, link)[0])
-            # print(response)
-        return True
+            ok = False
+            while not ok:
+                try:
+                    urlretrieve(link, person_dir + re.findall(IMDbPicsMiner.pattern, link)[0])
+                    ok = True
+                except urllib.error.HTTPError as e:
+                    print("An error occurred while downloading picture: " + e.__str__() + " Trying again.")
 
+        return True
 
     def get_imdb_pics(self, person_imdb_id):
         url = IMDbPicsMiner.imdb_api_url + str(person_imdb_id)
@@ -51,8 +57,11 @@ class IMDbPicsMiner:
         response = requests.request("GET", url)
         counter = 1
         while response.status_code != 200:
-            print("Problem occured while getting id", person_imdb_id, "from IMDb API")
-            sleep(random.randint(counter))
+            print("Problem occurred while getting id", person_imdb_id, "from IMDb API")
+            counter += 1
+            wait = random.randint(1, counter)
+            print("Trying again in ", wait, "seconds. ")
+            sleep(wait)
             response = requests.request("GET", url)
         if 'photos' in response.json():
             print("Downloading images for id", person_imdb_id)
@@ -126,8 +135,9 @@ def main(argv):
     else:
         print("usage: \n popular-imdb-miner.py <further_iteration (t or f)> <min_page> <max_page> \n or \n popular-imdb-miner.py <further_iteration> <page>")
         sys.exit(2)
-
-
+    # min_id = 1
+    # max_id = 2
+    # further = False
     miner = IMDbPicsMiner(min_id, max_id, further)
     miner.mine()
 
