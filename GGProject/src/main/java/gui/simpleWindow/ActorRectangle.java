@@ -1,5 +1,6 @@
 package gui.simpleWindow;
 
+import gui.WindowManager;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -10,11 +11,13 @@ class ActorRectangle extends Rectangle {
 	private final Color normalStrokeColor = Color.web("870F57");
 	private final DropShadow shadow = new DropShadow(127, Color.GOLDENROD);
 	private Tooltip tooltip;
+	private String imdb;
 	private boolean isNameVisible;
 
-	ActorRectangle(int x, int y, int width, int height, String name) {
+	ActorRectangle(int x, int y, int width, int height, String name, String imdb) {
 		super(width, height);
 		tooltip = new Tooltip(name);
+		this.imdb = imdb;
 		isNameVisible = false;
 		relocate(x, y);
 //		setFill(Color.TRANSPARENT);
@@ -44,6 +47,9 @@ class ActorRectangle extends Rectangle {
 
 		setOnMouseClicked(event -> {
 			System.out.println("Rectangle clicked");
+			//TODO show panel with details
+			WindowManager.showDetailsPane();
+			JavaFXSimpleWindow.loadActorDetails(imdb);
 		});
 	}
 

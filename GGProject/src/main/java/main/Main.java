@@ -5,21 +5,16 @@ import gui.simpleWindow.RunSimpleWindow;
 import transmission.Client;
 import gui.tray.TrayGUI;
 import keylistener.GlobalKeyListener;
+import transmission.SessionData;
 
 
 public class Main {
-	private static final String SERVER_IP_HAMACHI = "25.29.196.52";
-	private static final String SERVER_IP = "192.168.0.101";
-	private static final int SERVER_HOST = 5000;
-
 	public static void main(String args[]) {
 		//TODO show logo or sth
 		new RunSimpleWindow();
 		new TrayGUI();
 		new GlobalKeyListener().start();
-		new WindowManager();
-		new Client(SERVER_IP, SERVER_HOST);
-
+		new Client();
 	}
 
 	private static void testRequests() {
