@@ -95,4 +95,5 @@ def getDetails(actor_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = False, host = '156.17.227.136', port = 5000)
+    #app.run(debug = False, host = '79.110.197.182', port = 5000)
