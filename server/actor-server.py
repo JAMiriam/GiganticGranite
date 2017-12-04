@@ -8,9 +8,20 @@ from db_connection import DBConnector
 import json
 import facerec
 import sys
+from flaskext.mysql import MySQL
+import bcrypt
+import os
+
 prec=facerec.reclass()
 app = Flask(__name__)
 
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = sys.argv[1]
+app.config['MYSQL_DATABASE_PASSWORD'] = sys.argv[2]
+app.config['MYSQL_DATABASE_DB'] = 'giganticgraniteDB'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+
+mysql.init_app(app)
 
 @app.route('/actors/image', methods=['POST'])
 def getActors():
@@ -93,6 +104,57 @@ def getDetails(actor_id):
 
     return Response(data, mimetype="application/json")
 
+#####################################################
+#   Login
+#####################################################
+
+@app.route('/register', methods=['POST'])
+def register():
+    username = request.form['username']
+    password = request.form['password']
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+
+    query = ('SELECT * from user where username=%s')
+    cursor.execute(query, (username))
+    data = cursor.fetchone()
+    if data:
+        return jsonify({'data':'username is unavailable'})
+
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    
+    query = ('INSERT INTO user (username, password) VALUES (%s, %s)')
+        
+    cursor.execute(query, (username, hashed_password))
+    conn.commit()
+
+
+    return jsonify({'data':'ok'})
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+
+    query = ('SELECT * from user where username=%s')
+    cursor.execute(query, (username))
+    data = cursor.fetchone()
+
+    if data:
+        hash_password = data[2]
+
+        if bcrypt.hashpw(password.encode('utf-8'), hash_password.encode('utf-8')) == hash_password.encode('utf-8'):
+            return jsonify({'data':data[0]})
+        else:
+            return jsonify({'data':'Wrong password'})
+    else:
+        return jsonify({'data':'Wrong username'})
 
 if __name__ == '__main__':
     app.run(debug = False, host = '156.17.227.136', port = 5000)
