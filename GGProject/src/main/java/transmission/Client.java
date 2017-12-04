@@ -26,8 +26,9 @@ import java.util.ArrayList;
 
 public class Client {
 //    	private static final String SERVER_IP = "25.29.196.52";
-    private static final String SERVER_IP = "192.168.0.101";
-    private static final int SERVER_HOST = 5000;
+    static final String SERVER_IP = "192.168.0.101";
+//    static final String SERVER_IP = "127.0.0.1";
+    static final int SERVER_HOST = 5000;
     private static CloseableHttpClient httpClient;
 
     public Client() {
@@ -89,6 +90,8 @@ public class Client {
         ArrayList<Actor> actors =  JSONModelParser.parseToActor(array);
         return actors;
     }
+
+
 
     public static void closeConnection() {
         try {

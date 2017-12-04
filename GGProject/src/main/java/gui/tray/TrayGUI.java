@@ -1,6 +1,9 @@
 package gui.tray;
 
 import gui.WindowManager;
+import transmission.Client;
+import transmission.LoginException;
+import transmission.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.NoRouteToHostException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Graphical user interface. Linux-friendly.
@@ -115,6 +122,57 @@ public class TrayGUI {
 			tray.remove(trayIcon);
 			System.exit(0);
 		});
+
+
+		showLoginWindow();
+	}
+
+	/**
+	 * Displays dialog asking for login credentials.
+	 */
+	private void showLoginWindow() {
+		JTextField username = new JTextField();
+		JTextField password = new JPasswordField();
+				
+		// Setting up register message with clickable hyperlink.
+		JLabel register = new JLabel("<html>Don't have account yet? Please " +
+				"<a href=giganticgranite.com/register>register</a> on our web page.</html>");
+		register.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		register.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("http://giganticgranite.com/register"));
+				} catch (URISyntaxException | IOException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		});
+
+		Object[] message = {
+				"Username:", username,
+				"Password:", password,
+				register
+		};
+
+		int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION) {
+			try {
+				int userid = User.login(username.getText(), password.getText());
+				System.out.println("User: " + username.getText() + " (with id: " + userid + ") is logged in.");
+			} catch (NoRouteToHostException e) {
+				JOptionPane.showMessageDialog(null, "Could not connect to sever.\nPlease try again later.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
+			catch (LoginException le) {
+				JOptionPane.showMessageDialog(null, "Login failed. " + le.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+				showLoginWindow();
+			}
+		}
 	}
 
 	/**
