@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 
 public class Client {
-    //    private static final String SERVER_IP = "156.17.227.136";
-    static final String SERVER_IP = "192.168.0.101";
+        static final String SERVER_IP = "156.17.227.136";
+//    static final String SERVER_IP = "192.168.0.101";
     static final int SERVER_HOST = 5000;
     private static CloseableHttpClient httpClient;
 

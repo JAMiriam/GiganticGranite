@@ -2,6 +2,5 @@
 *.iml
 GGProject/out/
 GGProject/.idea/
-GGProject/screens/
 *.class
 GGProject/target/
