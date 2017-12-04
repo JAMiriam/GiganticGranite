@@ -44,7 +44,8 @@
                 $client = new Client();
                 $response = $client->request(
                     'POST',
-                    '127.0.0.1:5000/actors/image',
+                    '156.17.227.136:5000/actors/image',
+                    //'127.0.0.1:5000/actors/image',
                     [
                         'multipart' => [
                             [
@@ -56,8 +57,12 @@
                 );
                 $json = $response->getBody();
                 $actors = json_decode($json);
+                $remove = array();
                 foreach($actors as $actor) {
                     $name = $actor->name;
+                    if($actor->reliability === "wrong") {
+                        $name = "unrecognized";
+                    }
                     $top = intval($actor->top);
                     $left = intval($actor->left);
                     $right = intval($actor->right);
@@ -69,7 +74,17 @@
                             ' \'' . $name . '\'" "' . $uploaddir . '"';
                     //die($cmd);
                     shell_exec($cmd);
+                    if($actor->reliability === "wrong") {
+                        $key = array_search($actor, $actors, TRUE);
+                        array_push($remove, $key);
+                    }
                 }
+                foreach($remove as $r) {
+                    unset($actors[$r]);
+                }
+                $actors = array_values($actors);
+                $json = json_encode($actors);
+                //die(var_dump($remove));
                 //shell_exec('convert "' . $uploaddir . '" ' . '-fill none -stroke red -pointsize 20 -draw "rectangle 50,50 200,200" -draw "text 220,100 \'test trest\'" ' . '"' . $uploaddir . '"');
                 
 //                if (signed_in()) {

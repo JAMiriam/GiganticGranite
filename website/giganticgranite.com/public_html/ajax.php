@@ -20,7 +20,8 @@
     $client = new Client();
     foreach ($actors as $actor) {
         $imdb = $actor->{'imdb'};
-        $response = $client->request('GET', '127.0.0.1:5000/actordetails/' . $imdb);
+        $response = $client->request('GET', '156.17.227.136:5000/actordetails/' . $imdb);
+        //$response = $client->request('GET', '127.0.0.1:5000/actordetails/' . $imdb);
         $body = $response->getBody();
         $json = json_decode($body)[0];
         $details .= '<div class="col-md-6"><img class="profile-image" src="' . 

@@ -14,7 +14,8 @@
         $client = new Client();
         $response = $client->request(
             'POST',
-            '127.0.0.1:5000/login',
+            '156.17.227.136:5000/login',
+            //'127.0.0.1:5000/login',
                 [
                     'form_params' => [
                         'username' => $username,
@@ -41,7 +42,8 @@
         $client = new Client();
         $response = $client->request(
             'POST',
-            '127.0.0.1:5000/register',
+            '156.17.227.136:5000/register',
+            //'127.0.0.1:5000/register',
             [
                 'form_params' => [
                     'username' => $username,
