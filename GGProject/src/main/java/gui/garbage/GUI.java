@@ -1,4 +1,4 @@
-package gui.detailsWindow;
+package gui.garbage;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -138,7 +138,6 @@ public class GUI extends Application {
 			Optional<String> result = dialog.showAndWait();
 			if(result.isPresent()) {
 				System.out.println("New identity sent.");
-				//TODO send json to server with new data
 			}
 
 //		result.ifPresent(name -> System.out.println("New identity: " + name));

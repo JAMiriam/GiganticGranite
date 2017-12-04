@@ -25,9 +25,8 @@ import java.util.ArrayList;
 
 
 public class Client {
-//    	private static final String SERVER_IP = "25.29.196.52";
+    //    private static final String SERVER_IP = "156.17.227.136";
     static final String SERVER_IP = "192.168.0.101";
-//    static final String SERVER_IP = "127.0.0.1";
     static final int SERVER_HOST = 5000;
     private static CloseableHttpClient httpClient;
 
@@ -35,9 +34,9 @@ public class Client {
         httpClient = HttpClientBuilder.create().build();
 
         //Throughout proxy
-        HttpHost proxy = new HttpHost(SERVER_IP, SERVER_HOST);
-        HttpRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-        httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
+//        HttpHost proxy = new HttpHost(SERVER_IP, SERVER_HOST);
+//        HttpRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
+//        httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
     }
 
     public static void sendImageToServer(String path) {

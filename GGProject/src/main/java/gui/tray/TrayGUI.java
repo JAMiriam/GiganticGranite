@@ -111,8 +111,7 @@ public class TrayGUI {
 				WindowManager.clearSimpleWindow();
 			}
 			else if ("Log in".equals(item.getLabel())) {
-				trayIcon.displayMessage("Sun TrayIcon Demo",
-						"This is a \"log\" in message", TrayIcon.MessageType.WARNING);
+				showLoginWindow();
 			}
 		};
 
@@ -123,8 +122,6 @@ public class TrayGUI {
 			System.exit(0);
 		});
 
-
-		showLoginWindow();
 	}
 
 	/**

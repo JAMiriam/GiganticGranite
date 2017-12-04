@@ -1,4 +1,4 @@
-package gui.detailsWindow;
+package gui.simpleWindow;
 
 import gui.WindowManager;
 import gui.simpleWindow.JavaFXSimpleWindow;

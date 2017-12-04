@@ -133,6 +133,7 @@ public class JavaFXSimpleWindow extends Application {
 		//TODO move to another class
 		//TODO singleton pattern: once created = next time just load new data
 		Platform.runLater(() -> {
+			dialog = new Dialog<>();
 			dialog.setTitle("Details pane");
 //			dialog.setHeaderText("This is a custom dialog. Enter info and \n" +
 //					"press Okay (or click title bar 'X' for cancel).");

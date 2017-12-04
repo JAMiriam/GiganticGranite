@@ -24,17 +24,12 @@ class ActorRectangle extends Rectangle {
 		setFill(Color.grayRgb(255, 0.55));
 		setStroke(normalStrokeColor);
 		setStrokeWidth(4);
-
 		setArcHeight(10);
 		setArcWidth(10);
 
-		//TODO set tooltip style
-//		tooltip.setStyle("-fx-background: rgba(30,30,30);" +
-//				"-fx-text-fill: white;" +
-//				"-fx-background-color: rgba(30,30,30,0.8);" +
-//				"-fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */" +
-//				"-fx-font-size: 0.85em;"
-//		);
+		tooltip.setStyle("-fx-font: normal bold 14 Langdon; "
+				+ "-fx-base: #AE3522; "
+				+ "-fx-text-fill: orange;");
 
 		setOnMouseEntered(event -> {
 			setEffect(shadow);
@@ -46,8 +41,6 @@ class ActorRectangle extends Rectangle {
 		});
 
 		setOnMouseClicked(event -> {
-			System.out.println("Rectangle clicked");
-			//TODO show panel with details
 			WindowManager.showDetailsPane();
 			JavaFXSimpleWindow.loadActorDetails(imdb);
 		});
