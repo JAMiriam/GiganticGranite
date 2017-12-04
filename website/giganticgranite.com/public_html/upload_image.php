@@ -4,21 +4,21 @@
 
     $http = new HTTP2();
 
-    if (signed_in()) {
-        $uploaddir = '../';
-        $uploaddir = realpath($uploaddir);
-        $uploaddir .= '/uploads';
-        if (!file_exists($uploaddir)) {
-            mkdir($uploaddir, 0777, true);
-        }
-        $uploaddir .= '/';
-    } else {
+//    if (signed_in()) {
+//        $uploaddir = '../';
+//        $uploaddir = realpath($uploaddir);
+//        $uploaddir .= '/uploads';
+//        if (!file_exists($uploaddir)) {
+//            mkdir($uploaddir, 0777, true);
+//        }
+//        $uploaddir .= '/';
+//    } else {
         $uploaddir = sys_get_temp_dir() . '/gg-data';
         if (!file_exists($uploaddir)) {
             mkdir($uploaddir, 0777, true);
         }
         $uploaddir .= '/';
-    }
+//    }
 
     if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -72,12 +72,12 @@
                 }
                 //shell_exec('convert "' . $uploaddir . '" ' . '-fill none -stroke red -pointsize 20 -draw "rectangle 50,50 200,200" -draw "text 220,100 \'test trest\'" ' . '"' . $uploaddir . '"');
                 
-                if (signed_in()) {
-                    $filename = insert_image($uploaddir, $json);
-                } else {
+//                if (signed_in()) {
+//                    $filename = insert_image($uploaddir, $json);
+//                } else {
                     file_put_contents($tmpdir . $filename . '.json', $json);
                     $filename .= '.' . $ext;
-                }
+//                }
                 $http->redirect('info.php?id=' . $filename);
             } else {
                 die('error!');

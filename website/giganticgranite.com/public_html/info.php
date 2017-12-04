@@ -29,12 +29,21 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Sing in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">Sign up</a>
-                    </li>
+                    <?php
+                    if (signed_in()) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.php">Log out</a>
+                        </li>
+                        <?php
+                    } else { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php">Sing in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.php">Sign up</a>
+                        </li>
+                        <?php
+                    } ?>
                 </ul>
             </div>
         </nav>

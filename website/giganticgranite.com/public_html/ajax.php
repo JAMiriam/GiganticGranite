@@ -7,12 +7,12 @@
     
     $id = $_GET['id'];
     $actors_json;
-    if (signed_in()) {
-        $actors_json = get_actors($id);
-    } else {
+//    if (signed_in()) {
+//        $actors_json = get_actors($id);
+//    } else {
         $real_id = preg_replace('/\\.[^.\\s]{3,4}$/', '', $id);
         $actors_json = file_get_contents($uploaddir . $real_id . '.json');
-    }
+//    }
     
     // echo $actors_json;
     $actors = json_decode($actors_json);

@@ -9,11 +9,10 @@ Install [ImageMagick](https://www.imagemagick.org/script/download.php)
 Add php path to netbeans
 
 Install [composer](https://getcomposer.org/download/)
-
+```
 cd /path/to/repo/website/giganticgranite.com
-
 composer install
-
+```
 Create project with existing sources in netbeans (/path/to/repo/website/giganticgranite.com/public_html as root)
 
 ### Instalation (for Ubuntu)

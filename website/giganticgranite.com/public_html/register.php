@@ -45,9 +45,9 @@
 
         <main>
             <?php
-            if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+            if (isset($_POST['username']) && isset($_POST['password'])) {
                 global $result;
-                $result = sign_up($_POST['email'], $_POST['username'], $_POST['password']);
+                $result = sign_up($_POST['username'], $_POST['password']);
                 if ($result == 0) {
                     echo "Your account was created!";
                 } 
@@ -59,19 +59,10 @@
                     <form class="form-signin" action="register.php" method="post" onsubmit="return form_submit()">
                         <h2 class="form-signin-heading">Sing up</h2>
                         <div class="form-group">
-                            <label for="inputEmail" class="sr-only">Email address</label>
-                            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required>
-                            <?php
-                            if (isset($result) && $result == 1) { ?>
-                                <span class="help-block">Email associated with existing account</span>
-                                <?php
-                            } ?>
-                        </div>
-                        <div class="form-group">
                             <label for="inputUsername" class="sr-only">Username</label>
                             <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required>
                             <?php
-                            if (isset($result) && $result == 2) { ?>
+                            if (isset($result) && $result == 1) { ?>
                                 <span class="help-block">Username taken</span>
                                 <?php
                             } ?>
