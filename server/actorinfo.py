@@ -94,7 +94,8 @@ class ActorsInfoPicker:
             if 'imdb_id' in resp.json() else ''
 
         downloaded_actor.images = self.download_image_urls(resp)
-        downloaded_actor.movie_credits = self.download_movie_credits(downloaded_actor.id, resp)
+        # downloaded_actor.movie_credits = self.download_movie_credits(downloaded_actor.id, resp)
+        downloaded_actor.movie_credits = self.download_popular_movie_credits(downloaded_actor.id, resp)
         return downloaded_actor
 
     def download_movie_credits(self, actor_id, resp):
@@ -113,6 +114,46 @@ class ActorsInfoPicker:
                             movie_credit.genres.append(self.genres[genre_id])
                        else:
                             print('No genre with id = '+str(genre_id))
+                movie_credits.append(movie_credit)
+
+        return movie_credits
+
+    def download_popular_movie_credits(self, actor_id, resp):
+        movie_credits = []
+        if 'combined_credits' in resp.json() and 'cast' in resp.json()['combined_credits']:
+            size = 5
+            popular_movie = []
+            for movie_json in resp.json()['combined_credits']['cast']:
+                popular = float(movie_json['popularity']) if 'popularity' in movie_json else 0.0
+                counter = 0
+
+                for movie in popular_movie:
+                    mpop = float(movie['popularity']) if 'popularity' in movie else 0.0
+                    if popular < mpop:
+                        counter = counter + 1
+                if counter < len(popular_movie):
+                    if len(popular_movie) > size:
+                        temp = popular_movie[counter:size-1]
+                    else:
+                        temp = popular_movie[counter:len(popular_movie)-1]
+                    popular_movie[counter] = movie_json
+                    popular_movie = popular_movie[:counter+1] + temp
+                elif counter < size:
+                    popular_movie.append(movie_json)
+
+            for movie_json in popular_movie:
+                movie_credit = MovieCredit(actor_id)
+                movie_credit.title = str(movie_json['title']) if 'title' in movie_json \
+                    else str(movie_json['name']) if 'name' in movie_json else ''
+                movie_credit.vote_average = str(movie_json['vote_average']) if 'vote_average' in movie_json else ''
+                movie_credit.poster = self.tmdb_photo + str(movie_json['poster_path']) \
+                    if 'poster_path' in movie_json else ''
+                if 'genre_ids' in movie_json:
+                    for genre_id in movie_json['genre_ids']:
+                        if genre_id in self.genres.keys():
+                            movie_credit.genres.append(self.genres[genre_id])
+                        else:
+                            print('No genre with id = ' + str(genre_id))
                 movie_credits.append(movie_credit)
 
         return movie_credits
