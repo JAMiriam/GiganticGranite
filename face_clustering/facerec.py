@@ -64,7 +64,7 @@ def cls(path):
         for i, label in enumerate(labels):
             if label == biggest_class:
                 faces.append(descriptors[i])
-        pickle.dump(faces, open(os.path.join(mainpath, os.path.basename(path)+".p"),"wb"), pickle.HIGHEST_PROTOCOL)
+        pickle.dump(faces, open(os.path.join(mainpath, "zzz"+os.path.basename(path)+".p"),"wb"), pickle.HIGHEST_PROTOCOL)
         print(os.path.join(mainpath, os.path.basename(path)+".p"))
 def prd(path):
     import pickle
@@ -134,10 +134,13 @@ class reclass:
             guess_score=self.clf.score(des[0].reshape(1, -1),guess)
             fut=self.clf.decision_function(des[0].reshape(1, -1))
             print(guess,guess_score,fut,des[1],des[2],des[3],des[4])
-            if(fut[0][guess[0]-1]>0):
-                ret.append(("right",guess[0],des[3],des[1],des[2],des[4]))
-            else:
-                ret.append(("wrong",guess[0],des[3],des[1],des[2],des[4]))
+            try:
+                if(fut[0][guess[0]-1]>0):
+                    ret.append(("right",guess[0],des[3],des[1],des[2],des[4]))
+                else:
+                    ret.append(("wrong",guess[0],des[3],des[1],des[2],des[4]))
+            except:
+                ret.append(("wrong",1,des[3],des[1],des[2],des[4]))
         return ret
 
 
