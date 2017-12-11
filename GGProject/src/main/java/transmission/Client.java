@@ -32,11 +32,6 @@ public class Client {
 
     public Client() {
         httpClient = HttpClientBuilder.create().build();
-
-        //Throughout proxy
-//        HttpHost proxy = new HttpHost(SERVER_IP, SERVER_HOST);
-//        HttpRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-//        httpClient = HttpClients.custom().setRoutePlanner(routePlanner).build();
     }
 
     public static void sendImageToServer(String path) {

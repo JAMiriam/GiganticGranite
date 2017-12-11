@@ -7,6 +7,7 @@ public class SimpleActor {
     private int top;
     private int right;
     private int bottom;
+    private String reliability;
 
     public SimpleActor(){};
 
@@ -39,5 +40,14 @@ public class SimpleActor {
 
     public String toString() {
         return imdb_id + "; " + name + "; " + "[" + left + ", " + top + ", " + right + ", " + bottom + "]";
+    }
+
+
+    public String getReliability() {
+        return reliability;
+    }
+
+    public void setReliability(String reliability) {
+        this.reliability = reliability;
     }
 }

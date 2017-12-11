@@ -13,11 +13,13 @@ public class JSONModelParser {
         ArrayList<SimpleActor> actors = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonobject = json.getJSONObject(i);
+            System.out.println(jsonobject);
             SimpleActor actor = new SimpleActor();
             actor.setName(jsonobject.getString("name"));
             actor.setImdb_id(jsonobject.getString("imdb"));
             actor.setPos(jsonobject.getInt("left"), jsonobject.getInt("top"),
                     jsonobject.getInt("right"), jsonobject.getInt("bottom"));
+            actor.setReliability(jsonobject.getString("reliability"));
             actors.add(actor);
         }
         return actors;

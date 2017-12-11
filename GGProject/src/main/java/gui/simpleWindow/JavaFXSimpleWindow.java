@@ -26,6 +26,7 @@ public class JavaFXSimpleWindow extends Application {
 	private static Scene scene;
 	private static Group groupRoot;
 	private static Pane canvas;
+	private static GridPane actorPane;
 
 	private static ArrayList<SimpleActor> actors;
 	private static ArrayList<ActorRectangle> rectangles;
@@ -65,6 +66,10 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
+	public static void printPosition() {
+		System.out.println("X: " + mainStage.getX() + ", Y: " + mainStage.getY());
+	}
+
 	public static void loadActors(ArrayList<SimpleActor> recognizedActors) {
 		Platform.runLater(() -> {
 			actors.addAll(recognizedActors);
@@ -78,13 +83,11 @@ public class JavaFXSimpleWindow extends Application {
 	public static void drawRectangles() {
 		Platform.runLater(() -> {
 			canvas.setPrefSize(info.getWidth(), info.getHeight());
-
 			for(SimpleActor actor : actors) {
-				//actor.Pos = {left, top, right, bottom}
 				int width = actor.getPos()[3] - actor.getPos()[0];
 				int height = actor.getPos()[2] - actor.getPos()[1];
 				int x = actor.getPos()[1], y = actor.getPos()[0];
-				rectangles.add(new ActorRectangle(x, y, width, height, actor.getName(), actor.getImdb_id()));
+				rectangles.add(new ActorRectangle(x, y, width, height, actor.getName(), actor.getImdb_id(), actor.getReliability()));
 			}
 			canvas.getChildren().addAll(rectangles);
 			mainStage.setAlwaysOnTop(true);
@@ -144,7 +147,6 @@ public class JavaFXSimpleWindow extends Application {
 			BorderPane windowPane;
 			BorderPane mainPane;
 			ScrollPane scrollablePane;
-			GridPane actorPane;
 			MenuBar menuBar;
 			Button reportButton, imdbprofileButton;
 			TextInputDialog reportDialog;
@@ -204,12 +206,12 @@ public class JavaFXSimpleWindow extends Application {
 			actorPane.add(died, 0,6);
 			actorPane.add(diedField, 1,6);
 			actorPane.add(biography, 0, 7);
-//			actorPane.add(biographyField);
-			actorPane.add(knownFrom, 0, 9);
-			actorPane.add(imdbProfile, 0, 10);
-			actorPane.add(imdbprofileButton, 1, 10);
+			actorPane.add(biographyField, 0, 9, 2, 1);
+			actorPane.add(knownFrom, 0, 10);
+			actorPane.add(imdbProfile, 0, 14);
+			actorPane.add(imdbprofileButton, 1, 14);
 
-			actorPane.add(reportButton, 0, 11);
+			actorPane.add(reportButton, 0, 16);
 
 			imdbprofileButton.setOnAction(e -> {
 				try {
@@ -231,10 +233,8 @@ public class JavaFXSimpleWindow extends Application {
 			});
 			mainPane.setTop(detailsPhotoPane);
 			mainPane.setCenter(actorPane);
-			Menu menuFile = new Menu("File");
-			Menu menuEdit = new Menu("Edit");
-			Menu menuView = new Menu("View");
-			menuBar.getMenus().addAll(menuFile, menuEdit, menuView);
+			Menu menuFile = new Menu("");
+			menuBar.getMenus().addAll(menuFile);
 
 			scrollablePane.setContent(mainPane);
 			windowPane.setTop(menuBar);
@@ -266,11 +266,13 @@ public class JavaFXSimpleWindow extends Application {
 				biographyField.setText(actorData.getBiography());
 				genderField.setText(actorData.getGender());
 				profileUrl = actorData.getImdb_profile();
-				for(MovieCredit movie : actorData.getMovie_credits()) {
-					posters.add(movie.getPoster());
-				}
 
-				System.out.println("Posters number: " + posters.size());
+				for(int i = 0, j = 11; i < 3 && i < actorData.getMovie_credits().size(); i++, j++) {
+					ImageView poster = new ImageView(actorData.getMovie_credits().get(i).getPoster());
+					poster.setFitWidth(120);
+					poster.setPreserveRatio(true);
+					actorPane.add(poster, 0, j);
+				}
 
 				ImageView photo = new ImageView(actorData.getImages().get(0));
 				StackPane.setAlignment(photo, Pos.CENTER);
