@@ -23,12 +23,15 @@
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <?php
                     if (signed_in()) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link disabled"><?php echo $_SESSION['username']; ?></a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Log out</a>
                         </li>
@@ -49,7 +52,10 @@
         <main>
             <?php
             if (signed_in()) { ?>
-                <h1>Hello, <?php echo $_SESSION['username'] ?></h1>
+                <div class="container text-center" id="top">
+                    <h2>Welcome back!</h2>
+                    <a href="upload.php">Upload image</a>
+                </div>
                 <?php
             } elseif (isset($_POST['username']) && isset($_POST['password'])) {
                 sign_in($_POST['username'], $_POST['password']);
@@ -84,6 +90,10 @@
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                     </form>
+                </div>
+                
+                <div class="container text-center">
+                    Don't have an account? <a href='register.php'>Create</a> it or start <a href="upload.php">uploading</a> your screenshots without it.
                 </div>
                 
                 <?php

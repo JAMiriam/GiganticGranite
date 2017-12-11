@@ -3,7 +3,7 @@
     
     use GuzzleHttp\Client;
 
-    session_start();    
+    session_start();
         
     function signed_in() {
         return isset($_SESSION['signed_in']) && isset($_SESSION['username']);

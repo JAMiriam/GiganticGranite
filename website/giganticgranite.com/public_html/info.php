@@ -25,12 +25,15 @@
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <?php
                     if (signed_in()) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link disabled"><?php echo $_SESSION['username']; ?></a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Log out</a>
                         </li>

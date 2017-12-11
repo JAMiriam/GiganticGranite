@@ -1,4 +1,4 @@
-<?php require_once 'utils.php'; ?>
+<?php require_once 'utils.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,13 +17,13 @@
                 <a class="navbar-brand" href="/">Gigantic Granite</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Upload</a>
+                        <a class="nav-link" href="upload.php">Upload</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.php">About</a>
+                        <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -51,16 +51,19 @@
 
         <!-- fill main -->
         <main>
-            <div class="container" align="center">
-                <h1>Upload screenshot from movie:</h1>
-                <form enctype="multipart/form-data" action="upload_image.php" method="post">
-                    <div class="form-group">
-                        <input type="file" class="form-control-file" id="image" name="image">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+            <div class="container text-center">
+                <h3>This project was created by:</h3>
+                <ul class="list-group">
+                    <li class="list-group-item">Miriam Jańczak</li>
+                    <li class="list-group-item">Agata Jasionowska</li>
+                    <li class="list-group-item">Małgorzata Kaczmarczyk</li>
+                    <li class="list-group-item">Michał Krasoń</li>
+                    <li class="list-group-item">Wojciech Przytarski</li>
+                    <li class="list-group-item">Paweł Rakosza</li>
+                </ul>
             </div>
         </main>
+
         <!-- JQuery, Popper.js, Bootstrap JS scripts -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
