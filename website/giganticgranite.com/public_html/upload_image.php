@@ -58,23 +58,37 @@
                 $json = $response->getBody();
                 $actors = json_decode($json);
                 $remove = array();
+                $dup = array();
+                $size = getimagesize($uploaddir);
+                $scale = 1;
+                $scalestring = '" ';
+                if ($size[0] < 1000) {
+                    $scale = 2;
+                    $scalestring = '" -resize 200%% -filter Lanczos ';
+                }
                 foreach($actors as $actor) {
                     $name = $actor->name;
                     if($actor->reliability === "wrong") {
                         $name = "unrecognized";
                     }
-                    $top = intval($actor->top);
-                    $left = intval($actor->left);
-                    $right = intval($actor->right);
-                    $bottom = intval($actor->bottom);
-                    $cmd = 'convert "' . $uploaddir . '" ' . '-fill none -stroke red -pointsize 20 -draw "rectangle ';
+                    $top = intval($actor->top) * $scale;
+                    $left = intval($actor->left) * $scale;
+                    $right = intval($actor->right) * $scale;
+                    $bottom = intval($actor->bottom) * $scale;
+                    $cmd = 'convert "' . $uploaddir . $scalestring . '-fill none -stroke red -pointsize 22 -draw "rectangle ';
                     //die(var_dump($actor));
                     $cmd .= $top . ',' . $left . ' ' . $right . ',' . $bottom . 
-                            '" -draw "text ' . $top . ',' . ($bottom + 20) . 
+                            '" -font Arial-Bold -fill red -draw "text ' . $top . ',' . ($bottom + 20) . 
                             ' \'' . $name . '\'" "' . $uploaddir . '"';
                     //die($cmd);
                     shell_exec($cmd);
                     if($actor->reliability === "wrong") {
+                        $key = array_search($actor, $actors, TRUE);
+                        array_push($remove, $key);
+                    }
+                    if (!isset($dup[$actor->imdb])){
+                        $dup[$actor->imdb] = 1;
+                    } else {
                         $key = array_search($actor, $actors, TRUE);
                         array_push($remove, $key);
                     }
