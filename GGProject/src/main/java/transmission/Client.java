@@ -3,19 +3,17 @@ package transmission;
 import gui.WindowManager;
 import json.JSONModelParser;
 import models.Actor;
+import models.Complaint;
 import models.SimpleActor;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.routing.HttpRoutePlanner;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
@@ -39,6 +37,33 @@ public class Client {
         ArrayList<SimpleActor> simpleActorsList = JSONModelParser.parseToSimpleActor(postResponse);
         WindowManager.createSimpleWindow(simpleActorsList);
         SessionData.getActorsData(simpleActorsList);
+    }
+        
+    public static void sendSuggestionToServer(Complaint complaint) {
+        String ret = postComplaint("http://" + SERVER_IP + ":" + SERVER_HOST + "/actors/suggestion", complaint);
+        System.out.println(ret);
+    }
+
+    private static String postComplaint(String url, Complaint complaint) {
+        HttpPost post = new HttpPost(url);
+        File file = new File(complaint.getLocalPath());
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        FileBody fileBody = new FileBody(file);
+        builder.addTextBody("complaint", complaint.toJSON(), ContentType.APPLICATION_JSON);
+        builder.addPart("image", fileBody);
+        HttpEntity entity = builder.build();
+        post.setEntity(entity);
+
+        System.out.println("Executing request: \"" + post.getRequestLine() + "\"");
+        String resp = ":(";
+        try {
+            resp = EntityUtils.toString(httpClient.execute(post).getEntity(), "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resp;
     }
 
     private static JSONArray postRequest(String url, String path) {
