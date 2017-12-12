@@ -36,11 +36,12 @@
             //$filename = sha1_file($_FILES['image']['tmp_name']);
             $tmpdir = $uploaddir;
             $uploaddir = $uploaddir . $filename . '.' . $ext;
+            $originaldir = $uploaddir . '.o';
             if (move_uploaded_file(
                 $_FILES['image']['tmp_name'],
                 $uploaddir
             )) {
-                // DO something
+                file_put_contents($originaldir, file_get_contents($uploaddir));
                 $client = new Client();
                 $response = $client->request(
                     'POST',
@@ -59,6 +60,8 @@
                 $actors = json_decode($json);
                 $remove = array();
                 $dup = array();
+                $suggestions = array();
+                $i = 0;
                 $size = getimagesize($uploaddir);
                 $scale = 1;
                 $scalestring = '" ';
@@ -69,7 +72,9 @@
                 foreach($actors as $actor) {
                     $name = $actor->name;
                     if($actor->reliability === "wrong") {
-                        $name = "unrecognized";
+                        $i += 1;
+                        $name = $i . " unrecognized";
+                        array_push($suggestions, $actor);
                     }
                     $top = intval($actor->top) * $scale;
                     $left = intval($actor->left) * $scale;
@@ -86,13 +91,16 @@
                         $key = array_search($actor, $actors, TRUE);
                         array_push($remove, $key);
                     }
-                    if (!isset($dup[$actor->imdb])){
-                        $dup[$actor->imdb] = 1;
-                    } else {
-                        $key = array_search($actor, $actors, TRUE);
-                        array_push($remove, $key);
+                    if($actor->reliability !== "wrong") {
+                        if (!isset($dup[$actor->imdb])){
+                            $dup[$actor->imdb] = 1;
+                        } else {
+                            $key = array_search($actor, $actors, TRUE);
+                            array_push($remove, $key);
+                        }
                     }
                 }
+                $_SESSION['suggestions'] = $suggestions;
                 foreach($remove as $r) {
                     unset($actors[$r]);
                 }

@@ -66,6 +66,11 @@
         $src = 'data:image/' . $type . ';base64,' . base64_encode($data);
         return $src;
     }
+    
+    function send_complaint() {
+        
+    }
+    
 //          old database methods
 //          
 //    function insert_image($image_path, $actors) {

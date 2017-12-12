@@ -50,11 +50,37 @@
                 </ul>
             </div>
         </nav>
+        
+        <script>
+            <?php echo $variables; ?>
+        </script>
+        
+        <!-- TODO -->
+        <!-- modal for suggestions -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p id="number"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          
+            </div>
+        </div>
 
         <!-- fill main -->
         <main>
             <div class="container text-center jumbotron">
-                <img src="<?php echo $src ?>" class="big-image">
+                <img src="<?php echo $src ?>" class="big-image" onclick="imgClick(event)">
             </div>
             <div class="jumbotron">
                 <div class="container" id="ajax-container">
@@ -68,5 +94,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <script src="scripts/ajax.js"></script>
+        <script src="scripts/info.js"></script>
     </body>
 </html>
