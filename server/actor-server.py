@@ -55,7 +55,7 @@ def getComplaint():
     # parse json to get arguments
     # get id from db
     # run method in ai to check suggestion
-
+    #result=prec.sug(img,(top,left,right,bottom),position_id)
     img = request.files['image']
     complaint = request.form.get('complaint')
     img.save(secure_filename(img.filename))
