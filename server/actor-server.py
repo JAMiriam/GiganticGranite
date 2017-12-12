@@ -49,6 +49,20 @@ def getActors():
     return Response(data, mimetype="application/json")
 
 
+@app.route('/actors/suggestion', methods=['POST'])
+def getComplaint():
+    #   TODO
+    # parse json to get arguments
+    # get id from db
+    # run method in ai to check suggestion
+
+    img = request.files['image']
+    complaint = request.form.get('complaint')
+    img.save(secure_filename(img.filename))
+    print(complaint)
+    return Response("OK", mimetype="text/xml")
+
+
 # JSON with details contains
 # 	array of Actor:
 #		name: string
