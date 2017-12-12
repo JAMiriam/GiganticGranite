@@ -63,14 +63,14 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Who is it?</h4>
               </div>
-              <div class="modal-body">
-                <p id="number"></p>
+              <div class="modal-body text-center">
+                  <input id="actorNameInput" type="text" placeholder="Actor name" class="form-control">
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="sendSuggestion()">Submit</button>
               </div>
             </div>
           

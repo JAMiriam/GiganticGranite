@@ -21,3 +21,24 @@ function imgClick(event) {
         }
     }
 }
+
+function sendSuggestion() {
+    let text = $("#actorNameInput").val();
+    let image_id = window.location.search.substring(4);
+    if (text !== '') {
+        $.ajax({
+            type: "GET",
+            url: "suggestion.php",
+            data: {
+                id: image_id,
+                name: text,
+                left: chosen[0],
+                top: chosen[1],
+                right: chosen[2],
+                bottom: chosen[3]
+            }
+        });
+    }
+    $("#actorNameInput").val("");
+    chosen = null;
+}
