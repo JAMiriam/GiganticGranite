@@ -40,8 +40,8 @@ class DBConnector:
              "name": name,
              "internal_id": internal_id}
         try:
-            post_id = self.collection.insert_one(p).inserted_id
-            return post_id
+            self.collection.insert_one(p)
+            return internal_id
         except errors.DuplicateKeyError as dke:
             print('Error: %s' % dke)
             return None
