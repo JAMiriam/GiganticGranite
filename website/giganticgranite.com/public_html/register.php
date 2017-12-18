@@ -75,11 +75,6 @@
                             <label for="inputPasswordRepeat" class="sr-only">Repeat password</label>
                             <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Repeat password" required>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="agree" required> I agree with <a href="#">Terms and conditions</a>
-                            </label>
-                        </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                     </form>
                 </div>

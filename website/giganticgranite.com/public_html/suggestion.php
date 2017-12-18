@@ -7,6 +7,17 @@
     
     $id = $_GET['id'];
     $name = $_GET['name'];
+    $left = $_GET['left'];
+    $right = $_GET['right'];
+    $top = $_GET['top'];
+    $bottom = $_GET['bottom'];
+    $array = array(
+        'name' => $name,
+        'left' => $left,
+        'right' => $right,
+        'top' => $top,
+        'bottom' => $bottom
+    );
     
     $client = new Client();
     $response = $client->request(
@@ -20,7 +31,7 @@
                 ],
                 [
                     'name'      => 'complaint',
-                    'contents'  => 'Not implemented yet!'
+                    'contents'  => json_encode($array)
                 ]
             ]
         ]
