@@ -12,6 +12,7 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import models.*;
+import transmission.Client;
 import transmission.SessionData;
 import windowutils.WindowInfo;
 import java.io.IOException;
@@ -32,7 +33,6 @@ public class JavaFXSimpleWindow extends Application {
 	private static ArrayList<ActorRectangle> rectangles;
 	private static Dialog<String> dialog;
 	private static Text nameField, birthdateField, diedField, biographyField, genderField;
-	private static ArrayList<String> posters;
 	private static String profileUrl;
 	private static Pane detailsPhotoPane;
 	private static WindowInfo info;
@@ -64,10 +64,6 @@ public class JavaFXSimpleWindow extends Application {
 			mainStage.setMinHeight(info.getHeight());
 			mainStage.setMinWidth(info.getWidth());
 		});
-	}
-
-	public static void printPosition() {
-		System.out.println("X: " + mainStage.getX() + ", Y: " + mainStage.getY());
 	}
 
 	public static void loadActors(ArrayList<SimpleActor> recognizedActors) {
@@ -152,7 +148,7 @@ public class JavaFXSimpleWindow extends Application {
 			TextInputDialog reportDialog;
 
 			windowPane = new BorderPane();
-			windowPane.setPrefSize(400, 500);
+			windowPane.setPrefSize(420, 500);
 			mainPane = new BorderPane();
 			scrollablePane = new ScrollPane();
 			detailsPhotoPane = new StackPane();
@@ -189,13 +185,19 @@ public class JavaFXSimpleWindow extends Application {
 			Label biography = new Label("Biography: ");
 			Label imdbProfile = new Label("Imdb profile:");
 			Label knownFrom = new Label("Known from:");
+			setLabelCss(name);
+			setLabelCss(birthdate);
+			setLabelCss(died);
+			setLabelCss(gender);
+			setLabelCss(biography);
+			setLabelCss(imdbProfile);
+			setLabelCss(knownFrom);
 
 			nameField = new Text();
 			birthdateField = new Text();
 			diedField = new Text();
 			biographyField = new Text();
 			genderField = new Text();
-			posters = new ArrayList<>();
 
 			actorPane.add(name, 0, 3);
 			actorPane.add(nameField, 1,3);
@@ -227,8 +229,15 @@ public class JavaFXSimpleWindow extends Application {
 			reportButton.setOnAction(e -> {
 				Optional<String> resultName = reportDialog.showAndWait();
 				if (resultName.isPresent()) {
-					System.out.println("New identity sent.");
-					//TODO send json to server with new data
+					SimpleActor actor = getActiveActor();
+					if(actor != null) {
+						Complaint complaint = new Complaint(resultName.get(), actor.getPos(), SessionData.getScreenshotPath());
+						System.out.println("Suggestion: " + complaint.toString());
+						Client.sendSuggestionToServer(complaint);
+					}
+					else {
+						System.out.println("There's some kind of problem. We will fix it someday...");
+					}
 				}
 			});
 			mainPane.setTop(detailsPhotoPane);
@@ -247,12 +256,12 @@ public class JavaFXSimpleWindow extends Application {
 
 			ButtonType button = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);
 			dialog.getDialogPane().getButtonTypes().add(button);
-			Optional<String> result = dialog.showAndWait();
-
-//			if (result.isPresent()) {
-//				actionStatus = ("Result: " + result.get());
-//			}
+			dialog.showAndWait();
 		});
+	}
+
+	private static void setLabelCss(Label label) {
+		label.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
 	}
 
 	public static void loadActorDetails(String imdb_id) {
@@ -284,6 +293,17 @@ public class JavaFXSimpleWindow extends Application {
 				e.printStackTrace();
 			}
 		});
+	}
+
+	private static SimpleActor getActiveActor() {
+		String imdb = "";
+		for(ActorRectangle actor : rectangles)
+			if(actor.isActive())
+				imdb = actor.getImdb();
+		for(SimpleActor a : actors)
+			if(a.getImdb_id().equals(imdb))
+				return a;
+		return null;
 	}
 
 	public static void main(String[] args) {

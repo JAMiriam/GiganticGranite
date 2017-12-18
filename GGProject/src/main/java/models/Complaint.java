@@ -10,7 +10,7 @@ public class Complaint {
     private int bottom;
     private String localPath;
 
-    public Complaint(String name, int[] pos, String localPath){
+    public Complaint(String name, Integer[] pos, String localPath){
         this.name = name;
         this.left = pos[0];
         this.top = pos[1];

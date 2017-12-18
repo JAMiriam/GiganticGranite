@@ -33,6 +33,7 @@ public class Client {
     }
 
     public static void sendImageToServer(String path) {
+        SessionData.setScreenshotPath(path);
         JSONArray postResponse = postRequest("http://" + SERVER_IP + ":" + SERVER_HOST + "/actors/image", path);
         ArrayList<SimpleActor> simpleActorsList = JSONModelParser.parseToSimpleActor(postResponse);
         WindowManager.createSimpleWindow(simpleActorsList);

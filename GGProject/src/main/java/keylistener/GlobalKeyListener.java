@@ -54,7 +54,7 @@ public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 
 //				ALT+PRTSCR pressed - active window screenshot
 				if (altPressedFlag) {
-					manager.captureActiveWindow();
+					manager.captureFullScreen();
 					manager.sendScreenshot();
 				}
 //				PRTSCR pressed - full screenshot

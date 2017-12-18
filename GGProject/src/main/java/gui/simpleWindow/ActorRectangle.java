@@ -13,14 +13,14 @@ class ActorRectangle extends Rectangle {
 	private final Color wrongStrokeColor = Color.RED;
 	private final DropShadow shadow = new DropShadow(127, Color.GOLDENROD);
 	private Tooltip tooltip;
-	private String imdb;
 	private boolean isNameVisible;
+	private String imdb;
 
 	ActorRectangle(int x, int y, int width, int height, String name, String imdb, String reliability) {
 		super(width, height);
 		tooltip = new Tooltip(name);
-		this.imdb = imdb;
 		isNameVisible = false;
+		this.imdb = imdb;
 		relocate(x, y);
 //		setFill(Color.TRANSPARENT);
 		setFill(Color.grayRgb(255, 0.6));
@@ -62,5 +62,13 @@ class ActorRectangle extends Rectangle {
 	private void hideName() {
 		tooltip.hide();
 		isNameVisible = false;
+	}
+
+	public boolean isActive() {
+		return isNameVisible;
+	}
+
+	public String getImdb() {
+		return imdb;
 	}
 }

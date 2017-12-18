@@ -9,6 +9,15 @@ import java.util.Map;
 
 public class SessionData {
 	private static Map<String, Actor> mapDetails;
+	private static String screenshotPath;
+
+	public static void setScreenshotPath(String path) {
+		screenshotPath = path;
+	}
+
+	public static String getScreenshotPath() {
+		return screenshotPath;
+	}
 
 	public static void getActorsData(ArrayList<SimpleActor> recognized) {
 		mapDetails = new HashMap<>();

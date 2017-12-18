@@ -31,10 +31,11 @@ public class ScreenshotManager {
 		System.out.println("Window captured");
 	}
 
+	//TODO delete screenshot eventually!!
 	public void sendScreenshot() {
 		System.out.println("Screenshot sent");
 		Client.sendImageToServer(path);
-		deleteScreenshot();
+//		deleteScreenshot();
 	}
 
 	private void deleteScreenshot() {
