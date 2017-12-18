@@ -51,16 +51,27 @@ def getActors():
 
 @app.route('/actors/suggestion', methods=['POST'])
 def getComplaint():
-    #   TODO
-    # parse json to get arguments
-    # get id from db
-    # run method in ai to check suggestion
-    #result=prec.sug(img,(top,left,right,bottom),position_id)
+    picker = ActorsInfoPicker()
+    connector = DBConnector()
+    resp = "OK"
     img = request.files['image']
     complaint = request.form.get('complaint')
-    img.save(secure_filename(img.filename))
-    print(complaint)
-    return Response("OK", mimetype="text/xml")
+    suggestion = json.loads(complaint)
+    name = suggestion['name']
+    position_id = connector.find_by_name(name)
+    if position_id is not None:
+        result = prec.sug(img, (suggestion['top'], suggestion['left'],
+                                suggestion['right'], suggestion['bottom']), position_id)
+        if result is 0:
+            resp = "NOT OK"
+    else:
+        imdb_id, tmdb_id = picker.download_by_name(name)
+        if tmdb_id is not None:
+            connector.post(imdb_id, tmdb_id, name)
+        else:
+            resp = "NOT OK"
+
+    return Response(resp, mimetype="text/xml")
 
 
 # JSON with details contains
