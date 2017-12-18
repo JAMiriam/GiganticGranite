@@ -67,7 +67,12 @@ def getComplaint():
     else:
         imdb_id, tmdb_id = picker.download_by_name(name)
         if tmdb_id is not None:
-            connector.post(imdb_id, tmdb_id, name)
+            pos_id = connector.post(imdb_id, tmdb_id, name)
+            if pos_id is not None:
+                prec.sug(img, (suggestion['top'], suggestion['left'],
+                            suggestion['right'], suggestion['bottom']), pos_id)
+            else:
+                resp = "NOT OK"
         else:
             resp = "NOT OK"
 
