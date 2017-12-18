@@ -65,9 +65,10 @@
                 $size = getimagesize($uploaddir);
                 $scale = 1;
                 $scalestring = '" ';
-                if ($size[0] < 1000) {
+                if ($size[0] < 1000 && $size[1] < 1000) {
                     $scale = 2;
-                    $scalestring = '" -resize 200%% -filter Lanczos ';
+                    $scalestring = '" -resize 200%% -filter Lanczos "';
+                    shell_exec('convert "' . $uploaddir . $scalestring . $uploaddir . '"');
                 }
                 foreach($actors as $actor) {
                     $name = $actor->name;
@@ -80,7 +81,7 @@
                     $left = intval($actor->left) * $scale;
                     $right = intval($actor->right) * $scale;
                     $bottom = intval($actor->bottom) * $scale;
-                    $cmd = 'convert "' . $uploaddir . $scalestring . '-fill none -stroke red -pointsize 22 -draw "rectangle ';
+                    $cmd = 'convert "' . $uploaddir . '" -fill none -stroke red -pointsize 22 -draw "rectangle ';
                     //die(var_dump($actor));
                     $cmd .= $top . ',' . $left . ' ' . $right . ',' . $bottom . 
                             '" -font Arial-Bold -fill red -draw "text ' . $top . ',' . ($bottom + 20) . 
