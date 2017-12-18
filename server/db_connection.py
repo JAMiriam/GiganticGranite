@@ -52,6 +52,17 @@ class DBConnector:
     def find_actor_int(self, id):
         id = int(id)
         return self.collection.find_one({"internal_id": id})
+    
+    def swap_internal_id(self, id_from, id_to):
+        if self.collection.find_one({"internal_id": id_from}) is not None:
+            if self.collection.find_one({"internal_id": id_to}) is None:
+                self.collection.update_one({'internal_id': id_from}, {'$set': {'internal_id': id_to}}, upsert=False)
+            else:
+                self.collection.update_one({'internal_id': id_from}, {'$set': {'internal_id': 100000000000}}, upsert=False)
+                self.collection.update_one({'internal_id': id_to}, {'$set': {'internal_id': id_from}}, upsert=False)
+                self.collection.update_one({'internal_id': 100000000000}, {'$set': {'internal_id': id_to}}, upsert=False)
+        else:
+            raise errors.PyMongoError('Actor with id %d not found' % id_from)
 
 
 
