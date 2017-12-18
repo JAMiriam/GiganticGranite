@@ -166,6 +166,27 @@ class ActorsInfoPicker:
                     images.append(self.tmdb_photo + str(image_json['file_path']))
         return images
 
+    def download_by_name(self, name):
+        url = ActorsInfoPicker.name_url + self.key_url + '&query=' + name
+        resp = requests.request("GET", url)
+        if resp.status_code != 200:
+            raise ConnectionError('GET {}'.format(resp.status_code))
+        results_count = resp.json()['total_results'] if 'total_results' in resp.json() else 0
+        if results_count > 0 and 'id' in resp.json()['results'][0]:
+            tmdb_id = resp.json()['results'][0]['id']
+            url = self.tmdb_id_url + str(tmdb_id) + self.key_url
+            resp = requests.request("GET", url)
+            if resp.status_code != 200:
+                # print(resp.json()['status_code'], resp.json()['status_message'])
+                raise ConnectionError('GET {}'.format(resp.status_code))
+            if 'imdb_id' in resp.json():
+                imdb_id = str(resp.json()['imdb_id'])
+                return imdb_id, tmdb_id
+            else:
+                return None, None
+        else:
+            return None, None
+
 
 class MovieCredit:
     def __init__(self, actor_id):

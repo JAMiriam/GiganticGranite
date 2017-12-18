@@ -17,10 +17,28 @@ class DBConnector:
         self.collection = self.db['actors-test']
 
     ## insert single person into db
+    # def post(self, imdb_id, tmdb_id, name):
+    #     p = {"_id": imdb_id,
+    #          "tmdb_id": tmdb_id,
+    #          "name": name}
+    #     try:
+    #         post_id = self.collection.insert_one(p).inserted_id
+    #         return post_id
+    #     except errors.DuplicateKeyError as dke:
+    #         print('Error: %s' % dke)
+    #         return None
+
+    def find_by_name(self, name):
+        actor = self.collection.find_one({"name": name}, {"internal_id": 1, "_id": 0})
+        return actor["internal_id"] if actor is not None and "internal_id" in actor else None
+
     def post(self, imdb_id, tmdb_id, name):
+        l = list(self.collection.find({}, {"internal_id": 1, "_id": 0}).sort("internal_id", -1).limit(1))
+        internal_id = 1 + (0 if len(l) == 0 else l[0]["internal_id"])
         p = {"_id": imdb_id,
              "tmdb_id": tmdb_id,
-             "name": name}
+             "name": name,
+             "internal_id": internal_id}
         try:
             post_id = self.collection.insert_one(p).inserted_id
             return post_id
@@ -34,6 +52,8 @@ class DBConnector:
     def find_actor_int(self, id):
         id = int(id)
         return self.collection.find_one({"internal_id": id})
+
+
 
 # # get all documents matching query
 # for post in collection.find({"_id": "nm0000093"}):
