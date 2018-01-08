@@ -20,7 +20,7 @@
         $uploaddir .= '/';
 //    }
 
-    if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
+//    if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         if ($ext = array_search(
             $finfo->file($_FILES['image']['tmp_name']),
@@ -118,12 +118,12 @@
 //                }
                 $http->redirect('info.php?id=' . $filename);
             } else {
-                die('error!');
+                $http->redirect('/error.php');
             }
         } else {
-            $http->redirect('/');
+            $http->redirect('/error.php');
         }
-    } else {
-        $http->redirect('/');
-    }
+//    } else {
+//        $http->redirect('/');
+//    }
 ?>

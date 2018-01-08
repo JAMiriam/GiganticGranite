@@ -53,7 +53,7 @@
             <?php
             if (signed_in()) { ?>
                 <div class="container text-center" id="top">
-                    <h2>Welcome back!</h2>
+                    <h2>Welcome!</h2>
                     <a href="upload.php">Upload image</a>
                 </div>
                 <?php
