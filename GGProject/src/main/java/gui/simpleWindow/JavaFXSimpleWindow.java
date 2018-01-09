@@ -290,7 +290,12 @@ public class JavaFXSimpleWindow extends Application {
 				photo.setPreserveRatio(true);
 				detailsPhotoPane.getChildren().add(photo);
 			} catch (Exception e) {
-				e.printStackTrace();
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				loadActorDetails(imdb_id);
 			}
 		});
 	}

@@ -36,7 +36,8 @@ public class SessionData {
 	public static Actor getActorDetails(String imdb_id) throws Exception {
 		if(mapDetails.containsKey(imdb_id))
 			return mapDetails.get(imdb_id);
-		else
+		else {
 			throw new Exception("No actor details in session");
+		}
 	}
 }

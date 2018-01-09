@@ -44,7 +44,7 @@ public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 //		ALT pressed - set flag
 		if (e.getKeyCode() == NativeKeyEvent.VC_ALT)
 			altPressedFlag = true;
-		else if (e.getKeyCode() == NativeKeyEvent.VC_INSERT) {
+		else if (e.getKeyCode() == NativeKeyEvent.VC_PRINTSCREEN) {
 			try {
 				ScreenshotManager manager;
 //				#1 Screenshot captured via Robot.createScreenCapture
