@@ -3,7 +3,7 @@ from actorinfo import ActorsInfoPicker, Actor, MovieCredit
 # from werkzeug import secure_filename
 from werkzeug.utils import secure_filename
 
-from ai_info_parser import make_dict
+from ai_info_parser import make_dict, make_dict_logged
 from db_connection import DBConnector
 import json
 import facerec
