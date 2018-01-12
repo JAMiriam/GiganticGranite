@@ -11,6 +11,9 @@ import sys
 from flaskext.mysql import MySQL
 import bcrypt
 import os
+import datetime
+import random
+import string
 
 prec=facerec.reclass()
 app = Flask(__name__)
@@ -26,6 +29,7 @@ mysql.init_app(app)
 @app.route('/actors/image', methods=['POST'])
 def getActors():
     img = request.files['image']
+    token = request.args.get('token', '')
     
     #prec.prd(img) returns array of vectors which contain:
     #at first position "right" actor was found or "wrong" actor wasn't
@@ -35,10 +39,16 @@ def getActors():
     #at this moment there can be problems with using this function
     found_actors=prec.prd(img)
     
-    # 		TODO
-    # find actor's name for specific id
-    # create JSON with array of id, name, position
-    #
+    if token != '':
+        temp = make_dict_logged(found_actors, user_id)
+        dicted_actors = temp[0]
+        to_history = temp[1]
+
+        insertToHistory(token, to_history)
+
+        data = json.dumps(dicted_actors)
+
+        return Response(data, mimetype="application/json")
     # test connection
     # dicted_actors = dict(status='ok')
 
@@ -153,11 +163,11 @@ def register():
         return jsonify({'data':'username is unavailable'})
 
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
+    token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(30))
     
-    query = ('INSERT INTO user (username, password) VALUES (%s, %s)')
+    query = ('INSERT INTO user (username, password, token) VALUES (%s, %s, %s)')
         
-    cursor.execute(query, (username, hashed_password))
+    cursor.execute(query, (username, hashed_password, token))
     conn.commit()
 
 
@@ -180,11 +190,61 @@ def login():
         hash_password = data[2]
 
         if bcrypt.hashpw(password.encode('utf-8'), hash_password.encode('utf-8')) == hash_password.encode('utf-8'):
-            return jsonify({'data':data[0]})
+            return jsonify({'data':data[3]})
         else:
             return jsonify({'data':'Wrong password'})
     else:
         return jsonify({'data':'Wrong username'})
+
+def insertToHistory(token, actors_to_history):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+
+    query = ('SELECT userId from user where token=%s')
+    cursor.execute(query, (token))
+    data = cursor.fetchone()
+
+    if data:
+        user_id = data[0]
+        now = datetime.datetime.now()
+        search_date = now.strftime("%Y-%m-%d %H:%M")
+
+        query = ('INSERT INTO search_history (userId, foundActors, searchDate) VALUES (%s, %s, %s)')
+        
+        cursor.execute(query, (user_id, actors_to_history, search_date))
+        conn.commit()
+
+    return None
+
+@app.route('/get/history')
+def getHistory():
+    token = request.args.get('token', '')
+    if token != '':
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        query = ('SELECT userId from user where token=%s')
+        cursor.execute(query, (token))
+        data = cursor.fetchone()
+
+        if data:
+            user_id = data[0]
+            query = ('SELECT foundActors, searchDate from search_history where userId=%s')
+            cursor.execute(query, (user_id))
+
+            history = cursor.fetchall()
+
+            dicted_history = []
+            for search in history:
+                temp = dict(foundActors=search[0], 
+                    date=search[1])
+                dicted_history.append(temp)
+
+            data = json.dumps(dicted_history)
+
+            return Response(data, mimetype="application/json")
+
+    return jsonify({'data':'Bad token'}) 
 
 if __name__ == '__main__':
     app.run(debug = False, host = '156.17.227.136', port = 5000)
