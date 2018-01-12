@@ -40,7 +40,7 @@ def getActors():
     found_actors=prec.prd(img)
     
     if token != '':
-        temp = make_dict_logged(found_actors, user_id)
+        temp = make_dict_logged(found_actors)
         dicted_actors = temp[0]
         to_history = temp[1]
 
