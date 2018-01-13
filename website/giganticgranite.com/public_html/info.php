@@ -76,6 +76,19 @@
           
             </div>
         </div>
+        
+        <div id="confirmModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p class="text-center">Thank You for your suggestion. We'll add this actor as soon as we've got enough pictures.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- fill main -->
         <main>

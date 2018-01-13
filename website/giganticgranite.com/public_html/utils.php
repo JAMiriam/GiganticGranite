@@ -11,10 +11,10 @@
 
     function sign_in($username, $password) {
         $http = new HTTP2();
-        $client = new Client();
+        $client = new Client(['verify' => false]);
         $response = $client->request(
             'POST',
-            '156.17.227.136:5000/login',
+            'https://156.17.227.136:5000/login',
             //'127.0.0.1:5000/login',
                 [
                     'form_params' => [
@@ -41,10 +41,10 @@
 
     function sign_up($username, $password) {
         $http = new HTTP2();
-        $client = new Client();
+        $client = new Client(['verify' => false]);
         $response = $client->request(
             'POST',
-            '156.17.227.136:5000/register',
+            'https://156.17.227.136:5000/register',
             //'127.0.0.1:5000/register',
             [
                 'form_params' => [

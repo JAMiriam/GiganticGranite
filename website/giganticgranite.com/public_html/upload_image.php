@@ -2,7 +2,7 @@
     require_once 'utils.php';
     use GuzzleHttp\Client;
 
-    $http = new HTTP2();
+        $http = new HTTP2();
 
 try {
     $uploaddir = sys_get_temp_dir() . '/gg-data';
@@ -33,12 +33,12 @@ try {
                 $uploaddir
             )) {
                 file_put_contents($originaldir, file_get_contents($uploaddir));
-                $client = new Client();
+                $client = new Client(['verify' => false]);
                 $response;
                 if (signed_in()) {
                     $response = $client->request(
                         'POST',
-                        '156.17.227.136:5000/actors/image',
+                        'https://156.17.227.136:5000/actors/image',
                         //'127.0.0.1:5000/actors/image',
                         [
                             'multipart' => [
@@ -56,7 +56,7 @@ try {
                 } else {
                     $response = $client->request(
                         'POST',
-                        '156.17.227.136:5000/actors/image',
+                        'https://156.17.227.136:5000/actors/image',
                         //'127.0.0.1:5000/actors/image',
                         [
                             'multipart' => [

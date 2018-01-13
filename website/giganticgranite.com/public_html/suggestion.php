@@ -19,10 +19,10 @@
         'bottom' => $bottom
     );
     
-    $client = new Client();
+    $client = new Client(['verify' => false]);
     $response = $client->request(
         'POST',
-        '156.17.227.136:5000/actors/suggestion',
+        'https://156.17.227.136:5000/actors/suggestion',
         [
             'multipart' => [
                 [

@@ -2,6 +2,7 @@ var chosen;
 var bigImage;
 var number;
 var myModal;
+var confirmModal;
 var actorNameInput;
 
 var rect;
@@ -14,6 +15,7 @@ $(document).ready(function() {
     bigImage = $(".big-image")[0];
     number = $("#number");
     myModal = $("#myModal");
+    confirmModal = $("#confirmModal");
     actorNameInput = $("#actorNameInput");
 
     rect = bigImage.getBoundingClientRect();
@@ -65,4 +67,5 @@ function sendSuggestion() {
     }
     actorNameInput.val("");
     chosen = null;
+    confirmModal.modal();
 }
