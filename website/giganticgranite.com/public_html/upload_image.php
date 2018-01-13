@@ -90,17 +90,22 @@ try {
                     $name = $actor->name;
                     if($actor->reliability === "wrong") {
                         $i += 1;
-                        $name = $i . " unrecognized";
+//                        $name = $i . " unrecognized";
+                        $name .= '?';
                         array_push($suggestions, $actor);
                     }
                     $top = intval($actor->top) * $scale;
                     $left = intval($actor->left) * $scale;
                     $right = intval($actor->right) * $scale;
                     $bottom = intval($actor->bottom) * $scale;
-                    $cmd = 'convert "' . $uploaddir . '" -fill none -stroke red -pointsize 22 -draw "rectangle ';
+                    $color = 'green';
+                    if($actor->reliability === "wrong") {
+                        $color = 'red';
+                    }
+                    $cmd = 'convert "' . $uploaddir . '" -fill none -stroke ' . $color . ' -pointsize 22 -draw "rectangle ';
                     //die(var_dump($actor));
                     $cmd .= $top . ',' . $left . ' ' . $right . ',' . $bottom . 
-                            '" -font Arial-Bold -fill red -draw "text ' . $top . ',' . ($bottom + 20) . 
+                            '" -font Arial-Bold -fill ' . $color . ' -stroke ' . $color . ' -draw "text ' . $top . ',' . ($bottom + 20) . 
                             ' \'' . $name . '\'" "' . $uploaddir . '"';
                     //die($cmd);
                     shell_exec($cmd);
