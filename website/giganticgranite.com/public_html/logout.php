@@ -5,4 +5,4 @@
 
     $http = new HTTP2();
     $http->redirect('/');
-?>
+    

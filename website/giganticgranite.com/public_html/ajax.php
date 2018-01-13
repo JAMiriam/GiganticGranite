@@ -2,7 +2,7 @@
     require_once 'utils.php';
     
     use GuzzleHttp\Client;
-    
+try {
     $uploaddir = sys_get_temp_dir() . '/gg-data/';
     
     $id = $_GET['id'];
@@ -47,4 +47,8 @@
     }
     $details .= '</div>';
     echo $details;
+} catch (Exception $e) {
+    $http = new HTTP2();
+    $http->redirect("/error2.php");
+}
     

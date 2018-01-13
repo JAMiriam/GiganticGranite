@@ -32,9 +32,11 @@
             // TODO read data from server (whatever it is)
             $_SESSION['signed_in'] = 1;
             $_SESSION['username'] = $username;
+            $_SESSION['token'] = $json->data;
             $http->redirect("\index.php");
         }
-        die($response->getBody());
+        $http->redirect("\error2.php");
+        // die($response->getBody());
     }
 
     function sign_up($username, $password) {
@@ -108,4 +110,3 @@
 //
 //        return new mysqli($host, $user, $dbpassword, $dbname, $port, $socket);
 //    }
-?>
