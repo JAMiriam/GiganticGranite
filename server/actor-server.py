@@ -29,8 +29,8 @@ mysql.init_app(app)
 @app.route('/actors/image', methods=['POST'])
 def getActors():
     img = request.files['image']
-    token = request.args.get('token', '')
-    
+    token = request.form.get('token')
+    print(token)
     #prec.prd(img) returns array of vectors which contain:
     #at first position "right" actor was found or "wrong" actor wasn't
     #found at current position
@@ -203,12 +203,12 @@ def insertToHistory(token, actors_to_history):
     query = ('SELECT userId from user where token=%s')
     cursor.execute(query, (token))
     data = cursor.fetchone()
-
+    print(data)
     if data:
         user_id = data[0]
         now = datetime.datetime.now()
         search_date = now.strftime("%Y-%m-%d %H:%M")
-
+        print("dfgdfgdrf")
         query = ('INSERT INTO search_history (userId, foundActors, searchDate) VALUES (%s, %s, %s)')
         
         cursor.execute(query, (user_id, actors_to_history, search_date))
