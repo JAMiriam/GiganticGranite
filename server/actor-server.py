@@ -232,7 +232,8 @@ def insertToHistory(token, actors_to_history, filename):
         conn.commit()
 
         temp_path = os.path.join('temp', filename)
-        img = cv2.imread(temp_path)
+        #img = cv2.imread(temp_path)
+        img = cv2.LoadImage(temp_path,CV_LOAD_IMAGE_COLOR)
         if img is not None:
 
             height, width = img.shape[:2]
