@@ -284,7 +284,9 @@ def getHistory():
 @app.route('/images/<filename>')
 def getImage(filename):
     filename = 'images/'+filename
-    return send_file(filename, mimetype='image/png')
+    if os.path.isfile(filename):
+        return send_file(filename, mimetype='image/png')
+    return "no image"
 
 if __name__ == '__main__':
     app.run(debug = False, host = '156.17.227.136', port = 5000)
