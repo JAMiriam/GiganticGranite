@@ -202,7 +202,7 @@ def login():
     else:
         return jsonify({'data':'Wrong username'})
 
-def insertToHistory(token, actors_to_history):
+def insertToHistory(token, actors_to_history, filename):
     conn = mysql.connect()
     cursor = conn.cursor()
 
