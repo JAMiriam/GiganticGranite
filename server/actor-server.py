@@ -25,7 +25,7 @@ app.config['MYSQL_DATABASE_USER'] = sys.argv[1]
 app.config['MYSQL_DATABASE_PASSWORD'] = sys.argv[2]
 app.config['MYSQL_DATABASE_DB'] = 'giganticgraniteDB'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['UPLOAD_FOLDER'] = './images'
+app.config['UPLOAD_FOLDER'] = 'images'
 
 mysql.init_app(app)
 
@@ -48,7 +48,7 @@ def getActors():
         to_history = temp[1]
 
         filename = secure_filename(img.filename)
-        img.save(os.path.join('./temp', filename))
+        img.save(os.path.join('temp', filename))
 
         insertToHistory(token, to_history, img.filename)
 
@@ -229,7 +229,7 @@ def insertToHistory(token, actors_to_history):
         cursor.execute(query, (hist_id, user_id, actors_to_history, search_date))
         conn.commit()
 
-        temp_path = 'temp/'+filename
+        temp_path = os.path.join('temp', filename)
         img = cv2.imread(temp_path)
         if img is not None:
 
@@ -243,7 +243,8 @@ def insertToHistory(token, actors_to_history):
                 # resize image
             img = cv2.resize(img, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
 
-            new_path = 'images/img_'+str(hist_id)+'.png'
+            new_name = 'img_'+str(hist_id)+'.png'
+            new_path = os.path.join('images', new_name)
             print(new_path)
             cv2.imwrite(new_path,img)
         os.remove(temp_path)
@@ -283,7 +284,7 @@ def getHistory():
 
 @app.route('/images/<filename>')
 def getImage(filename):
-    filename = 'images/'+filename
+    filename = os.path.join('images', filename)
     if os.path.isfile(filename):
         return send_file(filename, mimetype='image/png')
     return "no image"
