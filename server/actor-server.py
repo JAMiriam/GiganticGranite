@@ -206,7 +206,7 @@ def insertToHistory(token, actors_to_history, filename):
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    query = ('SELECT userId from user where token=%s')
+    query = ('SELECT userId, token from user where token like %s')
     cursor.execute(query, (token))
     data = cursor.fetchone()
     print(data)
