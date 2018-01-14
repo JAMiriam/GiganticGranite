@@ -1,6 +1,6 @@
-from flask import Flask, Response, jsonify, request
+from flask import Flask, Response, jsonify, request, send_file
 from actorinfo import ActorsInfoPicker, Actor, MovieCredit
-# from werkzeug import secure_filename
+#from werkzeug import secure_filename
 from werkzeug.utils import secure_filename
 
 from ai_info_parser import make_dict, make_dict_logged
@@ -14,6 +14,8 @@ import os
 import datetime
 import random
 import string
+import cv2
+import numpy as np
 
 prec=facerec.reclass()
 app = Flask(__name__)
@@ -23,6 +25,7 @@ app.config['MYSQL_DATABASE_USER'] = sys.argv[1]
 app.config['MYSQL_DATABASE_PASSWORD'] = sys.argv[2]
 app.config['MYSQL_DATABASE_DB'] = 'giganticgraniteDB'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['UPLOAD_FOLDER'] = './images'
 
 mysql.init_app(app)
 
@@ -44,7 +47,10 @@ def getActors():
         dicted_actors = temp[0]
         to_history = temp[1]
 
-        insertToHistory(token, to_history)
+        filename = secure_filename(img.filename)
+        img.save(os.path.join('./temp', filename))
+
+        insertToHistory(token, to_history, img.filename)
 
         data = json.dumps(dicted_actors)
 
@@ -90,20 +96,20 @@ def getComplaint():
 
 
 # JSON with details contains
-# 	array of Actor:
-#		name: string
-#		biography: string
-#		birthday: string
-#		deathday: string or null
-#		gender: string
-#		imdb_profile: string
-#		images: array of string
-#		movie_credits: array of MovieCredit
-#			title: string
-#			genres: array of string
-#			vote_average: number
-#			poster: string
-#	
+#   array of Actor:
+#       name: string
+#       biography: string
+#       birthday: string
+#       deathday: string or null
+#       gender: string
+#       imdb_profile: string
+#       images: array of string
+#       movie_credits: array of MovieCredit
+#           title: string
+#           genres: array of string
+#           vote_average: number
+#           poster: string
+#   
 @app.route('/actordetails/<actor_id>', methods=['GET'])
 def getDetails(actor_id):
     picker = ActorsInfoPicker()
@@ -205,14 +211,42 @@ def insertToHistory(token, actors_to_history):
     data = cursor.fetchone()
     print(data)
     if data:
+        query = ('SELECT MAX(historyId) from search_history ')
+        cursor.execute(query)
+        hist_data = cursor.fetchone()
+        
+        if not hist_data[0]:
+            hist_id = 1
+        else:
+            hist_id = hist_data[0] + 1
+
         user_id = data[0]
         now = datetime.datetime.now()
         search_date = now.strftime("%Y-%m-%d %H:%M")
         print("dfgdfgdrf")
-        query = ('INSERT INTO search_history (userId, foundActors, searchDate) VALUES (%s, %s, %s)')
+        query = ('INSERT INTO search_history (historyId, userId, foundActors, searchDate) VALUES (%s, %s, %s, %s)')
         
-        cursor.execute(query, (user_id, actors_to_history, search_date))
+        cursor.execute(query, (hist_id, user_id, actors_to_history, search_date))
         conn.commit()
+
+        temp_path = 'temp/'+filename
+        img = cv2.imread(temp_path)
+        if img is not None:
+
+            height, width = img.shape[:2]
+            max_height = 100
+            max_width = 160
+
+            scaling_factor = max_height / float(height)
+            if max_width/float(width) < scaling_factor:
+                scaling_factor = max_width / float(width)
+                # resize image
+            img = cv2.resize(img, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
+
+            new_path = 'images/img_'+str(hist_id)+'.png'
+            print(new_path)
+            cv2.imwrite(new_path,img)
+        os.remove(temp_path)
 
     return None
 
@@ -229,22 +263,28 @@ def getHistory():
 
         if data:
             user_id = data[0]
-            query = ('SELECT foundActors, searchDate from search_history where userId=%s')
+            query = ('SELECT foundActors, searchDate, historyId from search_history where userId=%s')
             cursor.execute(query, (user_id))
 
             history = cursor.fetchall()
 
             dicted_history = []
             for search in history:
-                temp = dict(foundActors=search[0], 
-                    date=search[1])
+                temp = dict(foundActors=json.dumps(search[0].split(', ')), 
+                    date=search[1],
+                    image='images/img_'+str(search[2])+'.png')
                 dicted_history.append(temp)
 
             data = json.dumps(dicted_history)
 
             return Response(data, mimetype="application/json")
 
-    return jsonify({'data':'Bad token'}) 
+    return jsonify({'data':'Bad token'})
+
+@app.route('/images/<filename>')
+def getImage(filename):
+    filename = 'images/'+filename
+    return send_file(filename, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(debug = False, host = '156.17.227.136', port = 5000)
