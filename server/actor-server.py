@@ -287,5 +287,5 @@ def getImage(filename):
     return send_file(filename, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(debug = False, host = '156.17.227.136', port = 5000)
+    app.run(debug = False, host = '156.17.227.136', port = 5000, ssl_context='adhoc')
     #app.run(debug = False, host = '79.110.197.182', port = 5000)
