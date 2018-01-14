@@ -33,7 +33,9 @@ mysql.init_app(app)
 def getActors():
     img = request.files['image']
     token = request.form.get('token')
-    print(token)
+    if not token:
+        token = request.args.get('token', '')
+    #print(token)
     #prec.prd(img) returns array of vectors which contain:
     #at first position "right" actor was found or "wrong" actor wasn't
     #found at current position
