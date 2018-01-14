@@ -249,8 +249,11 @@ def insertToHistory(token, actors_to_history, filename):
             new_path = os.path.join('images', new_name)
             print(new_path)
             cv2.imwrite(new_path,img)
+        else:
+            print("cant load temp image")
         os.remove(temp_path)
-
+    else:
+        print("something went wrong")
     return None
 
 @app.route('/get/history')
