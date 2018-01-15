@@ -18,6 +18,6 @@ public class TestDetailsPane {
 		simpleActorsList.add(kevinSpacey);
 		SessionData.getActorsData(simpleActorsList);
 		GUIManager.showDetailsPane();
-		JavaFXSimpleWindow.loadActorDetails(imdb);
+		JavaFXSimpleWindow.setActorDetails(imdb);
 	}
 }

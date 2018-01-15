@@ -60,7 +60,7 @@ class ActorRectangle extends Rectangle {
 		setOnMouseClicked(event -> {
 			hideName();
 			GUIManager.showDetailsPane();
-			JavaFXSimpleWindow.loadActorDetails(imdb);
+			JavaFXSimpleWindow.setActorDetails(imdb);
 		});
 	}
 

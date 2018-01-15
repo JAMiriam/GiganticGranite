@@ -15,12 +15,14 @@ import transmission.Client;
 import transmission.SessionData;
 import windowutils.WindowInfo;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
 import static javafx.stage.StageStyle.TRANSPARENT;
 
+/**
+ * Base JavaFX application window
+ */
 public class JavaFXSimpleWindow extends Application {
 	private static Stage mainStage;
 	private static Scene scene;
@@ -36,6 +38,10 @@ public class JavaFXSimpleWindow extends Application {
 	private static Pane detailsPhotoPane;
 	private static WindowInfo info;
 
+	/**
+	 * Starts JavaFX and creates main components
+	 * @param stage
+	 */
 	@Override
 	public void start(final Stage stage) {
 		mainStage = stage;
@@ -55,6 +61,10 @@ public class JavaFXSimpleWindow extends Application {
 		System.out.println("JavaFX simple window created");
 	}
 
+	/**
+	 * Sets window position to given coordinates
+	 * @param windowPos active window info
+	 */
 	public static void relocateWindow(WindowInfo windowPos) {
 		Platform.runLater(() -> {
 			info = windowPos;
@@ -65,6 +75,10 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
+	/**
+	 * Load actors got from server
+	 * @param recognizedActors vector with recognized actors
+	 */
 	public static void loadActors(ArrayList<SimpleActor> recognizedActors) {
 		Platform.runLater(() -> {
 			actors.addAll(recognizedActors);
@@ -75,6 +89,9 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
+	/**
+	 * Draws rectangles around all recognized actors' faces
+	 */
 	public static void drawRectangles() {
 		Platform.runLater(() -> {
 			canvas.setPrefSize(info.getWidth(), info.getHeight());
@@ -90,6 +107,9 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
+	/**
+	 * Removes data from vectors and windows
+	 */
 	public static void clearData() {
 		Platform.runLater(() -> {
 			rectangles.clear();
@@ -101,8 +121,10 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
+	/**
+	 * Shows panel with actor's details
+	 */
 	public static void showDetailsPanel() {
-		//TODO singleton pattern: once created = next time just load new data
 		Platform.runLater(() -> {
 			dialog = new Dialog<>();
 			dialog.setTitle("Details pane");
@@ -232,11 +254,19 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
+	/**
+	 * Sets font for given label
+	 * @param label label to modify
+	 */
 	private static void setLabelCss(Label label) {
 		label.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
 	}
 
-	public static void loadActorDetails(String imdb_id) {
+	/**
+	 * Sets details fields for clicked actor
+	 * @param imdb_id imdb identifier
+	 */
+	public static void setActorDetails(String imdb_id) {
 		Platform.runLater(() -> {
 			try {
 				Actor actorData = SessionData.getActorDetails(imdb_id);
@@ -257,7 +287,6 @@ public class JavaFXSimpleWindow extends Application {
 
 				ImageView photo = new ImageView(actorData.getImages().get(0));
 				StackPane.setAlignment(photo, Pos.CENTER);
-		//		photo.setFitHeight(100);
 				photo.setFitWidth(120);
 				photo.setPreserveRatio(true);
 				detailsPhotoPane.getChildren().add(photo);
@@ -267,11 +296,15 @@ public class JavaFXSimpleWindow extends Application {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				loadActorDetails(imdb_id);
+				setActorDetails(imdb_id);
 			}
 		});
 	}
 
+	/**
+	 * Gets current active SimpleActor instance
+	 * @return
+	 */
 	private static SimpleActor getActiveActor() {
 		String imdb = "";
 		for(ActorRectangle actor : rectangles)
@@ -283,6 +316,10 @@ public class JavaFXSimpleWindow extends Application {
 		return null;
 	}
 
+	/**
+	 * Launches application window
+	 * @param args program's arguments
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
