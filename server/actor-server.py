@@ -49,10 +49,12 @@ def getActors():
         dicted_actors = temp[0]
         to_history = temp[1]
 
-        filename = secure_filename(img.filename)
-        img.save(os.path.join('temp', filename))
-
-        insertToHistory(token, to_history, img.filename)
+        #filename = secure_filename(img.filename)
+        #img.save(os.path.join('temp', filename))
+        nparr = np.fromstring(img.read(), np.uint8)
+        a_img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        
+        insertToHistory(token, to_history, a_img)
 
         data = json.dumps(dicted_actors)
 
@@ -204,7 +206,7 @@ def login():
     else:
         return jsonify({'data':'Wrong username'})
 
-def insertToHistory(token, actors_to_history, filename):
+def insertToHistory(token, actors_to_history, img):
     conn = mysql.connect()
     cursor = conn.cursor()
 
@@ -232,10 +234,10 @@ def insertToHistory(token, actors_to_history, filename):
         conn.commit()
 
         #temp_path = os.path.join('temp', filename)
-        temp_path = 'D:\\GiganticGranite\\server\\temp\\'+filename
-        img = cv2.imread(temp_path)
-        if img is None:
-            temp_path = os.path.join('D:\GiganticGranite\server\temp', filename)
+        #temp_path = 'D:\\GiganticGranite\\server\\temp\\'+filename
+        #img = cv2.imread(temp_path)
+        #if img is None:
+        #    temp_path = os.path.join('D:\GiganticGranite\server\temp', filename)
         #img = cv2.LoadImage(temp_path,CV_LOAD_IMAGE_COLOR)
         if img is not None:
 
@@ -250,13 +252,13 @@ def insertToHistory(token, actors_to_history, filename):
             img = cv2.resize(img, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
 
             new_name = 'img_'+str(hist_id)+'.png'
-            #new_path = os.path.join('images', new_name)
+            new_path = os.path.join('images', new_name)
             #print(new_path)
-            new_path = os.path.join('D:\GiganticGranite\server\images', new_name)
+            #new_path = os.path.join('D:\GiganticGranite\server\images', new_name)
             cv2.imwrite(new_path,img)
         else:
             print("cant load temp image")
-        os.remove(temp_path)
+        #os.remove(temp_path)
     else:
         print("something went wrong")
     return None
