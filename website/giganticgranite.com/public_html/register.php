@@ -47,7 +47,12 @@
             <?php
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 global $result;
-                $result = sign_up($_POST['username'], $_POST['password']);
+                try {
+                    $result = sign_up($_POST['username'], $_POST['password']);
+                } catch (Exception $e) {
+                    $http = new HTTP2();
+                    $http->redirect("/error2.php");
+                }
                 if ($result == 0) {
                     echo "Your account was created!";
                 } 

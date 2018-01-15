@@ -26,7 +26,7 @@
         );
 //        echo $res->getBody();
 //        die();
-        $src = 'data:image/' . 'png' . ';base64,' . base64_encode($res->getBody());
+        $src = 'data:image/' . 'jpg' . ';base64,' . base64_encode($res->getBody());
         $data[$i]->image = $src;
     }
     

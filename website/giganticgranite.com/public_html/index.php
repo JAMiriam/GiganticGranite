@@ -58,7 +58,12 @@
                 </div>
                 <?php
             } elseif (isset($_POST['username']) && isset($_POST['password'])) {
-                sign_in($_POST['username'], $_POST['password']);
+                try {
+                    sign_in($_POST['username'], $_POST['password']);
+                } catch (Exception $e) {
+                    $http = new HTTP2();
+                    $http->redirect("/error2.php");
+                }
             } else { ?>
 
                 <!-- sign in -->            

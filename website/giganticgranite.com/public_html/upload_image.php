@@ -141,6 +141,6 @@ try {
         $http->redirect('/error.php');
     }
 } catch (Exception $e) {
-    echo $e->getMessage();
-//    $http->redirect('/error.php');
+//    echo $e->getMessage();
+    $http->redirect('/error.php');
 }
