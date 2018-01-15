@@ -14,7 +14,7 @@ class DBConnector:
         self.uri = uri_file.read()
         self.client = MongoClient(self.uri)
         self.db = self.client['gigantic-granite']
-        self.collection = self.db['actors-test']
+        self.collection = self.db['actors-data']
 
     ## insert single person into db
     # def post(self, imdb_id, tmdb_id, name):
