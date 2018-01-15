@@ -42,7 +42,9 @@ def getActors():
     #at second place is a mega position number of actor (or best guess in case of "wrong")
     #next four are position of face four int top left right bottom 
     #at this moment there can be problems with using this function
-    found_actors=prec.prd(img)
+    nparr = np.fromstring(img.read(), np.uint8)
+    a_img = cv2.imdecode(nparr,cv2.IMREAD_COLOR)
+    found_actors=prec.prd(a_img)
     
     if token != '':
         temp = make_dict_logged(found_actors)
@@ -51,8 +53,8 @@ def getActors():
 
         #filename = secure_filename(img.filename)
         #img.save(os.path.join('temp', filename))
-        nparr = np.fromstring(img.read(), np.uint8)
-        a_img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        
         
         insertToHistory(token, to_history, a_img)
 
