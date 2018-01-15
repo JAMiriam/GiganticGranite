@@ -14,6 +14,8 @@ import models.*;
 import transmission.Client;
 import transmission.SessionData;
 import windowutils.WindowInfo;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -225,6 +227,7 @@ public class JavaFXSimpleWindow extends Application {
 
 			ButtonType button = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);
 			dialog.getDialogPane().getButtonTypes().add(button);
+
 			dialog.showAndWait();
 		});
 	}

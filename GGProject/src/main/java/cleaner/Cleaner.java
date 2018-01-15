@@ -5,6 +5,9 @@ import transmission.Client;
 import java.io.File;
 import java.util.Vector;
 
+/**
+ * Class with actions to perform before exiting the program
+ */
 public class Cleaner {
 	public Cleaner() {
 		deleteScreenshotsFromSession(Client.screenshotPaths);
@@ -12,6 +15,10 @@ public class Cleaner {
 		System.exit(0);
 	}
 
+	/**
+	 * Removes screens from drive
+	 * @param paths vactor of screenshots' paths
+	 */
 	private void deleteScreenshotsFromSession(Vector<String> paths) {
 		for(String path : paths) {
 			try {

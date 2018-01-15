@@ -2,6 +2,7 @@ package gui.tray;
 
 import cleaner.Cleaner;
 import gui.GUIManager;
+import transmission.Client;
 import transmission.LoginException;
 import transmission.User;
 
@@ -51,6 +52,7 @@ public class TrayGUI {
 		JMenuItem clearItem = new JMenuItem("Clear");
 		JMenuItem helpItem = new JMenuItem("Help");
 		JMenuItem settingsItem = new JMenuItem("Settings");
+		JMenuItem historyItem = new JMenuItem("History");
 		JMenuItem loginItem = new JMenuItem("Log in");
 		JMenuItem exitItem = new JMenuItem("Exit");
 		JCheckBoxMenuItem enableBox = new JCheckBoxMenuItem("Enabled");
@@ -113,6 +115,10 @@ public class TrayGUI {
 
 		clearItem.addActionListener(e -> GUIManager.clearSimpleWindow());
 
+		historyItem.addActionListener(e -> {
+
+		});
+
 		exitItem.addActionListener(e -> {
 			tray.remove(trayIcon);
 			new Cleaner();
@@ -133,11 +139,7 @@ public class TrayGUI {
 		register.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					Desktop.getDesktop().browse(new URI("http://giganticgranite.com/register"));
-				} catch (URISyntaxException | IOException ex) {
-					System.out.println(ex.getMessage());
-				}
+				Client.openRegistration();
 			}
 		});
 
@@ -150,7 +152,8 @@ public class TrayGUI {
 		int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
 		if (option == JOptionPane.OK_OPTION) {
 			try {
-				int userid = User.login(username.getText(), password.getText());
+				String userid = User.login(username.getText(), password.getText());
+				System.out.println("userid: " + userid);
 				showTooltipBalloon(username.getText() + " logged in");
 			} catch (NoRouteToHostException e) {
 				JOptionPane.showMessageDialog(null, "Could not connect to sever.\nPlease try again later.",
@@ -174,7 +177,6 @@ public class TrayGUI {
 		JComboBox<String> extra = new JComboBox<>(extraSelect);
 
 		String[] loaded = GUIManager.loadSettings();
-		System.out.println("In tray: " + loaded[0] + ", " + loaded[1]);
 		basic.setSelectedItem(loaded[0]);
 		extra.setSelectedItem(loaded[1]);
 
@@ -188,6 +190,10 @@ public class TrayGUI {
 			assert selectedExtra != null;
 			GUIManager.saveConfig(selectedBasic, selectedExtra);
 		}
+	}
+
+	private void openHistory() {
+
 	}
 
 	/**
