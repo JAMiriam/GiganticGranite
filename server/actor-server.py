@@ -253,7 +253,7 @@ def insertToHistory(token, actors_to_history, img):
                 # resize image
             img = cv2.resize(img, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
 
-            new_name = 'img_'+str(hist_id)+'.png'
+            new_name = 'img_'+str(hist_id)+'.jpg'
             new_path = os.path.join('images', new_name)
             #print(new_path)
             #new_path = os.path.join('D:\GiganticGranite\server\images', new_name)
@@ -287,7 +287,7 @@ def getHistory():
             for search in history:
                 temp = dict(foundActors=json.dumps(search[0].split(', ')), 
                     date=search[1],
-                    image='images/img_'+str(search[2])+'.png')
+                    image='images/img_'+str(search[2])+'.jpg')
                 dicted_history.append(temp)
 
             data = json.dumps(dicted_history)
@@ -300,7 +300,7 @@ def getHistory():
 def getImage(filename):
     filename = os.path.join('images', filename)
     if os.path.isfile(filename):
-        return send_file(filename, mimetype='image/png')
+        return send_file(filename, mimetype='image/jpg')
     return "no image"
 
 if __name__ == '__main__':
