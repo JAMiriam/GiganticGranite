@@ -13,8 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.NoRouteToHostException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 
 /**
@@ -53,6 +51,7 @@ public class TrayGUI {
 		JMenuItem helpItem = new JMenuItem("Help");
 		JMenuItem settingsItem = new JMenuItem("Settings");
 		JMenuItem historyItem = new JMenuItem("History");
+		JMenuItem aboutItem = new JMenuItem("About");
 		JMenuItem loginItem = new JMenuItem("Log in");
 		JMenuItem exitItem = new JMenuItem("Exit");
 		JCheckBoxMenuItem enableBox = new JCheckBoxMenuItem("Enabled");
@@ -65,6 +64,7 @@ public class TrayGUI {
 		optionMenu.add(enableBox);
 		optionMenu.add(settingsItem);
 		optionMenu.add(helpItem);
+		optionMenu.add(aboutItem);
 		popup.addSeparator();
 		popup.add(exitItem);
 
@@ -116,7 +116,7 @@ public class TrayGUI {
 		clearItem.addActionListener(e -> GUIManager.clearSimpleWindow());
 
 		historyItem.addActionListener(e -> {
-
+			User.openHistoryInBrowser();
 		});
 
 		exitItem.addActionListener(e -> {
@@ -190,10 +190,6 @@ public class TrayGUI {
 			assert selectedExtra != null;
 			GUIManager.saveConfig(selectedBasic, selectedExtra);
 		}
-	}
-
-	private void openHistory() {
-
 	}
 
 	/**

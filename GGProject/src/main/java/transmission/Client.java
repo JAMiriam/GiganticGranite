@@ -7,6 +7,7 @@ import models.Complaint;
 import models.SimpleActor;
 import org.apache.http.*;
 import org.apache.http.client.methods.*;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -18,8 +19,12 @@ import org.apache.http.util.*;
 import org.json.JSONArray;
 
 import javax.net.ssl.SSLContext;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -28,9 +33,9 @@ import java.util.Vector;
 
 
 public class Client {
-        static final String SERVER_IP = "156.17.227.136";
-//    static final String SERVER_IP = "192.168.0.101";
+	static final String SERVER_IP = "156.17.227.136";
     static final int SERVER_HOST = 5000;
+    static final int SITE_HOST = 8000;
     private static CloseableHttpClient httpClient;
     public static Vector<String> screenshotPaths;
 
@@ -48,7 +53,6 @@ public class Client {
 
 		} catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
 			e.printStackTrace();
-			//TODO no connection - countdown for retry
 		}
 
         screenshotPaths = new Vector<>();
@@ -107,11 +111,14 @@ public class Client {
 
         try {
             String responseBody = EntityUtils.toString(httpClient.execute(post).getEntity(), "UTF-8");
-            System.out.println(responseBody);
             actor = new JSONArray(responseBody);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (HttpHostConnectException e) {
+			JOptionPane.showMessageDialog(null, "Could not connect to sever.\nPlease try again later.",
+					"Error", JOptionPane.ERROR_MESSAGE);
         }
+        catch(IOException ex) {
+			ex.printStackTrace();
+		}
         return actor;
     }
 
@@ -143,4 +150,16 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+	public static void openRegistration() {
+		try {
+			String url = "http://" + SERVER_IP + ":" + SITE_HOST + "/register.php";
+			if (Runtime.getRuntime().exec(new String[] {"which", "xdg-open"}).getInputStream().read() != -1) {
+				Runtime.getRuntime().exec(new String[] {"xdg-open", url});
+			}
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 }
