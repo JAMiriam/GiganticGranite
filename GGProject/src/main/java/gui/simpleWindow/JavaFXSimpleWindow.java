@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import models.*;
@@ -105,8 +104,6 @@ public class JavaFXSimpleWindow extends Application {
 		Platform.runLater(() -> {
 			dialog = new Dialog<>();
 			dialog.setTitle("Details pane");
-//			dialog.setHeaderText("This is a custom dialog. Enter info and \n" +
-//					"press Okay (or click title bar 'X' for cancel).");
 			dialog.setResizable(true);
 			dialog.setX(0);
 			dialog.setY(0);
@@ -144,7 +141,6 @@ public class JavaFXSimpleWindow extends Application {
 			reportDialog.setContentText("Please enter new name:");
 
 			actorPane = new GridPane();
-//		actorPane.setAlignment(Pos.CENTER);
 			actorPane.setHgap(10);
 			actorPane.setVgap(10);
 			actorPane.setPadding(new Insets(25, 25, 25, 25));
@@ -188,6 +184,7 @@ public class JavaFXSimpleWindow extends Application {
 
 			imdbprofileButton.setOnAction(e -> {
 				try {
+					mainStage.setAlwaysOnTop(false);
 					if (Runtime.getRuntime().exec(new String[] {"which", "xdg-open"}).getInputStream().read() != -1) {
 						Runtime.getRuntime().exec(new String[] {"xdg-open", profileUrl});
 					}
@@ -223,6 +220,7 @@ public class JavaFXSimpleWindow extends Application {
 			BorderPane.setAlignment(scrollablePane, Pos.CENTER_RIGHT);
 			setUserAgentStylesheet(STYLESHEET_MODENA);
 
+			mainStage.setAlwaysOnTop(false);
 			dialog.getDialogPane().setContent(windowPane);
 
 			ButtonType button = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);

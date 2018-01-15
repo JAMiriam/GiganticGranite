@@ -46,6 +46,7 @@ class ActorRectangle extends Rectangle {
 		});
 
 		setOnMouseClicked(event -> {
+			hideName();
 			GUIManager.showDetailsPane();
 			JavaFXSimpleWindow.loadActorDetails(imdb);
 		});
@@ -54,7 +55,6 @@ class ActorRectangle extends Rectangle {
 	private void showName(MouseEvent event) {
 		if(!isNameVisible) {
 			tooltip.show(this, event.getSceneX(), event.getSceneY() + 2);
-//			Tooltip.install(this, tooltip);
 			isNameVisible = true;
 		}
 	}
