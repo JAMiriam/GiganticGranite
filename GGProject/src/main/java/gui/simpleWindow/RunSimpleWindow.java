@@ -8,14 +8,14 @@ import javafx.application.Application;
 public class RunSimpleWindow extends Thread {
 
 	/**
-	 *
+	 * Constructor
 	 */
 	public RunSimpleWindow() {
 		start();
 	}
 
 	/**
-	 * 
+	 * Runs thread
 	 */
 	@Override
 	public void run() {

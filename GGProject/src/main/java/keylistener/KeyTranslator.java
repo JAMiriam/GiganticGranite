@@ -2,7 +2,16 @@ package keylistener;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+/**
+ * Translates given names to JNativeHook numbers and numbers to JVativeHook names
+ */
 public class KeyTranslator {
+
+	/**
+	 * Translates string with name to key number
+	 * @param name key name
+	 * @return key number
+	 */
 	public static int getKeyNumber(String name) {
 		switch (name) {
 			case "PrtSc": {
@@ -32,7 +41,12 @@ public class KeyTranslator {
 		}
 		return 0;
 	}
-	
+
+	/**
+	 * Translates key number to key name
+	 * @param number key number
+	 * @return key name
+	 */
 	public static String getKeyName(int number) {
 		switch(number) {
 			case 3639: {

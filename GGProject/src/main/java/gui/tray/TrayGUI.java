@@ -20,6 +20,7 @@ import java.net.NoRouteToHostException;
  */
 public class TrayGUI {
 	private static TrayIcon trayIcon;
+
 	public TrayGUI() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -39,7 +40,7 @@ public class TrayGUI {
 			return;
 		}
 		final JPopupMenu popup = new JPopupMenu();
-		Image image = createImage();
+		Image image = new ImageIcon("images/icon16x16.png", "").getImage();
 		int trayIconWidth = new TrayIcon(image).getSize().width;
 		trayIcon = new TrayIcon(image.getScaledInstance(trayIconWidth, -1, Image.SCALE_SMOOTH));
 		final SystemTray tray = SystemTray.getSystemTray();
@@ -170,6 +171,9 @@ public class TrayGUI {
 		}
 	}
 
+	/**
+	 * Displays dialog with settings
+	 */
 	private void showSettingsWindow() {
 		String[] basicSelect = {"PrtSc", "Insert", "Delete", "PgUp", "PgDown"};
 		String[] extraSelect = { "ALT", "CTRL", "SHIFT"};
@@ -190,14 +194,6 @@ public class TrayGUI {
 			assert selectedExtra != null;
 			GUIManager.saveConfig(selectedBasic, selectedExtra);
 		}
-	}
-
-	/**
-	 *
-	 * @return Image object
-	 */
-	private Image createImage() {
-		return (new ImageIcon("images/icon16x16.png", "")).getImage();
 	}
 
 	/**

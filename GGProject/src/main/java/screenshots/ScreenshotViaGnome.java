@@ -29,9 +29,15 @@ public class ScreenshotViaGnome implements IScreenshoter {
 }
 
 /**
- * Class executing given bash command
+ * Class executing bash command
  */
 class BashCommandExecutor {
+
+	/**
+	 * Runs given command
+	 * @param command command to execute
+	 * @throws Exception
+	 */
 	static void runCommand(String command) throws Exception {
 		Runtime r = Runtime.getRuntime();
 		String[] commands = {"bash", "-c", command};

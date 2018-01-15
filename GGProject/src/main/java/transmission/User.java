@@ -21,10 +21,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- *
- */
 public class User extends Client {
 	private static String userToken = "";
 
@@ -74,7 +70,7 @@ public class User extends Client {
 
     public static void openHistoryInBrowser() {
     	if(!userToken.isEmpty()) {
-
+    		//TODO run in browser!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 		else {
 			JOptionPane.showConfirmDialog(null, "You are not logged in.", "Login", JOptionPane.OK_CANCEL_OPTION);

@@ -7,6 +7,9 @@ import transmission.SessionData;
 
 import java.util.ArrayList;
 
+/**
+ * Test class for details panel with dummy data
+ */
 public class TestDetailsPane {
 	public static void main(String args[]) {
 		String imdb = "nm0000228";

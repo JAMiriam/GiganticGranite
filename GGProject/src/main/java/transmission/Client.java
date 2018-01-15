@@ -31,7 +31,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-
+/**
+ * Client class to communicate with server
+ */
 public class Client {
 	static final String SERVER_IP = "156.17.227.136";
     static final int SERVER_HOST = 5000;

@@ -8,7 +8,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * JSON parser class
+ */
 public class JSONModelParser {
+
+    /**
+     * Gets actor info from given json
+     * @param json json from server
+     * @return list of SimpleActor instances
+     */
     public static ArrayList<SimpleActor> parseToSimpleActor(JSONArray json) {
         ArrayList<SimpleActor> actors = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
@@ -25,7 +34,12 @@ public class JSONModelParser {
         return actors;
     }
 
-    public static ArrayList<Actor> parseToActor(JSONArray json) {
+	/**
+	 * Gets actor info from given json
+	 * @param json json from server
+	 * @return list of Actor instances
+	 */
+	public static ArrayList<Actor> parseToActor(JSONArray json) {
         ArrayList<Actor> actors = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonobject = json.getJSONObject(i);
@@ -50,7 +64,12 @@ public class JSONModelParser {
         return actors;
     }
 
-    private static ArrayList<MovieCredit> parseToMovieCredit(JSONArray json) {
+	/**
+	 * Gets movies info from given json
+	 * @param json json from server
+	 * @return list of MoveCredit instances
+	 */
+	private static ArrayList<MovieCredit> parseToMovieCredit(JSONArray json) {
         ArrayList<MovieCredit> movies = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonobject = json.getJSONObject(i);
