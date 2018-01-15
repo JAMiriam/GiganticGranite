@@ -52,7 +52,7 @@
         <main>
             <div class="container text-center">
                 <h2>Something went wrong!</h2>
-                <h3>Please try again later or with different sreenshot</h3>
+                <h3>Please try again later or with different screenshot</h3>
             </div>
         </main>
 

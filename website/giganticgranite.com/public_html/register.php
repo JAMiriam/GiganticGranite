@@ -80,7 +80,7 @@
                             <label for="inputPasswordRepeat" class="sr-only">Repeat password</label>
                             <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Repeat password" required>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
                     </form>
                 </div>
 

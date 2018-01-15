@@ -56,8 +56,6 @@
         if ($json->data == "username is unavailable") {
             return 1;
         } else {
-            $_SESSION['signed_in'] = 1;
-            $_SESSION['username'] = $username;
             $http->redirect("/");
         }
     }
