@@ -1,13 +1,12 @@
 package gui.tray;
 
-import gui.WindowManager;
-import transmission.Client;
+import gui.GUIManager;
+import org.jnativehook.keyboard.NativeKeyEvent;
 import transmission.LoginException;
 import transmission.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,11 +15,12 @@ import java.net.NoRouteToHostException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
 /**
- * Graphical user interface. Linux-friendly.
- * Tray icon with context menu.
+ * Tray icon with context menu. Linux-friendly.
  */
 public class TrayGUI {
+	private static TrayIcon trayIcon;
 	public TrayGUI() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -32,7 +32,7 @@ public class TrayGUI {
 	}
 
 	/**
-	 * Creating simple context menu attached to tray image
+	 * Creates simple context menu attached to tray image
 	 */
 	private void createAndShow() {
 		if (!SystemTray.isSupported()) {
@@ -40,28 +40,30 @@ public class TrayGUI {
 			return;
 		}
 		final JPopupMenu popup = new JPopupMenu();
-		Image image = createImage("images/icon.png");
+		Image image = createImage();
 		int trayIconWidth = new TrayIcon(image).getSize().width;
-		final TrayIcon trayIcon = new TrayIcon(image.getScaledInstance(trayIconWidth, -1, Image.SCALE_SMOOTH));
+		trayIcon = new TrayIcon(image.getScaledInstance(trayIconWidth, -1, Image.SCALE_SMOOTH));
 		final SystemTray tray = SystemTray.getSystemTray();
 		trayIcon.setImageAutoSize(false);
 
 		// Create a popup menu components
-		JMenu displayMenu = new JMenu("Settings");
+		JMenu optionMenu = new JMenu("More");
 		JMenuItem clearItem = new JMenuItem("Clear");
-		JMenuItem aboutItem = new JMenuItem("About");
+		JMenuItem helpItem = new JMenuItem("Help");
+		JMenuItem settingsItem = new JMenuItem("Settings");
 		JMenuItem loginItem = new JMenuItem("Log in");
 		JMenuItem exitItem = new JMenuItem("Exit");
-		JCheckBoxMenuItem cb1 = new JCheckBoxMenuItem("Set sth1");
+		JCheckBoxMenuItem enableBox = new JCheckBoxMenuItem("Enabled");
+		enableBox.setSelected(true);
 
 		//Add components to popup menu
-		popup.add(clearItem);
-		popup.addSeparator();
 		popup.add(loginItem);
+		popup.add(clearItem);
+		popup.add(optionMenu);
+		optionMenu.add(enableBox);
+		optionMenu.add(settingsItem);
+		optionMenu.add(helpItem);
 		popup.addSeparator();
-		popup.add(displayMenu);
-		displayMenu.add(cb1);
-		displayMenu.add(aboutItem);
 		popup.add(exitItem);
 
 		trayIcon.addMouseListener(new MouseAdapter() {
@@ -91,37 +93,30 @@ public class TrayGUI {
 			return;
 		}
 
-		trayIcon.addActionListener(e -> JOptionPane.showMessageDialog(null,
-				"This dialog box is run from System Tray"));
-
-		aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
+		helpItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
 				"This dialog box is run from the About menu item"));
 
-		cb1.addItemListener(e -> {
-			if (e.getStateChange() == ItemEvent.SELECTED)
-				trayIcon.setImageAutoSize(true);
-			else
-				trayIcon.setImageAutoSize(false);
+		enableBox.addItemListener(e -> {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				GUIManager.setProgramMode(true);
+				showTooltipBalloon("GGApp enabled");
+			}
+			else {
+				GUIManager.setProgramMode(false);
+				showTooltipBalloon("GGApp disabled");
+			}
 		});
 
-		ActionListener listener = e -> {
-			JMenuItem item = (JMenuItem) e.getSource();
+		settingsItem.addActionListener(e -> showSettingsWindow());
 
-			if ("Clear".equals(item.getLabel())) {
-				WindowManager.clearSimpleWindow();
-			}
-			else if ("Log in".equals(item.getLabel())) {
-				showLoginWindow();
-			}
-		};
+		loginItem.addActionListener(e -> showLoginWindow());
 
-		clearItem.addActionListener(listener);
-		loginItem.addActionListener(listener);
+		clearItem.addActionListener(e -> GUIManager.clearSimpleWindow());
+
 		exitItem.addActionListener(e -> {
 			tray.remove(trayIcon);
 			System.exit(0);
 		});
-
 	}
 
 	/**
@@ -156,7 +151,7 @@ public class TrayGUI {
 		if (option == JOptionPane.OK_OPTION) {
 			try {
 				int userid = User.login(username.getText(), password.getText());
-				System.out.println("User: " + username.getText() + " (with id: " + userid + ") is logged in.");
+				showTooltipBalloon(username.getText() + " logged in");
 			} catch (NoRouteToHostException e) {
 				JOptionPane.showMessageDialog(null, "Could not connect to sever.\nPlease try again later.",
 						"Error", JOptionPane.ERROR_MESSAGE);
@@ -172,11 +167,42 @@ public class TrayGUI {
 		}
 	}
 
+	private void showSettingsWindow() {
+		String[] basicSelect = {"PrtSc", "Insert", "Delete", "PgUp", "PgDown"};
+		String[] extraSelect = { "ALT", "CTRL", "SHIFT"};
+		JComboBox<String> basic = new JComboBox<>(basicSelect);
+		JComboBox<String> extra = new JComboBox<>(extraSelect);
+
+		String[] loaded = GUIManager.loadSettings();
+		System.out.println("In tray: " + loaded[0] + ", " + loaded[1]);
+		basic.setSelectedItem(loaded[0]);
+		extra.setSelectedItem(loaded[1]);
+
+		Object[] message = {"Basic key:", basic, "Extra key:", extra };
+
+		int option = JOptionPane.showConfirmDialog(null, message, "Settings", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION) {
+			String selectedBasic = (String)basic.getSelectedItem();
+			String selectedExtra = (String)extra.getSelectedItem();
+			assert selectedBasic != null;
+			assert selectedExtra != null;
+			GUIManager.saveConfig(selectedBasic, selectedExtra);
+		}
+	}
+
 	/**
-	 * @param iconPath path to image
+	 *
 	 * @return Image object
 	 */
-	private Image createImage(String iconPath) {
-		return (new ImageIcon(iconPath, "")).getImage();
+	private Image createImage() {
+		return (new ImageIcon("images/icon16x16.png", "")).getImage();
+	}
+
+	/**
+	 * Shows balloon tooltip with message
+	 * @param message string to display
+	 */
+	public static void showTooltipBalloon(String message) {
+		trayIcon.displayMessage("GGApp info", message, TrayIcon.MessageType.INFO);
 	}
 }

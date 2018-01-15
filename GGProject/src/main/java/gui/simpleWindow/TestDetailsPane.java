@@ -1,8 +1,6 @@
 package gui.simpleWindow;
 
-import gui.WindowManager;
-import gui.simpleWindow.JavaFXSimpleWindow;
-import gui.simpleWindow.RunSimpleWindow;
+import gui.GUIManager;
 import models.SimpleActor;
 import transmission.Client;
 import transmission.SessionData;
@@ -19,7 +17,7 @@ public class TestDetailsPane {
 		kevinSpacey.setImdb_id(imdb);
 		simpleActorsList.add(kevinSpacey);
 		SessionData.getActorsData(simpleActorsList);
-		WindowManager.showDetailsPane();
+		GUIManager.showDetailsPane();
 		JavaFXSimpleWindow.loadActorDetails(imdb);
 	}
 }

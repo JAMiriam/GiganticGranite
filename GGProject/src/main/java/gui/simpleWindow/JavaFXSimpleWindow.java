@@ -20,9 +20,7 @@ import java.util.*;
 
 import static javafx.stage.StageStyle.TRANSPARENT;
 
-//TODO make proper css for all nodes!
 public class JavaFXSimpleWindow extends Application {
-	private static final int shadowSize = 50;
 	private static Stage mainStage;
 	private static Scene scene;
 	private static Group groupRoot;
@@ -102,34 +100,7 @@ public class JavaFXSimpleWindow extends Application {
 		});
 	}
 
-	private Pane createShadowPane() {
-		Pane shadowPane = new Pane();
-		shadowPane.setStyle(
-				"-fx-background-color: white;" + "-fx-effect: " +
-						"dropshadow(gaussian, #870f57, " + shadowSize + ", 0, 0, 0);" +
-						"-fx-background-insets: " + shadowSize + ";"
-		);
-
-		Rectangle innerRect = new Rectangle();
-		Rectangle outerRect = new Rectangle();
-		shadowPane.layoutBoundsProperty().addListener((observable, oldBounds, newBounds) -> {
-					innerRect.relocate(
-							newBounds.getMinX() + shadowSize,
-							newBounds.getMinY() + shadowSize
-					);
-					innerRect.setWidth(newBounds.getWidth() - shadowSize * 2);
-					innerRect.setHeight(newBounds.getHeight() - shadowSize * 2);
-					outerRect.setWidth(newBounds.getWidth());
-					outerRect.setHeight(newBounds.getHeight());
-					Shape clip = Shape.subtract(outerRect, innerRect);
-					shadowPane.setClip(clip);
-				}
-		);
-		return shadowPane;
-	}
-
 	public static void showDetailsPanel() {
-		//TODO move to another class
 		//TODO singleton pattern: once created = next time just load new data
 		Platform.runLater(() -> {
 			dialog = new Dialog<>();

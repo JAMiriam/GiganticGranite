@@ -1,6 +1,6 @@
 package transmission;
 
-import gui.WindowManager;
+import gui.GUIManager;
 import json.JSONModelParser;
 import models.Actor;
 import models.Complaint;
@@ -36,7 +36,7 @@ public class Client {
         SessionData.setScreenshotPath(path);
         JSONArray postResponse = postRequest("http://" + SERVER_IP + ":" + SERVER_HOST + "/actors/image", path);
         ArrayList<SimpleActor> simpleActorsList = JSONModelParser.parseToSimpleActor(postResponse);
-        WindowManager.createSimpleWindow(simpleActorsList);
+        GUIManager.createSimpleWindow(simpleActorsList);
         SessionData.getActorsData(simpleActorsList);
     }
         
@@ -83,6 +83,7 @@ public class Client {
 
         try {
             String responseBody = EntityUtils.toString(httpClient.execute(post).getEntity(), "UTF-8");
+            System.out.println(responseBody);
             actor = new JSONArray(responseBody);
         } catch (Exception e) {
             e.printStackTrace();

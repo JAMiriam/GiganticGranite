@@ -1,6 +1,6 @@
 package screenshots;
 
-import gui.WindowManager;
+import gui.GUIManager;
 import windowutils.ActiveWindowInfo;
 import windowutils.WindowInfo;
 
@@ -17,14 +17,14 @@ public class ScreenshotViaGnome implements IScreenshoter {
 	public void takeFullScreen(String savePath) throws Exception {
 		BashCommandExecutor.runCommand("gnome-screenshot --file=" + savePath);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		WindowManager.setScreenSize(new WindowInfo("", 0, 0, screenSize.width, screenSize.height));
+		GUIManager.setScreenSize(new WindowInfo("", 0, 0, screenSize.width, screenSize.height));
 	}
 
 	@Override
 	public void takeActiveWindow(String savePath) throws Exception {
 		BashCommandExecutor.runCommand("gnome-screenshot -w --file=" + savePath);
 		WindowInfo info = ActiveWindowInfo.getActiveWindowInfo();
-		WindowManager.setScreenSize(new WindowInfo("", info.getX(), info.getY(), info.getWidth(), info.getHeight()));
+		GUIManager.setScreenSize(new WindowInfo("", info.getX(), info.getY(), info.getWidth(), info.getHeight()));
 	}
 }
 

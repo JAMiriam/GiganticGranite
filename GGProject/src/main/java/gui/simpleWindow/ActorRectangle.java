@@ -1,6 +1,6 @@
 package gui.simpleWindow;
 
-import gui.WindowManager;
+import gui.GUIManager;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -46,7 +46,7 @@ class ActorRectangle extends Rectangle {
 		});
 
 		setOnMouseClicked(event -> {
-			WindowManager.showDetailsPane();
+			GUIManager.showDetailsPane();
 			JavaFXSimpleWindow.loadActorDetails(imdb);
 		});
 	}

@@ -50,6 +50,11 @@
             <artifactId>platform</artifactId>
             <version>3.5.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.swt</groupId>
+            <artifactId>org.eclipse.swt</artifactId>
+            <version>3.3.0</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,6 +1,6 @@
 package keylistener;
 
-import gui.WindowManager;
+import gui.GUIManager;
 import org.jnativehook.*;
 import org.jnativehook.keyboard.*;
 import screenshots.*;
@@ -14,7 +14,10 @@ import java.util.logging.Logger;
  * ALT+PRTSCR = capture only active window
  */
 public class GlobalKeyListener extends Thread implements NativeKeyListener  {
-	private boolean altPressedFlag = false;
+	private static int basicKey;
+	private static int extraKey;
+	private boolean extraFlag = false;
+	private static boolean enabled = true;
 
 	private static void startListener() {
 		try {
@@ -29,50 +32,63 @@ public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 		}
 	}
 
+	public static void setListenerState(boolean state) {
+		enabled = state;
+	}
+
+	public static void setConfig(int basic, int extra) {
+		basicKey = basic;
+		extraKey = extra;
+		System.out.println("New config is: " + basicKey + ", " + extraKey);
+	}
+
+	public static int[] getCurrentConfig() {
+		return new int[] {basicKey, extraKey};
+	}
+
 	public void run() {
+		basicKey = NativeKeyEvent.VC_PRINTSCREEN;
+		extraKey = NativeKeyEvent.VC_ALT;
 		startListener();
 	}
 
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
-//		ESC pressed - kill simple window
-		if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
-//			GlobalScreen.unregisterNativeHook();
-			WindowManager.clearSimpleWindow();
-		}
-
-//		ALT pressed - set flag
-		if (e.getKeyCode() == NativeKeyEvent.VC_ALT)
-			altPressedFlag = true;
-		else if (e.getKeyCode() == NativeKeyEvent.VC_PRINTSCREEN) {
-			try {
-				ScreenshotManager manager;
-//				#1 Screenshot captured via Robot.createScreenCapture
-//				manager = new ScreenshotManager(new ScreenshotViaRobot());
-
-				manager = new ScreenshotManager(new ScreenshotViaGnome());
-
-//				ALT+PRTSCR pressed - active window screenshot
-				if (altPressedFlag) {
-					manager.captureFullScreen();
-					manager.sendScreenshot();
-				}
-//				PRTSCR pressed - full screenshot
-				else {
-					manager.captureFullScreen();
-					manager.sendScreenshot();
-				}
+		if(enabled) {
+//		ESC pressed - clear window
+			if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
+				GUIManager.clearSimpleWindow();
 			}
-			catch (Exception ex) {
-				ex.printStackTrace();
+
+//		extra pressed - set flag
+			if (e.getKeyCode() == extraKey)
+				extraFlag = true;
+			else if (e.getKeyCode() == basicKey) {
+				try {
+					ScreenshotManager manager;
+					manager = new ScreenshotManager(new ScreenshotViaGnome());
+
+//				active window screenshot
+					if (extraFlag) {
+						manager.captureFullScreen();
+						manager.sendScreenshot();
+					}
+//				full screenshot
+					else {
+						manager.captureFullScreen();
+						manager.sendScreenshot();
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
 
 	@Override
 	public void nativeKeyReleased(NativeKeyEvent e) {
-		if (e.getKeyCode() == NativeKeyEvent.VC_ALT)
-			altPressedFlag = false;
+		if (e.getKeyCode() == extraKey)
+			extraFlag = false;
 	}
 
 	@Override
