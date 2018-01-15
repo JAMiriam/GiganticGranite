@@ -11,13 +11,15 @@ $(document).ready(function () {
         let arrayLength = result.length;
         str += '<div class="row">';
         for (var i = arrayLength - 1; i >= 0; i--) {
-            str += '<div class="col-md-4 text-center"><div><h3>' + result[i].date + '</h3></div><img src="' + result[i].image + '"></img>' + '<ul class="mylist">';
             let actors = JSON.parse(result[i].foundActors);
             let arrayLength2 = actors.length;
-            for (var j = 0; j < arrayLength2; j++) {
-                str += '<li>' + actors[j] + '</li>';
+            if (arrayLength2 > 0 && actors[0] !== '') {
+                str += '<div class="col-md-4 text-center"><div><h3>' + result[i].date + '</h3></div><img src="' + result[i].image + '"></img>' + '<h4>Found actors:</h4><ul class="mylist">';
+                for (var j = 0; j < arrayLength2; j++) {
+                    str += '<li>' + actors[j] + '</li>';
+                }
+                str += '</ul></div>';
             }
-            str += '</ul></div>';
         }
         str += '</div></div></div>';
         $("#content").html(str);
