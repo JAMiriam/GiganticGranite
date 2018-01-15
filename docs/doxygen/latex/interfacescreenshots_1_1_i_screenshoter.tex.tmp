@@ -1,0 +1,14 @@
+\hypertarget{interfacescreenshots_1_1_i_screenshoter}{}\section{screenshots.\+I\+Screenshoter Interface Reference}
+\label{interfacescreenshots_1_1_i_screenshoter}\index{screenshots.\+I\+Screenshoter@{screenshots.\+I\+Screenshoter}}
+
+
+Inheritance diagram for screenshots.\+I\+Screenshoter\+:
+% FIG 0
+
+
+\subsection{Detailed Description}
+Interface for taking screenshots 
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/screenshots/I\+Screenshoter.\+java\end{DoxyCompactItemize}
