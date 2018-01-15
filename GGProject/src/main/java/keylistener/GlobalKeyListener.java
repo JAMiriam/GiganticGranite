@@ -65,8 +65,7 @@ public class GlobalKeyListener extends Thread implements NativeKeyListener  {
 				extraFlag = true;
 			else if (e.getKeyCode() == basicKey) {
 				try {
-					ScreenshotManager manager;
-					manager = new ScreenshotManager(new ScreenshotViaGnome());
+					ScreenshotManager manager = new ScreenshotManager(new ScreenshotViaGnome());
 
 //				active window screenshot
 					if (extraFlag) {

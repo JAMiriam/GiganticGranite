@@ -1,7 +1,7 @@
 package gui.tray;
 
+import cleaner.Cleaner;
 import gui.GUIManager;
-import org.jnativehook.keyboard.NativeKeyEvent;
 import transmission.LoginException;
 import transmission.User;
 
@@ -115,7 +115,7 @@ public class TrayGUI {
 
 		exitItem.addActionListener(e -> {
 			tray.remove(trayIcon);
-			System.exit(0);
+			new Cleaner();
 		});
 	}
 

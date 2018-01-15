@@ -31,23 +31,9 @@ public class ScreenshotManager {
 		System.out.println("Window captured");
 	}
 
-	//TODO delete screenshot eventually!!
 	public void sendScreenshot() {
 		System.out.println("Screenshot sent");
 		Client.sendImageToServer(path);
 //		deleteScreenshot();
-	}
-
-	private void deleteScreenshot() {
-		try {
-			File file = new File(path);
-			if(file.delete())
-				System.out.println(file.getName() + " is deleted!");
-			else
-				System.out.println("Delete operation is failed.");
-		}
-		catch (Exception x) {
-			x.printStackTrace();
-		}
 	}
 }
