@@ -13,7 +13,7 @@ try {
 
 //    if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $finfo = new finfo(FILEINFO_MIME_TYPE);
-        if ($ext = array_search(
+        $ext = array_search(
             $finfo->file($_FILES['image']['tmp_name']),
             array (
                 'jpg' => 'image/jpeg',
@@ -21,7 +21,16 @@ try {
                 'gif' => 'image/gif'
             ),
             true
-        )) {
+        );
+//        if ($ext = array_search(
+//            $finfo->file($_FILES['image']['tmp_name']),
+//            array (
+//                'jpg' => 'image/jpeg',
+//                'png' => 'image/png',
+//                'gif' => 'image/gif'
+//            ),
+//            true
+//        )) {
             // choose better
             $filename = uniqid("", true);
             //$filename = sha1_file($_FILES['image']['tmp_name']);
@@ -137,9 +146,9 @@ try {
         } else {
             $http->redirect('/error.php');
         }
-    } else {
-        $http->redirect('/error.php');
-    }
+//    } else {
+//        $http->redirect('/error.php');
+//    }
 } catch (Exception $e) {
 //    echo $e->getMessage();
     $http->redirect('/error.php');
