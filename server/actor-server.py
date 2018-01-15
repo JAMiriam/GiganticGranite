@@ -231,8 +231,11 @@ def insertToHistory(token, actors_to_history, filename):
         cursor.execute(query, (hist_id, user_id, actors_to_history, search_date))
         conn.commit()
 
-        temp_path = os.path.join('temp', filename)
+        #temp_path = os.path.join('temp', filename)
+        temp_path = 'D:\\GiganticGranite\\server\\temp\\'+filename
         img = cv2.imread(temp_path)
+        if img is None:
+            temp_path = os.path.join('D:\GiganticGranite\server\temp', filename)
         #img = cv2.LoadImage(temp_path,CV_LOAD_IMAGE_COLOR)
         if img is not None:
 
@@ -247,8 +250,9 @@ def insertToHistory(token, actors_to_history, filename):
             img = cv2.resize(img, None, fx=scaling_factor, fy=scaling_factor, interpolation=cv2.INTER_AREA)
 
             new_name = 'img_'+str(hist_id)+'.png'
-            new_path = os.path.join('images', new_name)
-            print(new_path)
+            #new_path = os.path.join('images', new_name)
+            #print(new_path)
+            new_path = os.path.join('D:\GiganticGranite\server\images', new_name)
             cv2.imwrite(new_path,img)
         else:
             print("cant load temp image")
