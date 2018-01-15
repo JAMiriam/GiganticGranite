@@ -54,6 +54,8 @@ class DBConnector:
         return self.collection.find_one({"internal_id": id})
     
     def swap_internal_id(self, id_from, id_to):
+        if id_from == id_to:
+            return
         if self.collection.find_one({"internal_id": id_from}) is not None:
             if self.collection.find_one({"internal_id": id_to}) is None:
                 self.collection.update_one({'internal_id': id_from}, {'$set': {'internal_id': id_to}}, upsert=False)
