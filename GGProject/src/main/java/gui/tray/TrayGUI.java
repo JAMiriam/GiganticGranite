@@ -99,26 +99,35 @@ public class TrayGUI {
 		helpItem.addActionListener(e -> {
 			String helpMsg =
 					"Program takes screenshot and sends it to the server, which recognises actors’ faces and\n" +
-					"sends back the response. Default shortcut to take a screenshot is prtsc key for capturing\n" +
-					"whole screen and alt+prtsc for capturing only active window. Shortcuts can be changed in\n" +
-					"More->Settings. Subsequently, frames around recognised faces will be shown. Green colour\n" +
-					"means that certain recognition is most likely correct, and recognitions that may be incorrect\n" +
-					"are marked red. Clicking on a rectangle shows a details pane with basic info about the actor\n" +
-					"and link to their IMDb profile. To remove frames and details pane, press esc key or choose\n" +
-					"\"Clear” from menu.\n";
+					"sends back the response. \n\n" +
+					"Default shortcut to take a screenshot is prtsc key for capturing the whole screen and alt+prtsc\n" +
+					"for capturing only active window. Shortcuts can be changed in More->Settings. Subsequently, frames\n" +
+					"around recognised faces will be shown. Green colour  means that certain recognition is most likely\n" +
+					"correct, and recognitions that may be incorrect are marked red. Clicking on a rectangle shows a\n" +
+					"details pane with basic info about the actor and link to their IMDb profile. \n\n" +
+					"Users can also make complaints when they think a recognition is incorrect. To suggest the real name " +
+					"of wrongly recognised actor, click on “Complaint” and type actor’s full name. \n\n" +
+					"To remove frames and details pane, press esc key or choose “Clear” from the menu.\n" +
+					"Logged-in users have access to their search history. To log in, choose “Log in” option from \n" +
+					"the menu. To create an account, choose “Log in” and then click on the link to the registration page.\n" +
+					"To display your history, click on “History”.  You will be redirected to the web page. " +
+					"After closing the app, you will be logged out.";
+
 			JOptionPane.showMessageDialog(null, helpMsg, "Help", 1);
 		});
 
 		aboutItem.addActionListener(e -> {
 			String aboutMsg =
-					"Program takes screenshot and sends it to the server, which recognises actors’ faces and\n" +
-					"sends back the response. Default shortcut to take a screenshot is prtsc key for capturing\n" +
-					"whole screen and alt+prtsc for capturing only active window. Shortcuts can be changed in\n" +
-					"More->Settings. Subsequently, frames around recognised faces will be shown. Green colour\n" +
-					"means that certain recognition is most likely correct, and recognitions that may be incorrect\n" +
-					"are marked red. Clicking on a rectangle shows a details pane with basic info about the actor\n" +
-					"and link to their IMDb profile. To remove frames and details pane, press esc key or choose\n" +
-					"\"Clear” from menu.\n";
+					"Gigantic Granite is a software to recognise actors’ faces from films’ screenshots. \n" +
+					"Copyright © 2018  Miriam Jańczak, Agata Jasionowska, Małgorzata Kaczmarczyk, Michał Krasoń,\n" +
+					"Wojciech Przytarski, Paweł Rakosza\n\n" +
+					"Source code available on: https://github.com/JAMiriam/GiganticGranite/\n\n" +
+					"This program is free software: you can redistribute it and/or modify it under the terms of\n" +
+					"the GNU General Public License as published by the Free Software Foundation, either version 3\n" +
+					"of the License, or  (at your option) any later version.\n" +
+					"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; \n" +
+					"without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  " +
+					"See the GNU General Public License (http://www.gnu.org/licenses/)  for more details.\n";
 			JOptionPane.showMessageDialog(null, aboutMsg, "About", 1);
 		});
 
