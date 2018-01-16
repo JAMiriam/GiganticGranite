@@ -96,8 +96,31 @@ public class TrayGUI {
 			return;
 		}
 
-		helpItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
-				"This dialog box is run from the About menu item"));
+		helpItem.addActionListener(e -> {
+			String helpMsg =
+					"Program takes screenshot and sends it to the server, which recognises actors’ faces and\n" +
+					"sends back the response. Default shortcut to take a screenshot is prtsc key for capturing\n" +
+					"whole screen and alt+prtsc for capturing only active window. Shortcuts can be changed in\n" +
+					"More->Settings. Subsequently, frames around recognised faces will be shown. Green colour\n" +
+					"means that certain recognition is most likely correct, and recognitions that may be incorrect\n" +
+					"are marked red. Clicking on a rectangle shows a details pane with basic info about the actor\n" +
+					"and link to their IMDb profile. To remove frames and details pane, press esc key or choose\n" +
+					"\"Clear” from menu.\n";
+			JOptionPane.showMessageDialog(null, helpMsg, "Help", 1);
+		});
+
+		aboutItem.addActionListener(e -> {
+			String aboutMsg =
+					"Program takes screenshot and sends it to the server, which recognises actors’ faces and\n" +
+					"sends back the response. Default shortcut to take a screenshot is prtsc key for capturing\n" +
+					"whole screen and alt+prtsc for capturing only active window. Shortcuts can be changed in\n" +
+					"More->Settings. Subsequently, frames around recognised faces will be shown. Green colour\n" +
+					"means that certain recognition is most likely correct, and recognitions that may be incorrect\n" +
+					"are marked red. Clicking on a rectangle shows a details pane with basic info about the actor\n" +
+					"and link to their IMDb profile. To remove frames and details pane, press esc key or choose\n" +
+					"\"Clear” from menu.\n";
+			JOptionPane.showMessageDialog(null, aboutMsg, "About", 1);
+		});
 
 		enableBox.addItemListener(e -> {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
