@@ -1,0 +1,107 @@
+\hypertarget{classkeylistener_1_1_global_key_listener}{}\section{keylistener.\+Global\+Key\+Listener Class Reference}
+\label{classkeylistener_1_1_global_key_listener}\index{keylistener.\+Global\+Key\+Listener@{keylistener.\+Global\+Key\+Listener}}
+
+
+Inherits Thread, and Native\+Key\+Listener.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classkeylistener_1_1_global_key_listener_a1311c34091f1d6faed3d75fb53b78190}{run} ()
+\item 
+void \hyperlink{classkeylistener_1_1_global_key_listener_a4e9b0fc264c36da46f6fea18f066e350}{native\+Key\+Pressed} (Native\+Key\+Event e)
+\item 
+void \hyperlink{classkeylistener_1_1_global_key_listener_acdfabb2da1c1a0e1eac2cdf1aa4aef7d}{native\+Key\+Released} (Native\+Key\+Event e)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classkeylistener_1_1_global_key_listener_ac7791cb094144696ec7d2353918a4a3d}{set\+Listener\+State} (boolean state)
+\item 
+static void \hyperlink{classkeylistener_1_1_global_key_listener_af914f52abd190712aea1a285979aa4cb}{set\+Config} (int basic, int extra)
+\item 
+static int \mbox{[}$\,$\mbox{]} \hyperlink{classkeylistener_1_1_global_key_listener_af81aa4005a7d48056b73b3934f805668}{get\+Current\+Config} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classkeylistener_1_1_global_key_listener_ad66ec63997ce4dc870c9aedf34bb4b9a}{start\+Listener} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class of global keyboard listener (defined actions for P\+R\+T\+S\+CR and combination A\+L\+T+\+P\+R\+T\+S\+CR). 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_af81aa4005a7d48056b73b3934f805668}\label{classkeylistener_1_1_global_key_listener_af81aa4005a7d48056b73b3934f805668}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!get\+Current\+Config@{get\+Current\+Config}}
+\index{get\+Current\+Config@{get\+Current\+Config}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{get\+Current\+Config()}{getCurrentConfig()}}
+{\footnotesize\ttfamily static int \mbox{[}$\,$\mbox{]} keylistener.\+Global\+Key\+Listener.\+get\+Current\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Gets current key configuration \begin{DoxyReturn}{Returns}
+array with basic and extra keys 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_a4e9b0fc264c36da46f6fea18f066e350}\label{classkeylistener_1_1_global_key_listener_a4e9b0fc264c36da46f6fea18f066e350}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!native\+Key\+Pressed@{native\+Key\+Pressed}}
+\index{native\+Key\+Pressed@{native\+Key\+Pressed}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{native\+Key\+Pressed()}{nativeKeyPressed()}}
+{\footnotesize\ttfamily void keylistener.\+Global\+Key\+Listener.\+native\+Key\+Pressed (\begin{DoxyParamCaption}\item[{Native\+Key\+Event}]{e }\end{DoxyParamCaption})}
+
+Listens for keys pressing 
+\begin{DoxyParams}{Parameters}
+{\em e} & mouse click events \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_acdfabb2da1c1a0e1eac2cdf1aa4aef7d}\label{classkeylistener_1_1_global_key_listener_acdfabb2da1c1a0e1eac2cdf1aa4aef7d}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!native\+Key\+Released@{native\+Key\+Released}}
+\index{native\+Key\+Released@{native\+Key\+Released}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{native\+Key\+Released()}{nativeKeyReleased()}}
+{\footnotesize\ttfamily void keylistener.\+Global\+Key\+Listener.\+native\+Key\+Released (\begin{DoxyParamCaption}\item[{Native\+Key\+Event}]{e }\end{DoxyParamCaption})}
+
+Listens for keys releasing 
+\begin{DoxyParams}{Parameters}
+{\em e} & mouse click events \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_a1311c34091f1d6faed3d75fb53b78190}\label{classkeylistener_1_1_global_key_listener_a1311c34091f1d6faed3d75fb53b78190}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!run@{run}}
+\index{run@{run}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void keylistener.\+Global\+Key\+Listener.\+run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Start listener thread \mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_af914f52abd190712aea1a285979aa4cb}\label{classkeylistener_1_1_global_key_listener_af914f52abd190712aea1a285979aa4cb}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!set\+Config@{set\+Config}}
+\index{set\+Config@{set\+Config}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{set\+Config()}{setConfig()}}
+{\footnotesize\ttfamily static void keylistener.\+Global\+Key\+Listener.\+set\+Config (\begin{DoxyParamCaption}\item[{int}]{basic,  }\item[{int}]{extra }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets new keys configuration 
+\begin{DoxyParams}{Parameters}
+{\em basic} & new basic key \\
+\hline
+{\em extra} & new extra key \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_ac7791cb094144696ec7d2353918a4a3d}\label{classkeylistener_1_1_global_key_listener_ac7791cb094144696ec7d2353918a4a3d}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!set\+Listener\+State@{set\+Listener\+State}}
+\index{set\+Listener\+State@{set\+Listener\+State}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{set\+Listener\+State()}{setListenerState()}}
+{\footnotesize\ttfamily static void keylistener.\+Global\+Key\+Listener.\+set\+Listener\+State (\begin{DoxyParamCaption}\item[{boolean}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Enables or disables listener 
+\begin{DoxyParams}{Parameters}
+{\em state} & new listener state \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classkeylistener_1_1_global_key_listener_ad66ec63997ce4dc870c9aedf34bb4b9a}\label{classkeylistener_1_1_global_key_listener_ad66ec63997ce4dc870c9aedf34bb4b9a}} 
+\index{keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}!start\+Listener@{start\+Listener}}
+\index{start\+Listener@{start\+Listener}!keylistener\+::\+Global\+Key\+Listener@{keylistener\+::\+Global\+Key\+Listener}}
+\subsubsection{\texorpdfstring{start\+Listener()}{startListener()}}
+{\footnotesize\ttfamily static void keylistener.\+Global\+Key\+Listener.\+start\+Listener (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+Starts global key listener 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/keylistener/Global\+Key\+Listener.\+java\end{DoxyCompactItemize}

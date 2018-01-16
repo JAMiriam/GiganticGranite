@@ -1,0 +1,97 @@
+\hypertarget{classgui_1_1_g_u_i_manager}{}\section{gui.\+G\+U\+I\+Manager Class Reference}
+\label{classgui_1_1_g_u_i_manager}\index{gui.\+G\+U\+I\+Manager@{gui.\+G\+U\+I\+Manager}}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classgui_1_1_g_u_i_manager_ad0f98411aba9a8fe15a3965bee9a004d}{create\+Simple\+Window} (Array\+List$<$ Simple\+Actor $>$ actors\+Data)
+\item 
+static void \hyperlink{classgui_1_1_g_u_i_manager_a53027e64ff28a5c403ca6c5701760e41}{show\+Details\+Pane} ()
+\item 
+static void \hyperlink{classgui_1_1_g_u_i_manager_a535ab6d04abe06fab3dd346a66680f02}{set\+Screen\+Size} (Window\+Info info)
+\item 
+static void \hyperlink{classgui_1_1_g_u_i_manager_a92b21d9ad29b097a5e679da1de80a6e1}{clear\+Simple\+Window} ()
+\item 
+static void \hyperlink{classgui_1_1_g_u_i_manager_a2fda83994d697d912245b9be520a57a1}{set\+Program\+Mode} (boolean is\+Enabled)
+\item 
+static String \mbox{[}$\,$\mbox{]} \hyperlink{classgui_1_1_g_u_i_manager_a4befd69398d555a850a3e14afcb29ebe}{load\+Settings} ()
+\item 
+static void \hyperlink{classgui_1_1_g_u_i_manager_a7b6597e10beb5cade7d7333e781ddaed}{save\+Config} (String basic, String extra)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class with static methods to communicate between javafx G\+UI and other components 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classgui_1_1_g_u_i_manager_a92b21d9ad29b097a5e679da1de80a6e1}\label{classgui_1_1_g_u_i_manager_a92b21d9ad29b097a5e679da1de80a6e1}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!clear\+Simple\+Window@{clear\+Simple\+Window}}
+\index{clear\+Simple\+Window@{clear\+Simple\+Window}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{clear\+Simple\+Window()}{clearSimpleWindow()}}
+{\footnotesize\ttfamily static void gui.\+G\+U\+I\+Manager.\+clear\+Simple\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Clear javafx window data \mbox{\Hypertarget{classgui_1_1_g_u_i_manager_ad0f98411aba9a8fe15a3965bee9a004d}\label{classgui_1_1_g_u_i_manager_ad0f98411aba9a8fe15a3965bee9a004d}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!create\+Simple\+Window@{create\+Simple\+Window}}
+\index{create\+Simple\+Window@{create\+Simple\+Window}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{create\+Simple\+Window()}{createSimpleWindow()}}
+{\footnotesize\ttfamily static void gui.\+G\+U\+I\+Manager.\+create\+Simple\+Window (\begin{DoxyParamCaption}\item[{Array\+List$<$ Simple\+Actor $>$}]{actors\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Creates javafx window from given actors data 
+\begin{DoxyParams}{Parameters}
+{\em actors\+Data} & list of actors to display \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classgui_1_1_g_u_i_manager_a4befd69398d555a850a3e14afcb29ebe}\label{classgui_1_1_g_u_i_manager_a4befd69398d555a850a3e14afcb29ebe}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!load\+Settings@{load\+Settings}}
+\index{load\+Settings@{load\+Settings}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{load\+Settings()}{loadSettings()}}
+{\footnotesize\ttfamily static String \mbox{[}$\,$\mbox{]} gui.\+G\+U\+I\+Manager.\+load\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Loads current listener settings \begin{DoxyReturn}{Returns}
+settings 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classgui_1_1_g_u_i_manager_a7b6597e10beb5cade7d7333e781ddaed}\label{classgui_1_1_g_u_i_manager_a7b6597e10beb5cade7d7333e781ddaed}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!save\+Config@{save\+Config}}
+\index{save\+Config@{save\+Config}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{save\+Config()}{saveConfig()}}
+{\footnotesize\ttfamily static void gui.\+G\+U\+I\+Manager.\+save\+Config (\begin{DoxyParamCaption}\item[{String}]{basic,  }\item[{String}]{extra }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets new listener settings 
+\begin{DoxyParams}{Parameters}
+{\em basic} & new basic key \\
+\hline
+{\em extra} & new extra key \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classgui_1_1_g_u_i_manager_a2fda83994d697d912245b9be520a57a1}\label{classgui_1_1_g_u_i_manager_a2fda83994d697d912245b9be520a57a1}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!set\+Program\+Mode@{set\+Program\+Mode}}
+\index{set\+Program\+Mode@{set\+Program\+Mode}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{set\+Program\+Mode()}{setProgramMode()}}
+{\footnotesize\ttfamily static void gui.\+G\+U\+I\+Manager.\+set\+Program\+Mode (\begin{DoxyParamCaption}\item[{boolean}]{is\+Enabled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Enables or disables key listener 
+\begin{DoxyParams}{Parameters}
+{\em is\+Enabled} & new listener state \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classgui_1_1_g_u_i_manager_a535ab6d04abe06fab3dd346a66680f02}\label{classgui_1_1_g_u_i_manager_a535ab6d04abe06fab3dd346a66680f02}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!set\+Screen\+Size@{set\+Screen\+Size}}
+\index{set\+Screen\+Size@{set\+Screen\+Size}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{set\+Screen\+Size()}{setScreenSize()}}
+{\footnotesize\ttfamily static void gui.\+G\+U\+I\+Manager.\+set\+Screen\+Size (\begin{DoxyParamCaption}\item[{Window\+Info}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Sets local window info 
+\begin{DoxyParams}{Parameters}
+{\em info} & new window\+Info \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classgui_1_1_g_u_i_manager_a53027e64ff28a5c403ca6c5701760e41}\label{classgui_1_1_g_u_i_manager_a53027e64ff28a5c403ca6c5701760e41}} 
+\index{gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}!show\+Details\+Pane@{show\+Details\+Pane}}
+\index{show\+Details\+Pane@{show\+Details\+Pane}!gui\+::\+G\+U\+I\+Manager@{gui\+::\+G\+U\+I\+Manager}}
+\subsubsection{\texorpdfstring{show\+Details\+Pane()}{showDetailsPane()}}
+{\footnotesize\ttfamily static void gui.\+G\+U\+I\+Manager.\+show\+Details\+Pane (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Shows javafx details window 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/gui/G\+U\+I\+Manager.\+java\end{DoxyCompactItemize}
