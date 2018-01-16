@@ -2,8 +2,8 @@ package gui.simpleWindow;
 
 import gui.GUIManager;
 import models.SimpleActor;
-import transmission.Client;
 import transmission.SessionData;
+import transmission.Client;
 
 import java.util.ArrayList;
 

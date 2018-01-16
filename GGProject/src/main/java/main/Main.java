@@ -1,9 +1,9 @@
 package main;
 
 import gui.simpleWindow.RunSimpleWindow;
-import transmission.Client;
 import gui.tray.TrayGUI;
 import keylistener.GlobalKeyListener;
+import transmission.Client;
 
 /**
  * Main class

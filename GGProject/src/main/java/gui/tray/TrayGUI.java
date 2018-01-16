@@ -4,7 +4,6 @@ import cleaner.Cleaner;
 import gui.GUIManager;
 import transmission.Client;
 import transmission.LoginException;
-import transmission.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,6 +59,7 @@ public class TrayGUI {
 
 		//Add components to popup menu
 		popup.add(loginItem);
+		popup.add(historyItem);
 		popup.add(clearItem);
 		popup.add(optionMenu);
 		optionMenu.add(enableBox);
@@ -117,7 +117,7 @@ public class TrayGUI {
 		clearItem.addActionListener(e -> GUIManager.clearSimpleWindow());
 
 		historyItem.addActionListener(e -> {
-			User.openHistoryInBrowser();
+			Client.openHistoryInBrowser();
 		});
 
 		exitItem.addActionListener(e -> {
@@ -153,7 +153,7 @@ public class TrayGUI {
 		int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
 		if (option == JOptionPane.OK_OPTION) {
 			try {
-				String userid = User.login(username.getText(), password.getText());
+				String userid = Client.login(username.getText(), password.getText());
 				System.out.println("userid: " + userid);
 				showTooltipBalloon(username.getText() + " logged in");
 			} catch (NoRouteToHostException e) {
